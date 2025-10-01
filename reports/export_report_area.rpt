@@ -1,0 +1,23 @@
+****************************************
+Report : area
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:08:48 2025
+****************************************
+
+Number of ports:                          411
+Number of nets:                          6794
+Number of cells:                         6090
+Number of combinational cells:           4413
+Number of sequential cells:              1677
+Number of macros/black boxes:               0
+Number of buf/inv:                        730
+Number of references:                     142
+
+Combinational area:                   1555.69
+Buf/Inv area:                          190.43
+Noncombinational area:                1926.16
+Macro/Black Box area:                    0.00
+
+Total cell area:                      3481.85
+1

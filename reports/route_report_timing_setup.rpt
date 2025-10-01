@@ -1,0 +1,78 @@
+****************************************
+Report : timing
+        -path_type full
+        -delay_type max
+        -max_paths 1
+        -report_by design
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:05:12 2025
+****************************************
+
+  Startpoint: reg_op2_reg[1] (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: alu_out_q_reg[0] (rising edge-triggered flip-flop clocked by clk)
+  Mode: FUNC
+  Corner: Slow
+  Scenario: FUNC_Slow
+  Path Group: clk
+  Path Type: max
+
+  Point                                            Incr      Path  
+  ------------------------------------------------------------------------
+  clock clk (rise edge)                            0.00      0.00
+  clock network delay (propagated)                 0.09      0.09
+
+  reg_op2_reg[1]/CK (SAEDRVT14_FSDPMQ_LP_0P5)      0.00      0.09 r
+  reg_op2_reg[1]/Q (SAEDRVT14_FSDPMQ_LP_0P5)       0.06      0.15 r
+  ctmi_6578/X (SAEDRVT14_INV_S_0P5)                0.04      0.19 f
+  ctmi_12383/X (SAEDRVT14_OAI22_0P5)               0.03      0.22 r
+  ctmi_12379/X (SAEDRVT14_OAI22_0P5)               0.03      0.25 f
+  ctmi_12377/X (SAEDRVT14_AOI21_0P75)              0.02      0.27 r
+  ctmi_12376/X (SAEDRVT14_OAI22_0P5)               0.02      0.29 f
+  ctmi_12374/X (SAEDRVT14_AOI21_0P75)              0.02      0.31 r
+  ctmi_12373/X (SAEDRVT14_OAI21_0P5)               0.02      0.33 f
+  ctmi_12370/X (SAEDRVT14_AOI21_0P75)              0.02      0.35 r
+  ctmi_12369/X (SAEDRVT14_OAI22_0P5)               0.02      0.36 f
+  ctmi_12368/X (SAEDRVT14_AOI21_0P75)              0.02      0.38 r
+  placectmTdsLR_2_9761/X (SAEDRVT14_OA221_U_0P5)   0.03      0.42 r
+  A6192/X (SAEDRVT14_OA21_MM_1)                    0.02      0.43 r
+  ctmi_12360/X (SAEDRVT14_OAI22_0P5)               0.02      0.45 f
+  ctmi_12359/X (SAEDRVT14_AOI21_0P75)              0.03      0.48 r
+  A6248/X (SAEDRVT14_OA21_1)                       0.02      0.50 r
+  A6193/X (SAEDRVT14_OA21_MM_1)                    0.01      0.52 r
+  ctmi_12351/X (SAEDRVT14_OAI22_0P5)               0.02      0.54 f
+  ctmi_12350/X (SAEDRVT14_AOI21_0P75)              0.02      0.56 r
+  ctmi_12349/X (SAEDRVT14_OAI22_0P5)               0.02      0.58 f
+  ctmi_12348/X (SAEDRVT14_AOI21_0P75)              0.02      0.60 r
+  ctmi_12347/X (SAEDRVT14_OAI22_0P5)               0.03      0.63 f
+  ctmi_12346/X (SAEDRVT14_AOI21_3)                 0.02      0.65 r
+  ctmi_12345/X (SAEDRVT14_OAI21_0P5)               0.03      0.68 f
+  A6249/X (SAEDRVT14_NR2_MM_0P5)                   0.03      0.71 r
+  A6194/X (SAEDRVT14_AN4_0P5)                      0.04      0.76 r
+  ctmi_12343/X (SAEDRVT14_AOI21_0P75)              0.02      0.78 f
+  ctmi_12415/X (SAEDRVT14_OAI21_0P5)               0.02      0.80 r
+  ctmi_12341/X (SAEDRVT14_MUX2_MM_0P5)             0.03      0.83 r
+  ctmi_12340/X (SAEDRVT14_MUXI2_U_0P5)             0.01      0.84 f
+  ctmi_12339/X (SAEDRVT14_MUXI2_U_0P5)             0.02      0.86 r
+  ctmi_12338/X (SAEDRVT14_MUXI2_U_0P5)             0.02      0.87 f
+  placectmTdsLR_1_21590/X (SAEDRVT14_OAI21_0P5)    0.02      0.89 r
+  phfnr_buf_7392/X (SAEDRVT14_INV_0P5)             0.03      0.92 f
+  ctmi_13445/X (SAEDRVT14_AO32_U_0P5)              0.03      0.95 f
+  ctmi_13444/X (SAEDRVT14_OA33_U_0P5)              0.03      0.98 f
+  alu_out_q_reg[0]/D (SAEDRVT14_FSDPQ_V2_0P5)      0.00      0.98 f
+  data arrival time                                          0.98
+
+  clock clk (rise edge)                            1.20      1.20
+  clock network delay (propagated)                 0.06      1.26
+  alu_out_q_reg[0]/CK (SAEDRVT14_FSDPQ_V2_0P5)     0.00      1.26 r
+  clock uncertainty                               -0.25      1.01
+  library setup time                              -0.02      0.98
+  data required time                                         0.98
+  ------------------------------------------------------------------------
+  data required time                                         0.98
+  data arrival time                                         -0.98
+  ------------------------------------------------------------------------
+  slack (MET)                                                0.00
+
+
+1

@@ -1,0 +1,75 @@
+****************************************
+Report : design
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:08:48 2025
+****************************************
+
+Total number of std cells in library : 860
+Total number of dont_use lib cells   : 67
+Total number of dont_touch lib cells : 17
+Total number of buffers              : 59
+Total number of inverters            : 46
+Total number of flip-flops           : 173
+Total number of latches              : 45
+Total number of ICGs                 : 30
+
+Cell Instance Type  Count         Area
+--------------------------------------
+TOTAL LEAF CELLS    16211     7854.493
+unit                 9159     7019.995
+Standard cells       9159     7019.995
+unit                 9159     7019.995
+Hard macro cells        0        0.000
+unit                 9159     7019.995
+Soft macro cells        0        0.000
+unit                 9159     7019.995
+Always on cells         0        0.000
+unit                 9159     7019.995
+Physical only       10121     4372.645
+unit                 9159     7019.995
+Fixed cells          1302      325.541
+unit                 9159     7019.995
+Moveable cells      14909     7528.952
+unit                 9159     7019.995
+Placed cells         9099     6965.916
+unit                 9159     7019.995
+Sequential           1677     1926.161
+unit                 9159     7019.995
+Buffer/inverter       730      190.432
+unit                 9159     7019.995
+ICG cells              54       50.749
+unit                 9159     7019.995
+
+Logic Hierarchies                    : 0
+Design Masters count                 : 142
+Total Flat nets count                : 6794
+Total FloatingNets count             : 0
+Total no of Ports                    : 411
+Number of Master Clocks in design    : 1
+Number of Generated Clocks in design : 0
+Number of Path Groups in design      : 7 (1 of them Non Default)
+Number of Scan Chains in design      : 0
+List of Modes                        : FUNC
+List of Corners                      : Fast, Typical, Slow
+List of Scenarios                    : FUNC_Fast, FUNC_Slow, FUNC_Typical
+
+Core Area                            : 7854.538
+Chip Area                            : 9837.278
+Total Site Row Area                  : 7854.538
+Number of Blockages                  : 0
+Total area of Blockages              : 0.000
+Number of Power Domains              : 1
+Number of Voltage Areas              : 1
+Number of Group Bounds               : 0
+Number of Exclusive MoveBounds       : 0
+Number of Hard or Soft MoveBounds    : 0
+Number of Multibit Registers         : 0
+Number of Multibit LS/ISO Cells      : 0
+Number of Top Level RP Groups        : 0
+Number of Tech Layers                : 64 (54 of them have unknown routing dir.)
+
+Total wire length                    : 84514.69 micron
+Total number of wires                : 88040
+Total number of contacts             : 78159
+1

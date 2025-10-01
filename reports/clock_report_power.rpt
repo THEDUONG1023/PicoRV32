@@ -1,0 +1,164 @@
+****************************************
+Report : power
+        -significant_digits 2
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:40:40 2025
+****************************************
+Information: Activity propagation will be performed for scenario FUNC_Fast.
+Infomation: Fast mode activity propagation power.rtl_activity_annotation setup is ignored. Always use accurate mode.
+Information: Running switching activity propagation with 2 threads!
+
+ **** Information : No. of simulation cycles = 7 ****
+Mode: FUNC
+Corner: Fast
+Scenario: FUNC_Fast
+Voltage: 0.88
+Temperature: 125.00
+
+Voltage Unit         : 1V
+Capacitance Unit     : 1fF
+Time Unit            : 1ns
+Temperature Unit     : 1C
+Dynamic Power Unit   : 1pW
+Leakage Power Unit   : 1pW
+
+Switched supply net power scaling:
+scaling for leakage power
+
+Supply nets:
+VDD (power) probability 1.00 (default)
+VSS (ground) probability 1.00 (default)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[31] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[30] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[29] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[28] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[27] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[26] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[25] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[21] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[20] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Warning: Power table extrapolation (extrapolation mode) for port CK on cell mem_rdata_q_reg[14] for parameter Tinp. Lowest table value = inf, highest table value = inf, value = 0.056667 (POW-046)
+Note - message 'POW-046' limit (10) exceeded. Remainder will be suppressed.
+Warning: Fall toggles on pin instr_rdcycle_reg/QN are impossible given input states; converted to rise toggles. (POW-069)
+Warning: Fall toggles on pin instr_sub_reg/QN are impossible given input states; converted to rise toggles. (POW-069)
+Warning: Rise-Fall toggles on pin A6980/X are impossible given input states; converted to zero toggles. (POW-069)
+Warning: Fall toggles on pin cpu_state_reg[2]/QN are impossible given input states; converted to rise toggles. (POW-069)
+
+  Cell Internal Power    = 3.47e+08 pW ( 65.4%)
+  Net Switching Power    = 1.84e+08 pW ( 34.6%)
+Total Dynamic Power      = 5.31e+08 pW (100.0%)
+
+Cell Leakage Power       = 1.56e+08 pW
+
+
+  Attributes
+  ----------
+      u  -  User defined power group
+      i  -  Includes clock pin internal power
+
+Power Group         Internal Power        Switching Power          Leakage Power            Total Power    (   %  )    Attrs
+-----------------------------------------------------------------------------------------------------------------------------
+io_pad                    0.00e+00               0.00e+00               0.00e+00               0.00e+00    (  0.0%)         
+memory                    0.00e+00               0.00e+00               0.00e+00               0.00e+00    (  0.0%)         
+black_box                 0.00e+00               0.00e+00               0.00e+00               0.00e+00    (  0.0%)         
+clock_network             3.30e+08               1.36e+08               3.39e+06               4.69e+08    ( 68.2%)        i
+register                  1.12e+07               8.36e+06               1.06e+08               1.26e+08    ( 18.3%)         
+sequential                1.18e+06               3.90e+06               2.37e+06               7.45e+06    (  1.1%)         
+combinational             5.20e+06               3.58e+07               4.42e+07               8.51e+07    ( 12.4%)         
+-----------------------------------------------------------------------------------------------------------------------------
+Total                     3.47e+08 pW            1.84e+08 pW            1.56e+08 pW            6.87e+08 pW
+Mode: FUNC
+Corner: Slow
+Scenario: FUNC_Slow
+Voltage: 0.72
+Temperature: -40.00
+
+Voltage Unit         : 1V
+Capacitance Unit     : 1fF
+Time Unit            : 1ns
+Temperature Unit     : 1C
+Dynamic Power Unit   : 1pW
+Leakage Power Unit   : 1pW
+
+Switched supply net power scaling:
+scaling for leakage power
+
+Supply nets:
+VDD (power) probability 1.00 (default)
+VSS (ground) probability 1.00 (default)
+Warning: Fall toggles on pin instr_rdcycle_reg/QN are impossible given input states; converted to rise toggles. (POW-069)
+Warning: Fall toggles on pin instr_sub_reg/QN are impossible given input states; converted to rise toggles. (POW-069)
+Warning: Rise-Fall toggles on pin A6980/X are impossible given input states; converted to zero toggles. (POW-069)
+Warning: Fall toggles on pin cpu_state_reg[2]/QN are impossible given input states; converted to rise toggles. (POW-069)
+
+  Cell Internal Power    = 1.79e+08 pW ( 60.5%)
+  Net Switching Power    = 1.17e+08 pW ( 39.5%)
+Total Dynamic Power      = 2.96e+08 pW (100.0%)
+
+Cell Leakage Power       = 1.12e+05 pW
+
+
+  Attributes
+  ----------
+      u  -  User defined power group
+      i  -  Includes clock pin internal power
+
+Power Group         Internal Power        Switching Power          Leakage Power            Total Power    (   %  )    Attrs
+-----------------------------------------------------------------------------------------------------------------------------
+io_pad                    0.00e+00               0.00e+00               0.00e+00               0.00e+00    (  0.0%)         
+memory                    0.00e+00               0.00e+00               0.00e+00               0.00e+00    (  0.0%)         
+black_box                 0.00e+00               0.00e+00               0.00e+00               0.00e+00    (  0.0%)         
+clock_network             1.70e+08               8.36e+07               2.34e+03               2.53e+08    ( 85.6%)        i
+register                  5.74e+06               5.89e+06               9.02e+04               1.17e+07    (  4.0%)         
+sequential                7.11e+05               2.85e+06               1.30e+03               3.56e+06    (  1.2%)         
+combinational             2.90e+06               2.45e+07               1.82e+04               2.74e+07    (  9.3%)         
+-----------------------------------------------------------------------------------------------------------------------------
+Total                     1.79e+08 pW            1.17e+08 pW            1.12e+05 pW            2.96e+08 pW
+Mode: FUNC
+Corner: Typical
+Scenario: FUNC_Typical
+Voltage: 0.80
+Temperature: 25.00
+
+Voltage Unit         : 1V
+Capacitance Unit     : 1fF
+Time Unit            : 1ns
+Temperature Unit     : 1C
+Dynamic Power Unit   : 1pW
+Leakage Power Unit   : 1pW
+
+Switched supply net power scaling:
+scaling for leakage power
+
+Supply nets:
+VDD (power) probability 1.00 (default)
+VSS (ground) probability 1.00 (default)
+Warning: Fall toggles on pin instr_rdcycle_reg/QN are impossible given input states; converted to rise toggles. (POW-069)
+Warning: Fall toggles on pin instr_sub_reg/QN are impossible given input states; converted to rise toggles. (POW-069)
+Note - message 'POW-069' limit (10) exceeded. Remainder will be suppressed.
+
+  Cell Internal Power    = 2.41e+08 pW ( 61.6%)
+  Net Switching Power    = 1.50e+08 pW ( 38.4%)
+Total Dynamic Power      = 3.92e+08 pW (100.0%)
+
+Cell Leakage Power       = 1.48e+06 pW
+
+
+  Attributes
+  ----------
+      u  -  User defined power group
+      i  -  Includes clock pin internal power
+
+Power Group         Internal Power        Switching Power          Leakage Power            Total Power    (   %  )    Attrs
+-----------------------------------------------------------------------------------------------------------------------------
+io_pad                    0.00e+00               0.00e+00               0.00e+00               0.00e+00    (  0.0%)         
+memory                    0.00e+00               0.00e+00               0.00e+00               0.00e+00    (  0.0%)         
+black_box                 0.00e+00               0.00e+00               0.00e+00               0.00e+00    (  0.0%)         
+clock_network             2.29e+08               1.09e+08               3.11e+04               3.38e+08    ( 86.0%)        i
+register                  7.68e+06               7.28e+06               1.00e+06               1.60e+07    (  4.1%)         
+sequential                8.97e+05               3.47e+06               2.20e+04               4.39e+06    (  1.1%)         
+combinational             3.76e+06               3.07e+07               4.25e+05               3.48e+07    (  8.9%)         
+-----------------------------------------------------------------------------------------------------------------------------
+Total                     2.41e+08 pW            1.50e+08 pW            1.48e+06 pW            3.93e+08 pW
+1

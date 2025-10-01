@@ -1,0 +1,82 @@
+****************************************
+Report : timing
+        -path_type full
+        -delay_type max
+        -max_paths 1
+        -report_by design
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 14:33:41 2025
+****************************************
+
+  Startpoint: latched_branch_reg (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: reg_next_pc_reg[31] (rising edge-triggered flip-flop clocked by clk)
+  Mode: FUNC
+  Corner: Slow
+  Scenario: FUNC_Slow
+  Path Group: clk
+  Path Type: max
+
+  Point                                            Incr      Path  
+  ------------------------------------------------------------------------
+  clock clk (rise edge)                            0.00      0.00
+  clock network delay (ideal)                      0.00      0.00
+
+  latched_branch_reg/CK (SAEDRVT14_FSDP_V2_2)      0.00      0.00 r
+  latched_branch_reg/Q (SAEDRVT14_FSDP_V2_2)       0.09      0.09 f
+  ctmi_24422/X (SAEDRVT14_ND2_3)                   0.02      0.11 r
+  phfnr_buf_2580/X (SAEDRVT14_INV_1P5)             0.02      0.13 f
+  ctmi_2144/X (SAEDRVT14_AN2B_MM_4)                0.03      0.16 f
+  ctmi_24824/X (SAEDRVT14_AO222_1)                 0.04      0.20 f
+  add_1571/U_0/CO (SAEDRVT14_ADDH_0P5)             0.01      0.21 f
+  add_1571/U_3/CO (SAEDRVT14_ADDF_V1_0P5)          0.03      0.24 f
+  add_1571/U_5/CO (SAEDRVT14_ADDF_V1_0P5)          0.03      0.27 f
+  add_1571/U_8/CO (SAEDRVT14_ADDF_V1_0P5)          0.03      0.30 f
+  add_1571/U_10/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.33 f
+  add_1571/U_13/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.36 f
+  add_1571/U_15/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.39 f
+  add_1571/U_18/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.42 f
+  add_1571/U_20/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.46 f
+  add_1571/U_23/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.49 f
+  add_1571/U_25/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.52 f
+  add_1571/U_28/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.55 f
+  add_1571/U_30/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.58 f
+  add_1571/U_33/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.61 f
+  add_1571/U_35/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.64 f
+  add_1571/U_38/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.67 f
+  add_1571/U_40/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.70 f
+  add_1571/U_43/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.73 f
+  add_1571/U_45/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.76 f
+  add_1571/U_48/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.80 f
+  add_1571/U_50/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.83 f
+  add_1571/U_53/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.86 f
+  add_1571/U_55/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.89 f
+  add_1571/U_58/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.92 f
+  add_1571/U_60/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.95 f
+  add_1571/U_63/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.98 f
+  add_1571/U_65/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      1.01 f
+  add_1571/U_68/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      1.04 f
+  add_1571/U_70/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      1.07 f
+  add_1571/U_73/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      1.10 f
+  add_1571/ctmi_27792/X (SAEDRVT14_EO2_1)          0.02      1.12 r
+  A1706/X (SAEDRVT14_EN2_1)                        0.02      1.14 f
+  ctmi_27402/X (SAEDRVT14_AO33_1)                  0.02      1.17 f
+  ctmi_2118/X (SAEDRVT14_AO21_U_0P5)               0.01      1.18 f
+  reg_next_pc_reg[31]/D (SAEDRVT14_FSDPQ_V2LP_1)   0.00      1.18 f
+  data arrival time                                          1.18
+
+  clock clk (rise edge)                            1.20      1.20
+  clock network delay (ideal)                      0.00      1.20
+  reg_next_pc_reg[31]/CK (SAEDRVT14_FSDPQ_V2LP_1)
+                                                   0.00      1.20 r
+  clock uncertainty                               -0.25      0.95
+  library setup time                               0.01      0.96
+  data required time                                         0.96
+  ------------------------------------------------------------------------
+  data required time                                         0.96
+  data arrival time                                         -1.18
+  ------------------------------------------------------------------------
+  slack (VIOLATED)                                          -0.22
+
+
+1

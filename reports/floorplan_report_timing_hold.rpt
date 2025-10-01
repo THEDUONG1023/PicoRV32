@@ -1,0 +1,44 @@
+****************************************
+Report : timing
+        -path_type full
+        -delay_type min
+        -max_paths 1
+        -report_by design
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 14:33:41 2025
+****************************************
+
+  Startpoint: mem_rdata_q_reg[21] (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: instr_rdcycle_reg (rising edge-triggered flip-flop clocked by clk)
+  Mode: FUNC
+  Corner: Fast
+  Scenario: FUNC_Fast
+  Path Group: clk
+  Path Type: min
+
+  Point                                            Incr      Path  
+  ------------------------------------------------------------------------
+  clock clk (rise edge)                            0.00      0.00
+  clock network delay (ideal)                      0.00      0.00
+
+  mem_rdata_q_reg[21]/CK (SAEDRVT14_FSDP_V2LP_1)   0.00      0.00 r
+  mem_rdata_q_reg[21]/QN (SAEDRVT14_FSDP_V2LP_1)   0.03      0.03 f
+  ctmi_25636/X (SAEDRVT14_AN3_0P75)                0.01      0.04 f
+  instr_rdcycle_reg/D (SAEDRVT14_FSDPQB_V2LP_1)    0.00      0.04 f
+  data arrival time                                          0.04
+
+  clock clk (rise edge)                            0.00      0.00
+  clock network delay (ideal)                      0.00      0.00
+  instr_rdcycle_reg/CK (SAEDRVT14_FSDPQB_V2LP_1)   0.00      0.00 r
+  clock uncertainty                                0.05      0.05
+  library hold time                                0.02      0.07
+  data required time                                         0.07
+  ------------------------------------------------------------------------
+  data required time                                         0.07
+  data arrival time                                         -0.04
+  ------------------------------------------------------------------------
+  slack (VIOLATED)                                          -0.03
+
+
+1
