@@ -1,0 +1,3078 @@
+
+
+
+                              Fusion Compiler (TM)
+
+                Version W-2024.09-SP2 for linux64 - Nov 26, 2024
+                           Base Build Date: 11/5/2024
+
+                    Copyright (c) 1988 - 2024 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+ 
+Loading user preference file /home/DuongTuong-ST/.synopsys_fc_gui/preferences.tcl
+Information: Term was not able to be set up using xterm-256color . Using "xterm" by default instead. (CLE-10)
+#####################################################################
+#####	             Export                                     #####
+#####################################################################
+source -echo /home/DuongTuong-ST/works/Projects/picorv32/setup/setup.tcl 
+set DESIGN_NAME         "picorv32"              
+set DESIGN_LIBRARY      "${DESIGN_NAME}.dlib"  
+set WORK_DIR            "/home/DuongTuong-ST/works/Projects/picorv32"
+set TECH_FILE           "${WORK_DIR}/tech/tf/saed14nm_1p9m.tf"
+set REFERENCE_LIBRARY	"${WORK_DIR}/libs/saed14rvt/ndm/saed14rvt_frame_timing.ndm"
+set OUTPUT_LOCATION     "${WORK_DIR}/results/picorv32.dlib"
+set NETLIST_FILE        "${WORK_DIR}/inputs/netlist/picorv32.v"
+set DB_FF               "${WORK_DIR}/libs/saed14rvt/liberty/saed14rvt_ff0p88v125c.db"
+set DB_TT  	        "${WORK_DIR}/libs/saed14rvt/liberty/saed14rvt_tt0p8v25c.db"
+set DB_SS               "${WORK_DIR}/libs/saed14rvt/liberty/saed14rvt_ss0p72vm40c.db"
+set TLUP_MIN_FILE       "${WORK_DIR}/tech/tlup/saed14nm_1p9m_Cmin.tlup "
+set TLUP_NOM_FILE       "${WORK_DIR}/tech/tlup/saed14nm_1p9m_Cnom.tlup"
+set TLUP_MAX_FILE       "${WORK_DIR}/tech/tlup/saed14nm_1p9m_Cmax.tlup"
+set LAYER_MAP_FILE      "${WORK_DIR}/tech/map/saed14nm_tf_itf_tluplus.map"
+set MCMM_SETUP_SCRIPT   "${WORK_DIR}/inputs/constraints/mcmm_setup.tcl"
+set SDC_FILE            "${WORK_DIR}/inputs/constraints/picorv32.sdc"
+set DRC_RUNSET_FILE 	"${WORK_DIR}/tech/runsets/saed14nm_1p9m_drc_rules.rs"
+set GDS_MAP_FILE	"${WORK_DIR}/tech/map/saed14nm_1p9m_gdsout_mw.map"
+set MFILL_RUNSET_FILE	"${WORK_DIR}/tech/runsets/saed14nm_1p9m_mfill_rules.rs "
+set GDS_FILE            "${WORK_DIR}/libs/saed14rvt/gds/saed14rvt.gds"
+set REPORTS_PATH	"${WORK_DIR}/reports"
+source ${WORK_DIR}/setup/utilities.tcl
+set_host_options -max_cores 2
+1
+##open the design library
+open_lib ${OUTPUT_LOCATION}
+Information: Loading library file '/home/DuongTuong-ST/works/Projects/picorv32/results/picorv32.dlib' (FILE-007)
+Information: Loading library file '/home/DuongTuong-ST/works/Projects/picorv32/libs/saed14rvt/ndm/saed14rvt_frame_timing.ndm' (FILE-007)
+{picorv32.dlib}
+# Copy the imported block
+copy_block -from ${DESIGN_NAME}/route -to ${DESIGN_NAME}/export 
+Information: User units loaded from library 'saed14rvt_frame_timing' (LNK-040)
+{picorv32.dlib:picorv32/export.design}
+open_block ${DESIGN_NAME}/export 
+Information: Incrementing open_count of block 'picorv32.dlib:picorv32/export.design' to 2. (DES-021)
+{picorv32.dlib:picorv32/export.design}
+# Set Cell Name Prefix
+set_app_options -name cts.common.user_instance_name_prefix -value dfm
+cts.common.user_instance_name_prefix dfm
+#DECAP cell insertion
+set DECAP_CELLS [get_object_name [sort_collection -descending \
+   [get_lib_cells */*_DCAP_V4*] area]]
+saed14rvt_frame_timing/SAEDRVT14_DCAP_V4_64 saed14rvt_frame_timing/SAEDRVT14_DCAP_V4_32 saed14rvt_frame_timing/SAEDRVT14_DCAP_V4_16 saed14rvt_frame_timing/SAEDRVT14_DCAP_V4_8 saed14rvt_frame_timing/SAEDRVT14_DCAP_V4_5
+create_stdcell_fillers -lib_cells ${DECAP_CELLS}
+Using libraries: picorv32.dlib saed14rvt_frame_timing
+Visiting block picorv32.dlib:picorv32/export.design
+Information: Cellem using advance interpolation.
+Design 'picorv32' was successfully linked.
+* Disjointed site row process : FALSE
+INFO:: begin filler insertions...
+CHF::NPL_CHKQUERY_PNET checking turned off by default
+master SAEDRVT14_DCAP_V4_64 has site unit
+master SAEDRVT14_DCAP_V4_32 has site unit
+master SAEDRVT14_DCAP_V4_16 has site unit
+master SAEDRVT14_DCAP_V4_8 has site unit
+master SAEDRVT14_DCAP_V4_5 has site unit
+ Use site unit (740)
+Warning: filler ref cell SAEDRVT14_DCAP_V4_64 not marked filler type. (CHF-011)
+Warning: filler ref cell SAEDRVT14_DCAP_V4_32 not marked filler type. (CHF-011)
+Warning: filler ref cell SAEDRVT14_DCAP_V4_16 not marked filler type. (CHF-011)
+Warning: filler ref cell SAEDRVT14_DCAP_V4_8 not marked filler type. (CHF-011)
+Warning: filler ref cell SAEDRVT14_DCAP_V4_5 not marked filler type. (CHF-011)
+CHF: Multi-threading turned off because variant design not supported. 
+Warning: Smallest filler provided is greater than specified in option place.rules.min_vt_filler_size (CHF-073)
+Warning: option -continue_on_error turned on automatically. (CHF-014)
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+PDC app_options settings =========
+	place.legalize.enable_prerouted_net_check: 1
+	place.legalize.num_tracks_for_access_check: 1
+	place.legalize.use_eol_spacing_for_access_check: 0
+	place.legalize.allow_touch_track_for_access_check: 1
+	place.legalize.reduce_conservatism_in_eol_check: 0
+	place.legalize.preroute_shape_merge_distance: 0.0
+	place.legalize.enable_non_preferred_direction_span_check: 0
+
+Layer M1: cached 0 shapes out of 7900 total shapes.
+Layer M2: cached 3307 shapes out of 35969 total shapes.
+Layer M3: cached 3307 shapes out of 27648 total shapes.
+Cached 9921 vias out of 78187 total vias.
+CHF: loading design...
+CHF:: Loading blkInsts from NDM...
+CHF:: Building row/inst relations...
+INFO:: Use fillers in order(1000): SAEDRVT14_DCAP_V4_64 (68 x 1), SAEDRVT14_DCAP_V4_32 (34 x 1), SAEDRVT14_DCAP_V4_16 (18 x 1), SAEDRVT14_DCAP_V4_8 (10 x 1), SAEDRVT14_DCAP_V4_5 (7 x 1), 
+	10% complete ...
+	20% complete ...
+	30% complete ...
+	40% complete ...
+	50% complete ...
+	60% complete ...
+	70% complete ...
+	80% complete ...
+	90% complete ...
+Regular Filler Insertion Complete
+CHF:: Create all new fillers...
+... 723 of regular filler SAEDRVT14_DCAP_V4_64 inserted
+... 241 of regular filler SAEDRVT14_DCAP_V4_32 inserted
+... 457 of regular filler SAEDRVT14_DCAP_V4_16 inserted
+... 856 of regular filler SAEDRVT14_DCAP_V4_8 inserted
+... 792 of regular filler SAEDRVT14_DCAP_V4_5 inserted
+#### Filler cell insertion
+set FILLER_CELLS [get_object_name [sort_collection -descending \
+ [get_lib_cells */*_FILL* -filter "name !~ *Y2* AND name !~ *SPACER*"] area]]
+saed14rvt_frame_timing/SAEDRVT14_FILL64 saed14rvt_frame_timing/SAEDRVT14_FILL32 saed14rvt_frame_timing/SAEDRVT14_FILL_ECO_18 saed14rvt_frame_timing/SAEDRVT14_FILL16 saed14rvt_frame_timing/SAEDRVT14_FILL_ECO_15 saed14rvt_frame_timing/SAEDRVT14_FILL_ECO_12 saed14rvt_frame_timing/SAEDRVT14_FILL_ECO_9 saed14rvt_frame_timing/SAEDRVT14_FILL5 saed14rvt_frame_timing/SAEDRVT14_FILL_ECO_6 saed14rvt_frame_timing/SAEDRVT14_FILL4 saed14rvt_frame_timing/SAEDRVT14_FILL3 saed14rvt_frame_timing/SAEDRVT14_FILL_ECO_3 saed14rvt_frame_timing/SAEDRVT14_FILL2 saed14rvt_frame_timing/SAEDRVT14_FILL_ECO_2 saed14rvt_frame_timing/SAEDRVT14_FILL_ECO_1
+create_stdcell_fillers -lib_cells ${FILLER_CELLS} 
+* Disjointed site row process : FALSE
+INFO:: begin filler insertions...
+CHF::NPL_CHKQUERY_PNET checking turned off by default
+master SAEDRVT14_FILL64 has site unit
+master SAEDRVT14_FILL32 has site unit
+master SAEDRVT14_FILL_ECO_18 has site unit
+master SAEDRVT14_FILL16 has site unit
+master SAEDRVT14_FILL_ECO_15 has site unit
+master SAEDRVT14_FILL_ECO_12 has site unit
+master SAEDRVT14_FILL_ECO_9 has site unit
+master SAEDRVT14_FILL5 has site unit
+master SAEDRVT14_FILL_ECO_6 has site unit
+master SAEDRVT14_FILL4 has site unit
+master SAEDRVT14_FILL3 has site unit
+master SAEDRVT14_FILL_ECO_3 has site unit
+master SAEDRVT14_FILL2 has site unit
+master SAEDRVT14_FILL_ECO_2 has site unit
+master SAEDRVT14_FILL_ECO_1 has site unit
+ Use site unit (740)
+INFO:: process regular filler master min-vth type: 
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+PDC app_options settings =========
+	place.legalize.enable_prerouted_net_check: 1
+	place.legalize.num_tracks_for_access_check: 1
+	place.legalize.use_eol_spacing_for_access_check: 0
+	place.legalize.allow_touch_track_for_access_check: 1
+	place.legalize.reduce_conservatism_in_eol_check: 0
+	place.legalize.preroute_shape_merge_distance: 0.0
+	place.legalize.enable_non_preferred_direction_span_check: 0
+
+Layer M1: cached 0 shapes out of 7900 total shapes.
+Layer M2: cached 3307 shapes out of 35969 total shapes.
+Layer M3: cached 3307 shapes out of 27648 total shapes.
+Cached 9921 vias out of 78187 total vias.
+CHF: loading design...
+... VT_P rule: 0.888000
+... VT_N rule: 0.888000
+... max group width rule: 0.888000
+CHF:: Loading blkInsts from NDM...
+CHF:: Building row/inst relations...
+INFO:: Use fillers in order(1000): SAEDRVT14_FILL64 (66 x 1), SAEDRVT14_FILL32 (34 x 1), SAEDRVT14_FILL_ECO_18 (20 x 1), SAEDRVT14_FILL16 (18 x 1), SAEDRVT14_FILL_ECO_15 (17 x 1), SAEDRVT14_FILL_ECO_12 (14 x 1), SAEDRVT14_FILL_ECO_9 (10 x 1), SAEDRVT14_FILL5 (7 x 1), SAEDRVT14_FILL_ECO_6 (7 x 1), SAEDRVT14_FILL4 (6 x 1), SAEDRVT14_FILL3 (5 x 1), SAEDRVT14_FILL_ECO_3 (5 x 1), SAEDRVT14_FILL2 (4 x 1), SAEDRVT14_FILL_ECO_2 (4 x 1), SAEDRVT14_FILL_ECO_1 (1 x 1), 
+	10% complete ...
+	20% complete ...
+	30% complete ...
+	40% complete ...
+	50% complete ...
+	60% complete ...
+	70% complete ...
+	80% complete ...
+	90% complete ...
+Regular Filler Insertion Complete
+... 0 of regular filler SAEDRVT14_FILL64 inserted
+... 0 of regular filler SAEDRVT14_FILL32 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_18 inserted
+... 0 of regular filler SAEDRVT14_FILL16 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_15 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_12 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_9 inserted
+... 0 of regular filler SAEDRVT14_FILL5 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_6 inserted
+... 438 of regular filler SAEDRVT14_FILL4 inserted
+... 454 of regular filler SAEDRVT14_FILL3 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_3 inserted
+... 569 of regular filler SAEDRVT14_FILL2 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_2 inserted
+... 4289 of regular filler SAEDRVT14_FILL_ECO_1 inserted
+# Remove placement blockage
+remove_placement_blockages -all
+0
+create_stdcell_fillers -lib_cells ${FILLER_CELLS}
+Information: The command 'create_stdcell_fillers' cleared the undo history. (UNDO-016)
+* Disjointed site row process : FALSE
+INFO:: begin filler insertions...
+CHF::NPL_CHKQUERY_PNET checking turned off by default
+master SAEDRVT14_FILL64 has site unit
+master SAEDRVT14_FILL32 has site unit
+master SAEDRVT14_FILL_ECO_18 has site unit
+master SAEDRVT14_FILL16 has site unit
+master SAEDRVT14_FILL_ECO_15 has site unit
+master SAEDRVT14_FILL_ECO_12 has site unit
+master SAEDRVT14_FILL_ECO_9 has site unit
+master SAEDRVT14_FILL5 has site unit
+master SAEDRVT14_FILL_ECO_6 has site unit
+master SAEDRVT14_FILL4 has site unit
+master SAEDRVT14_FILL3 has site unit
+master SAEDRVT14_FILL_ECO_3 has site unit
+master SAEDRVT14_FILL2 has site unit
+master SAEDRVT14_FILL_ECO_2 has site unit
+master SAEDRVT14_FILL_ECO_1 has site unit
+ Use site unit (740)
+INFO:: process regular filler master min-vth type: 
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+PDC app_options settings =========
+	place.legalize.enable_prerouted_net_check: 1
+	place.legalize.num_tracks_for_access_check: 1
+	place.legalize.use_eol_spacing_for_access_check: 0
+	place.legalize.allow_touch_track_for_access_check: 1
+	place.legalize.reduce_conservatism_in_eol_check: 0
+	place.legalize.preroute_shape_merge_distance: 0.0
+	place.legalize.enable_non_preferred_direction_span_check: 0
+
+Layer M1: cached 0 shapes out of 7900 total shapes.
+Layer M2: cached 3307 shapes out of 35969 total shapes.
+Layer M3: cached 3307 shapes out of 27648 total shapes.
+Cached 9921 vias out of 78187 total vias.
+CHF: loading design...
+... VT_P rule: 0.888000
+... VT_N rule: 0.888000
+... max group width rule: 0.888000
+CHF:: Loading blkInsts from NDM...
+CHF:: Building row/inst relations...
+INFO:: Use fillers in order(1000): SAEDRVT14_FILL64 (66 x 1), SAEDRVT14_FILL32 (34 x 1), SAEDRVT14_FILL_ECO_18 (20 x 1), SAEDRVT14_FILL16 (18 x 1), SAEDRVT14_FILL_ECO_15 (17 x 1), SAEDRVT14_FILL_ECO_12 (14 x 1), SAEDRVT14_FILL_ECO_9 (10 x 1), SAEDRVT14_FILL5 (7 x 1), SAEDRVT14_FILL_ECO_6 (7 x 1), SAEDRVT14_FILL4 (6 x 1), SAEDRVT14_FILL3 (5 x 1), SAEDRVT14_FILL_ECO_3 (5 x 1), SAEDRVT14_FILL2 (4 x 1), SAEDRVT14_FILL_ECO_2 (4 x 1), SAEDRVT14_FILL_ECO_1 (1 x 1), 
+Regular Filler Insertion Complete
+... 0 of regular filler SAEDRVT14_FILL64 inserted
+... 0 of regular filler SAEDRVT14_FILL32 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_18 inserted
+... 0 of regular filler SAEDRVT14_FILL16 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_15 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_12 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_9 inserted
+... 0 of regular filler SAEDRVT14_FILL5 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_6 inserted
+... 0 of regular filler SAEDRVT14_FILL4 inserted
+... 0 of regular filler SAEDRVT14_FILL3 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_3 inserted
+... 0 of regular filler SAEDRVT14_FILL2 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_2 inserted
+... 0 of regular filler SAEDRVT14_FILL_ECO_1 inserted
+check_legality
+
+************************
+
+running check_legality
+
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+PDC app_options settings =========
+	place.legalize.enable_prerouted_net_check: 1
+	place.legalize.num_tracks_for_access_check: 1
+	place.legalize.use_eol_spacing_for_access_check: 0
+	place.legalize.allow_touch_track_for_access_check: 1
+	place.legalize.reduce_conservatism_in_eol_check: 0
+	place.legalize.preroute_shape_merge_distance: 0.0
+	place.legalize.enable_non_preferred_direction_span_check: 0
+
+Layer M1: cached 0 shapes out of 7900 total shapes.
+Layer M2: cached 3307 shapes out of 35969 total shapes.
+Layer M3: cached 3307 shapes out of 27648 total shapes.
+Cached 9921 vias out of 78187 total vias.
+
+check_legality for block design picorv32 ... 
+Information: Initializing classic cellmap without advanced rules enabled and without PDC enabled
+Information: The following app options are used in cellmap
+        place.legalize.enable_color_aware_placement : false
+        place.legalize.use_nll_query_cm : false
+        place.legalize.enable_advanced_legalizer : false
+        place.legalize.enable_prerouted_net_check : true
+        place.legalize.enable_advanced_prerouted_net_check : false
+        place.legalize.always_continue : true
+        place.legalize.limit_legality_checks : false
+        place.common.pnet_aware_density : 1.0000
+        place.common.pnet_aware_min_width : 0.0000
+        place.common.pnet_aware_layers : {}
+        place.common.use_placement_model : false
+        place.common.enable_advanced_placement_model : true
+        cts.placement.cell_spacing_rule_style : maximum
+Warning: Library cell saed14rvt_frame_timing:SAEDRVT14_ISOFSDPQ_PECO_8.frame is missing supply pins. Its power structure cannot be determined. (LGL-050)
+Warning: Library cell saed14rvt_frame_timing:SAEDRVT14_DCAP_PV1ECO_12.frame is missing supply pins. Its power structure cannot be determined. (LGL-050)
+Total 0.1817 seconds to build cellmap data
+Information: Creating classic rule checker.
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+=====> Processed 161 ref cells (23 fillers) from library
+Design has no advanced rules
+Checking legality
+Checking cell legality:
+0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Sorting rows.
+Checking spacing rule legality.
+0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Checking packing rule legality.
+0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+
+****************************************
+  Report : Legality
+****************************************
+
+VIOLATIONS BY CATEGORY:
+   MOVABLE  APP-FIXED USER-FIXED  DESCRIPTION
+         0          0          0  Two objects overlap.
+         0          0          0  A cell violates a pnet.
+         0          0          0  A cell is illegal at a site.
+         1          0          0  A cell is not aligned with a site.
+         0          0          0  A cell has an illegal orientation.
+         0          0          0  A cell spacing rule is violated.
+         0          0          0  A layer rule is violated.
+         0          0          0  A cell is in the wrong region.
+         0          0          0  Two cells violate cts margins.
+         0          0          0  Two cells violate coloring.
+
+         1          0          0  TOTAL
+
+TOTAL 1 Violations.
+
+VIOLATIONS BY SUBCATEGORY:
+     MOVABLE  APP-FIXED USER-FIXED  DESCRIPTION
+
+         0          0          0    Two objects overlap.
+           0          0          0    Two cells overlap.
+           0          0          0    Two cells have overlapping keepout margins.
+           0          0          0    A cell overlaps a blockage.
+           0          0          0    A cell keepout margin overlaps a blockage.
+
+         0          0          0    A cell violates a pnet.
+
+         0          0          0    A cell is illegal at a site.
+           0          0          0    A cell violates pin-track alignment rules.
+           0          0          0    A cell is illegal at a site.
+           0          0          0    A cell violates legal index rule.
+           0          0          0    A cell has the wrong variant for its location.
+
+         1          0          0    A cell is not aligned with a site.
+           1          0          0    A cell is not aligned with the base site.
+           0          0          0    A cell is not aligned with an overlaid site.
+
+         0          0          0    A cell has an illegal orientation.
+
+         0          0          0    A cell spacing rule is violated.
+           0          0          0    A spacing rule is violated in a row.
+           0          0          0    A spacing rule is violated between adjacent rows.
+           0          0          0    A cell violates vertical abutment rule.
+           0          0          0    A cell violates metal spacing rule.
+
+         0          0          0    A layer rule is violated.
+           0          0          0    A layer VTH rule is violated.
+           0          0          0    A layer OD rule is violated.
+           0          0          0    A layer OD max-width rule is violated.
+           0          0          0    A layer ALL_OD corner rule is violated.
+           0          0          0    A layer max-vertical-length rule is violated.
+           0          0          0    A layer TPO rule is violated.
+           0          0          0    Filler cell insertion cannot satisfy layer rules.
+
+         0          0          0    A cell is in the wrong region.
+           0          0          0    A cell is outside its hard bound.
+           0          0          0    A cell is in the wrong voltage area.
+           0          0          0    A cell violates an exclusive movebound.
+
+         0          0          0    Two cells violate cts margins.
+
+         0          0          0    Two cells violate coloring.
+
+
+check_legality for block design picorv32 failed!
+
+check_legality failed.
+
+**************************
+
+0
+add_redundant_vias
+NEX(Warning): extract.rc_techfile_for_diode_mode_26_thickness not set, will igonre it
+Cell Min-Routing-Layer = M1
+Cell Max-Routing-Layer = M7
+Turn off antenna since no rule is specified
+Information: Option route.detail.force_end_on_preferred_grid will be ignored since none of the layers have preferred grid. (ZRT-703)
+Skipping 6 internal pins that are not physical. Set route.common.verbose_level to > 0 and run routing command to get skipped pin names.
+Info: number of net_type_blockage: 0 
+Information: Via ladder engine would be activated for pattern must join connection in certain commands. Please refer to man-page for the command list. (ZRT-619)
+Via on layer (VIA1) needs more than one tracks
+Warning: Layer M1 default pitch 0.074 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.074" & "wire/via-up 0.078". (ZRT-026)
+Via on layer (VIA1) needs more than one tracks
+Warning: Layer M2 default pitch 0.060 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.078" & "wire/via-up 0.060". (ZRT-026)
+Via on layer (VIA4) needs more than one tracks
+Warning: Layer M5 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.125" & "wire/via-up 0.100". (ZRT-026)
+Via on layer (VIA7) needs more than one tracks
+Warning: Layer M7 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.100" & "wire/via-up 0.107". (ZRT-026)
+Wire on layer (M8) needs more than one tracks
+Via on layer (VIA7) needs more than one tracks
+Via on layer (VIA8) needs more than one tracks
+Warning: Layer M8 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.107" & "wire/via-up 0.135". (ZRT-026)
+Wire on layer (M9) needs more than one tracks
+Via on layer (VIA8) needs more than one tracks
+Via on layer (VIARDL) needs more than one tracks
+Warning: Layer M9 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.135" & "wire/via-up 1.570". (ZRT-026)
+Via on layer (VIARDL) needs more than one tracks
+Warning: Layer MRDL default pitch 4.000 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 4.500" & "wire/via-up 4.000". (ZRT-026)
+Information: When applicable Min-max layer allow_pin_connection mode will allow paths of length 0.90 outside the layer range. (ZRT-707)
+Information: When applicable Min-max layer allow_pin_connection mode will allow paths of length 0.90 outside the layer range on clock nets. (ZRT-718)
+Information: When applicable layer based tapering will taper up to 0.00 in distance from the pin. (ZRT-706)
+Warning: Standard cell pin SAEDRVT14_EO2_V1_0P75/A1 has no valid via regions. (ZRT-044)
+Warning: Standard cell pin SAEDRVT14_ADDH_0P5/CO has no valid via regions. (ZRT-044)
+Printing options for 'route.common.*'
+common.eco_route_fix_existing_drc                       :	 true                
+common.verbose_level                                    :	 0                   
+common.via_on_grid_by_layer_name                        :	 {VIA1 false} {VIA2 true}
+common.wire_on_grid_by_layer_name                       :	 {M1 true} {M2 true} {M3 true}
+
+Printing options for 'route.detail.*'
+detail.antenna                                          :	 true                
+detail.eco_route_use_soft_spacing_for_timing_optimization:	 true                
+detail.timing_driven                                    :	 true                
+
+Printing options for 'route.auto_via_ladder.*'
+
+[Dr init] Elapsed real time: 0:00:00 
+[Dr init] Elapsed cpu  time: sys=0:00:00 usr=0:00:00 total=0:00:00
+[Dr init] Stage (MB): Used   17  Alloctr   17  Proc   10 
+[Dr init] Total (MB): Used   83  Alloctr   84  Proc 4047 
+
+Redundant via optimization will attempt to replace the following vias: 
+
+   VIA12SQ_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12SQ_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA1_Base    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12BAR1_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12BAR1_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12BAR2_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12BAR2_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12LG_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12LG_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+     VIA12SQ    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+     VIA12SQ(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12BAR1    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12BAR1(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12BAR2    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12BAR2(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+     VIA12LG    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+     VIA12LG(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32SQ_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32SQ_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32BAR1_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32BAR1_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32BAR2_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32BAR2_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32LG_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32LG_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA1_32SQ    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA1_32SQ(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32BAR1    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32BAR1(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32BAR2    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32BAR2(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA1_32LG    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA1_32LG(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3SQ_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3SQ_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3BAR1_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3BAR1_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3BAR2_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3BAR2_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3LG_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3LG_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12_3SQ    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12_3SQ(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3BAR1    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3BAR1(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3BAR2    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA12_3BAR2(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12_3LG    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA12_3LG(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3SQ_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3SQ_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3BAR1_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3BAR1_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3BAR2_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3BAR2_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3LG_C    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3LG_C(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3SQ    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3SQ(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3BAR1    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3BAR1(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3BAR2    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3BAR2(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3LG    -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+  VIA1_32_3LG(r) -> VIA1_Base_1x2    VIA1_Base_2x1   
+
+   VIA2_Base    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23SQ_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23SQ_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23BAR1_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23BAR1_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23BAR2_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23BAR2_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23LG_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23LG_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+     VIA23SQ    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+     VIA23SQ(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23BAR1    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23BAR1(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23BAR2    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23BAR2(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+     VIA23LG    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+     VIA23LG(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33SQ_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33SQ_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33BAR1_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33BAR1_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33BAR2_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33BAR2_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33LG_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33LG_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA2_33SQ    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA2_33SQ(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33BAR1    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33BAR1(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33BAR2    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33BAR2(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA2_33LG    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA2_33LG(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3SQ_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3SQ_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3BAR1_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3BAR1_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3BAR2_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3BAR2_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3LG_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3LG_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23_3SQ    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23_3SQ(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3BAR1    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3BAR1(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3BAR2    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA23_3BAR2(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23_3LG    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA23_3LG(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3SQ_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3SQ_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3BAR1_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3BAR1_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3BAR2_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3BAR2_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3LG_C    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3LG_C(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3SQ    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3SQ(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3BAR1    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3BAR1(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3BAR2    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3BAR2(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3LG    -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+  VIA2_33_3LG(r) -> VIA2_Base_2x1    VIA2_Base_1x2   
+
+   VIA34SQ_C    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+   VIA34SQ_C(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA34BAR1_C    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA34BAR1_C(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA34BAR2_C    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA34BAR2_C(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+   VIA34LG_C    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+   VIA34LG_C(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+     VIA34SQ    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+     VIA34SQ(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+   VIA34BAR1    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+   VIA34BAR1(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+   VIA34BAR2    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+   VIA34BAR2(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+     VIA34LG    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+     VIA34LG(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34SQ_C    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34SQ_C(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34BAR1_C    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34BAR1_C(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34BAR2_C    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34BAR2_C(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34LG_C    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+   VIA3_34SQ    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+   VIA3_34SQ(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34BAR1    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34BAR1(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34BAR2    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA3_34BAR2(r) -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+    VIA3_4LG    -> VIA34SQ_C_2x1(r) VIA34SQ_2x1(r) VIA34SQ_2x1    VIA34SQ_C_2x1   
+                   VIA34BAR1_C_1x2   
+
+  VIA4BAR1_C    -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+  VIA4BAR1_C(r) -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+  VIA4BAR2_C    -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+  VIA4BAR2_C(r) -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+    VIA4LG_C    -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+      VIA4SQ    -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+    VIA4BAR1    -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+    VIA4BAR1(r) -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+    VIA4BAR2    -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+    VIA4BAR2(r) -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+      VIA4LG    -> VIA4SQ_2x1    VIA4BAR1_C_1x2   
+
+    VIA5SQ_C    -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+    VIA5SQ_C(r) -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+  VIA5BAR1_C    -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+  VIA5BAR1_C(r) -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+  VIA5BAR2_C    -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+  VIA5BAR2_C(r) -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+    VIA5LG_C    -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+    VIA5LG_C(r) -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+      VIA5SQ    -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+    VIA5BAR1    -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+    VIA5BAR1(r) -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+    VIA5BAR2    -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+    VIA5BAR2(r) -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+      VIA5LG    -> VIA5SQ_C_1x2    VIA5SQ_C_2x1   
+
+   VIA67SQ_C    -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+  VIA67BAR1_C    -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+  VIA67BAR1_C(r) -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+     VIA67SQ    -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+     VIA67SQ(r) -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+   VIA67BAR1    -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+   VIA67BAR1(r) -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+   VIA67BAR2    -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+   VIA67BAR2(r) -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+     VIA67LG    -> VIA67SQ_C_2x1    VIA67SQ_C_1x2   
+
+   VIA78SQ_C    -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+   VIA78SQ_C(r) -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+  VIA78BAR1_C    -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+  VIA78BAR1_C(r) -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+  VIA78BAR2_C    -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+  VIA78BAR2_C(r) -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+   VIA78LG_C    -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+     VIA78SQ    -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+     VIA78SQ(r) -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+   VIA78BAR1    -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+   VIA78BAR1(r) -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+   VIA78BAR2    -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+   VIA78BAR2(r) -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+     VIA78LG    -> VIA78SQ_C_1x2(r) VIA78SQ_1x2(r) VIA78SQ_1x2    VIA78SQ_C_1x2   
+                   VIA78SQ_C_2x1(r) VIA78SQ_2x1(r) VIA78SQ_2x1    VIA78SQ_C_2x1   
+
+     VIA89_C    -> VIA89_C_2x1    VIA89_C_1x2   
+
+       VIA89    -> VIA89_C_2x1    VIA89_C_1x2   
+
+     VIA9RDL    -> VIA9RDL_1x2    VIA9RDL_2x1   
+
+
+
+	There were 0 out of 25991 pins with no spots.
+
+[Technology Processing] Elapsed real time: 0:00:00 
+[Technology Processing] Elapsed cpu  time: sys=0:00:00 usr=0:00:00 total=0:00:00
+[Technology Processing] Stage (MB): Used   17  Alloctr   17  Proc   11 
+[Technology Processing] Total (MB): Used   83  Alloctr   84  Proc 4048 
+
+Begin Redundant via insertion ...
+
+Routed	1/24 Partitions, Violations =	0
+Routed	2/24 Partitions, Violations =	16
+Routed	3/24 Partitions, Violations =	18
+Routed	4/24 Partitions, Violations =	70
+Routed	5/24 Partitions, Violations =	70
+Routed	6/24 Partitions, Violations =	81
+Routed	7/24 Partitions, Violations =	97
+Routed	8/24 Partitions, Violations =	97
+Routed	9/24 Partitions, Violations =	97
+Routed	10/24 Partitions, Violations =	128
+Routed	11/24 Partitions, Violations =	128
+Routed	12/24 Partitions, Violations =	128
+Routed	13/24 Partitions, Violations =	125
+Routed	14/24 Partitions, Violations =	159
+Routed	15/24 Partitions, Violations =	164
+Routed	16/24 Partitions, Violations =	175
+Routed	17/24 Partitions, Violations =	178
+Routed	18/24 Partitions, Violations =	178
+Routed	19/24 Partitions, Violations =	178
+Routed	20/24 Partitions, Violations =	178
+Routed	21/24 Partitions, Violations =	178
+Routed	22/24 Partitions, Violations =	194
+Routed	23/24 Partitions, Violations =	191
+Routed	24/24 Partitions, Violations =	202
+
+RedundantVia finished with 202 violations
+
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	202
+	Diff net spacing : 97
+	Diff net var rule spacing : 14
+	Edge-line via spacing : 9
+	End of line enclosure : 1
+	Less than minimum area : 9
+	Less than minimum enclosed area : 3
+	Less than minimum width : 10
+	Less than NDR width : 46
+	Off-grid : 5
+	Same net spacing : 8
+
+
+Total Wire Length =                    84431 micron
+Total Number of Contacts =             61822
+Total Number of Wires =                74658
+Total Number of PtConns =              12878
+Total Number of Routed Wires =       73430
+Total Routed Wire Length =           83822 micron
+Total Number of Routed Contacts =       61822
+	Layer                   M1 :        724 micron
+	Layer                   M2 :      19219 micron
+	Layer                   M3 :      18835 micron
+	Layer                   M4 :      15549 micron
+	Layer                   M5 :      11712 micron
+	Layer                   M6 :      12495 micron
+	Layer                   M7 :       5288 micron
+	Layer                   M8 :          0 micron
+	Layer                   M9 :          0 micron
+	Layer                 MRDL :          0 micron
+	Via              VIA67SQ_C :        478
+	Via          VIA67SQ_C_1x2 :        235
+	Via          VIA67SQ_C_2x1 :        410
+	Via               VIA5SQ_C :       1056
+	Via      VIA5SQ_C(rot)_1x2 :          1
+	Via           VIA5SQ_C_1x2 :        772
+	Via           VIA5SQ_C_2x1 :        483
+	Via                 VIA4SQ :       2068
+	Via         VIA4BAR1_C_1x2 :        792
+	Via             VIA4SQ_2x1 :       2079
+	Via              VIA34SQ_C :       2130
+	Via         VIA34SQ_C(rot) :          2
+	Via     VIA34SQ_C(rot)_2x1 :       1631
+	Via          VIA34SQ_C_2x1 :         29
+	Via   VIA34BAR1_C(rot)_2x1 :          1
+	Via        VIA34BAR1_C_1x2 :       3575
+	Via       VIA34SQ(rot)_2x1 :         63
+	Via            VIA34SQ_2x1 :       1130
+	Via              VIA2_Base :       6451
+	Via              VIA23SQ_C :         32
+	Via          VIA2_Base_1x2 :       7525
+	Via          VIA2_Base_2x1 :      13224
+	Via         VIA12SQ_C(rot) :        221
+	Via              VIA1_Base :      11744
+	Via       VIA12BAR2_C(rot) :          7
+	Via          VIA1_Base_1x2 :       2513
+	Via          VIA1_Base_2x1 :       3170
+
+ 
+Redundant via conversion report:
+--------------------------------
+
+  Total optimized via conversion rate = 60.87% (37633 / 61822 vias)
+ 
+    Layer VIA1       = 32.19% (5683   / 17655   vias)
+        Weight 1     = 32.19% (5683    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 67.81% (11972   vias)
+    Layer VIA2       = 76.19% (20749  / 27232   vias)
+        Weight 1     = 76.19% (20749   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 23.81% (6483    vias)
+    Layer VIA3       = 75.10% (6429   / 8561    vias)
+        Weight 1     = 75.10% (6429    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.90% (2132    vias)
+    Layer VIA4       = 58.13% (2871   / 4939    vias)
+        Weight 1     = 58.13% (2871    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 41.87% (2068    vias)
+    Layer VIA5       = 54.33% (1256   / 2312    vias)
+        Weight 1     = 54.33% (1256    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.67% (1056    vias)
+    Layer VIA6       = 57.44% (645    / 1123    vias)
+        Weight 1     = 57.44% (645     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.56% (478     vias)
+ 
+  Total double via conversion rate    = 60.87% (37633 / 61822 vias)
+ 
+    Layer VIA1       = 32.19% (5683   / 17655   vias)
+    Layer VIA2       = 76.19% (20749  / 27232   vias)
+    Layer VIA3       = 75.10% (6429   / 8561    vias)
+    Layer VIA4       = 58.13% (2871   / 4939    vias)
+    Layer VIA5       = 54.33% (1256   / 2312    vias)
+    Layer VIA6       = 57.44% (645    / 1123    vias)
+ 
+  The optimized via conversion rate based on total routed via count = 60.87% (37633 / 61822 vias)
+ 
+    Layer VIA1       = 32.19% (5683   / 17655   vias)
+        Weight 1     = 32.19% (5683    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 67.81% (11972   vias)
+    Layer VIA2       = 76.19% (20749  / 27232   vias)
+        Weight 1     = 76.19% (20749   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 23.81% (6483    vias)
+    Layer VIA3       = 75.10% (6429   / 8561    vias)
+        Weight 1     = 75.10% (6429    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.90% (2132    vias)
+    Layer VIA4       = 58.13% (2871   / 4939    vias)
+        Weight 1     = 58.13% (2871    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 41.87% (2068    vias)
+    Layer VIA5       = 54.33% (1256   / 2312    vias)
+        Weight 1     = 54.33% (1256    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.67% (1056    vias)
+    Layer VIA6       = 57.44% (645    / 1123    vias)
+        Weight 1     = 57.44% (645     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.56% (478     vias)
+ 
+
+[RedundantVia] Elapsed real time: 0:00:09 
+[RedundantVia] Elapsed cpu  time: sys=0:00:00 usr=0:00:12 total=0:00:12
+[RedundantVia] Stage (MB): Used   97  Alloctr   98  Proc  396 
+[RedundantVia] Total (MB): Used  163  Alloctr  165  Proc 4433 
+
+Begin DRC fixing ...
+
+[Dr init] Elapsed real time: 0:00:09 
+[Dr init] Elapsed cpu  time: sys=0:00:00 usr=0:00:12 total=0:00:12
+[Dr init] Stage (MB): Used   97  Alloctr   98  Proc  396 
+[Dr init] Total (MB): Used  163  Alloctr  165  Proc 4433 
+Total number of nets = 6794, of which 0 are not extracted
+Total number of open nets = 0, of which 0 are frozen
+Information: Using 2 threads for routing. (ZRT-444)
+Start DR iteration 1: non-uniform partition
+Routed	1/92 Partitions, Violations =	192
+Routed	2/92 Partitions, Violations =	192
+Routed	3/92 Partitions, Violations =	191
+Routed	4/92 Partitions, Violations =	190
+Routed	5/92 Partitions, Violations =	189
+Routed	6/92 Partitions, Violations =	186
+Routed	7/92 Partitions, Violations =	186
+Routed	8/92 Partitions, Violations =	180
+Routed	9/92 Partitions, Violations =	180
+Routed	10/92 Partitions, Violations =	179
+Routed	11/92 Partitions, Violations =	179
+Routed	12/92 Partitions, Violations =	174
+Routed	13/92 Partitions, Violations =	174
+Routed	14/92 Partitions, Violations =	170
+Routed	15/92 Partitions, Violations =	170
+Routed	16/92 Partitions, Violations =	169
+Routed	17/92 Partitions, Violations =	165
+Routed	18/92 Partitions, Violations =	165
+Routed	19/92 Partitions, Violations =	165
+Routed	20/92 Partitions, Violations =	163
+Routed	21/92 Partitions, Violations =	159
+Routed	22/92 Partitions, Violations =	159
+Routed	23/92 Partitions, Violations =	153
+Routed	24/92 Partitions, Violations =	153
+Routed	25/92 Partitions, Violations =	150
+Routed	26/92 Partitions, Violations =	148
+Routed	27/92 Partitions, Violations =	138
+Routed	28/92 Partitions, Violations =	138
+Routed	29/92 Partitions, Violations =	137
+Routed	30/92 Partitions, Violations =	134
+Routed	31/92 Partitions, Violations =	134
+Routed	32/92 Partitions, Violations =	129
+Routed	33/92 Partitions, Violations =	129
+Routed	34/92 Partitions, Violations =	129
+Routed	35/92 Partitions, Violations =	129
+Routed	36/92 Partitions, Violations =	124
+Routed	37/92 Partitions, Violations =	124
+Routed	38/92 Partitions, Violations =	116
+Routed	39/92 Partitions, Violations =	116
+Routed	40/92 Partitions, Violations =	114
+Routed	41/92 Partitions, Violations =	113
+Routed	42/92 Partitions, Violations =	112
+Routed	43/92 Partitions, Violations =	112
+Routed	44/92 Partitions, Violations =	107
+Routed	45/92 Partitions, Violations =	104
+Routed	46/92 Partitions, Violations =	104
+Routed	47/92 Partitions, Violations =	99
+Routed	48/92 Partitions, Violations =	99
+Routed	49/92 Partitions, Violations =	97
+Routed	50/92 Partitions, Violations =	97
+Routed	51/92 Partitions, Violations =	92
+Routed	52/92 Partitions, Violations =	92
+Routed	53/92 Partitions, Violations =	90
+Routed	54/92 Partitions, Violations =	86
+Routed	55/92 Partitions, Violations =	80
+Routed	56/92 Partitions, Violations =	80
+Routed	57/92 Partitions, Violations =	80
+Routed	58/92 Partitions, Violations =	74
+Routed	59/92 Partitions, Violations =	74
+Routed	60/92 Partitions, Violations =	74
+Routed	61/92 Partitions, Violations =	67
+Routed	62/92 Partitions, Violations =	67
+Routed	63/92 Partitions, Violations =	65
+Routed	64/92 Partitions, Violations =	65
+Routed	65/92 Partitions, Violations =	63
+Routed	66/92 Partitions, Violations =	57
+Routed	67/92 Partitions, Violations =	56
+Routed	68/92 Partitions, Violations =	52
+Routed	69/92 Partitions, Violations =	52
+Routed	70/92 Partitions, Violations =	52
+Routed	71/92 Partitions, Violations =	52
+Routed	72/92 Partitions, Violations =	52
+Routed	73/92 Partitions, Violations =	51
+Routed	74/92 Partitions, Violations =	48
+Routed	75/92 Partitions, Violations =	48
+Routed	76/92 Partitions, Violations =	47
+Routed	77/92 Partitions, Violations =	46
+Routed	78/92 Partitions, Violations =	46
+Routed	79/92 Partitions, Violations =	44
+Routed	80/92 Partitions, Violations =	36
+Routed	81/92 Partitions, Violations =	36
+Routed	82/92 Partitions, Violations =	35
+Routed	83/92 Partitions, Violations =	32
+Routed	84/92 Partitions, Violations =	31
+Routed	85/92 Partitions, Violations =	29
+Routed	86/92 Partitions, Violations =	28
+Routed	87/92 Partitions, Violations =	22
+Routed	88/92 Partitions, Violations =	21
+Routed	89/92 Partitions, Violations =	18
+Routed	90/92 Partitions, Violations =	17
+Routed	91/92 Partitions, Violations =	14
+Routed	92/92 Partitions, Violations =	8
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	8
+	Diff net spacing : 8
+
+[Iter 1] Elapsed real time: 0:00:10 
+[Iter 1] Elapsed cpu  time: sys=0:00:00 usr=0:00:14 total=0:00:14
+[Iter 1] Stage (MB): Used  177  Alloctr  177  Proc  402 
+[Iter 1] Total (MB): Used  243  Alloctr  244  Proc 4439 
+
+End DR iteration 1 with 92 parts
+
+Start DR iteration 2: non-uniform partition
+Routed	1/7 Partitions, Violations =	7
+Routed	2/7 Partitions, Violations =	7
+Routed	3/7 Partitions, Violations =	6
+Routed	4/7 Partitions, Violations =	4
+Routed	5/7 Partitions, Violations =	2
+Routed	6/7 Partitions, Violations =	1
+Routed	7/7 Partitions, Violations =	0
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	0
+
+[Iter 2] Elapsed real time: 0:00:10 
+[Iter 2] Elapsed cpu  time: sys=0:00:00 usr=0:00:14 total=0:00:14
+[Iter 2] Stage (MB): Used  177  Alloctr  177  Proc  402 
+[Iter 2] Total (MB): Used  243  Alloctr  244  Proc 4439 
+
+End DR iteration 2 with 7 parts
+
+Finish DR since reached 0 DRC
+
+[DR] Elapsed real time: 0:00:10 
+[DR] Elapsed cpu  time: sys=0:00:00 usr=0:00:14 total=0:00:14
+[DR] Stage (MB): Used   82  Alloctr   82  Proc  402 
+[DR] Total (MB): Used  148  Alloctr  149  Proc 4439 
+
+Redundant via insertion finished with 0 open nets, of which 0 are frozen
+
+Redundant via insertion finished with 0 violations
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	0
+
+
+
+Total Wire Length =                    84431 micron
+Total Number of Contacts =             61819
+Total Number of Wires =                74658
+Total Number of PtConns =              12857
+Total Number of Routed Wires =       73447
+Total Routed Wire Length =           83825 micron
+Total Number of Routed Contacts =       61819
+	Layer                   M1 :        724 micron
+	Layer                   M2 :      19228 micron
+	Layer                   M3 :      18834 micron
+	Layer                   M4 :      15545 micron
+	Layer                   M5 :      11712 micron
+	Layer                   M6 :      12494 micron
+	Layer                   M7 :       5288 micron
+	Layer                   M8 :          0 micron
+	Layer                   M9 :          0 micron
+	Layer                 MRDL :          0 micron
+	Via              VIA67SQ_C :        479
+	Via          VIA67SQ_C_1x2 :        235
+	Via          VIA67SQ_C_2x1 :        409
+	Via               VIA5SQ_C :       1059
+	Via      VIA5SQ_C(rot)_1x2 :          1
+	Via           VIA5SQ_C_1x2 :        771
+	Via           VIA5SQ_C_2x1 :        483
+	Via                 VIA4SQ :       2070
+	Via         VIA4BAR1_C_1x2 :        791
+	Via             VIA4SQ_2x1 :       2075
+	Via              VIA34SQ_C :       2147
+	Via         VIA34SQ_C(rot) :          2
+	Via     VIA34SQ_C(rot)_2x1 :       1624
+	Via          VIA34SQ_C_2x1 :         29
+	Via   VIA34BAR1_C(rot)_2x1 :          2
+	Via        VIA34BAR1_C_1x2 :       3568
+	Via       VIA34SQ(rot)_2x1 :         63
+	Via            VIA34SQ_2x1 :       1122
+	Via              VIA2_Base :       6502
+	Via              VIA23SQ_C :         32
+	Via          VIA2_Base_1x2 :       7508
+	Via          VIA2_Base_2x1 :      13192
+	Via         VIA12SQ_C(rot) :        221
+	Via              VIA1_Base :      11751
+	Via       VIA12BAR2_C(rot) :          7
+	Via          VIA1_Base_1x2 :       2509
+	Via          VIA1_Base_2x1 :       3167
+
+ 
+Redundant via conversion report:
+--------------------------------
+
+  Total optimized via conversion rate = 60.74% (37549 / 61819 vias)
+ 
+    Layer VIA1       = 32.15% (5676   / 17655   vias)
+        Weight 1     = 32.15% (5676    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 67.85% (11979   vias)
+    Layer VIA2       = 76.01% (20700  / 27234   vias)
+        Weight 1     = 76.01% (20700   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 23.99% (6534    vias)
+    Layer VIA3       = 74.89% (6408   / 8557    vias)
+        Weight 1     = 74.89% (6408    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.11% (2149    vias)
+    Layer VIA4       = 58.06% (2866   / 4936    vias)
+        Weight 1     = 58.06% (2866    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 41.94% (2070    vias)
+    Layer VIA5       = 54.24% (1255   / 2314    vias)
+        Weight 1     = 54.24% (1255    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.76% (1059    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+  Total double via conversion rate    = 60.74% (37549 / 61819 vias)
+ 
+    Layer VIA1       = 32.15% (5676   / 17655   vias)
+    Layer VIA2       = 76.01% (20700  / 27234   vias)
+    Layer VIA3       = 74.89% (6408   / 8557    vias)
+    Layer VIA4       = 58.06% (2866   / 4936    vias)
+    Layer VIA5       = 54.24% (1255   / 2314    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+ 
+  The optimized via conversion rate based on total routed via count = 60.74% (37549 / 61819 vias)
+ 
+    Layer VIA1       = 32.15% (5676   / 17655   vias)
+        Weight 1     = 32.15% (5676    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 67.85% (11979   vias)
+    Layer VIA2       = 76.01% (20700  / 27234   vias)
+        Weight 1     = 76.01% (20700   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 23.99% (6534    vias)
+    Layer VIA3       = 74.89% (6408   / 8557    vias)
+        Weight 1     = 74.89% (6408    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.11% (2149    vias)
+    Layer VIA4       = 58.06% (2866   / 4936    vias)
+        Weight 1     = 58.06% (2866    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 41.94% (2070    vias)
+    Layer VIA5       = 54.24% (1255   / 2314    vias)
+        Weight 1     = 54.24% (1255    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.76% (1059    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+
+Total number of nets = 6794
+0 open nets, of which 0 are frozen
+Total number of excluded ports = 0 ports of 0 unplaced cells connected to 0 nets
+                                 0 ports without pins of 0 cells connected to 0 nets
+                                 0 ports of 0 cover cells connected to 0 non-pg nets
+Total number of DRCs = 0
+Total number of antenna violations = antenna checking not active
+Information: Routes in non-preferred voltage areas = 0 (ZRT-559)
+
+Updating the database ...
+#### Connect PG nets
+connect_pg_net -net VDD [get_pins -hierarchical  */VDD]
+1
+connect_pg_net -net VSS [get_pins -hierarchical  */VSS]
+1
+#### Analyze the design
+check_legality 
+Information: The command 'check_legality' cleared the undo history. (UNDO-016)
+
+************************
+
+running check_legality
+
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+PDC app_options settings =========
+	place.legalize.enable_prerouted_net_check: 1
+	place.legalize.num_tracks_for_access_check: 1
+	place.legalize.use_eol_spacing_for_access_check: 0
+	place.legalize.allow_touch_track_for_access_check: 1
+	place.legalize.reduce_conservatism_in_eol_check: 0
+	place.legalize.preroute_shape_merge_distance: 0.0
+	place.legalize.enable_non_preferred_direction_span_check: 0
+
+Layer M1: cached 0 shapes out of 7883 total shapes.
+Layer M2: cached 3307 shapes out of 35847 total shapes.
+Layer M3: cached 3307 shapes out of 27853 total shapes.
+Cached 9921 vias out of 78174 total vias.
+
+check_legality for block design picorv32 ... 
+Information: Initializing classic cellmap without advanced rules enabled and without PDC enabled
+Information: The following app options are used in cellmap
+        place.legalize.enable_color_aware_placement : false
+        place.legalize.use_nll_query_cm : false
+        place.legalize.enable_advanced_legalizer : false
+        place.legalize.enable_prerouted_net_check : true
+        place.legalize.enable_advanced_prerouted_net_check : false
+        place.legalize.always_continue : true
+        place.legalize.limit_legality_checks : false
+        place.common.pnet_aware_density : 1.0000
+        place.common.pnet_aware_min_width : 0.0000
+        place.common.pnet_aware_layers : {}
+        place.common.use_placement_model : false
+        place.common.enable_advanced_placement_model : true
+        cts.placement.cell_spacing_rule_style : maximum
+Warning: Library cell saed14rvt_frame_timing:SAEDRVT14_ISOFSDPQ_PECO_8.frame is missing supply pins. Its power structure cannot be determined. (LGL-050)
+Warning: Library cell saed14rvt_frame_timing:SAEDRVT14_DCAP_PV1ECO_12.frame is missing supply pins. Its power structure cannot be determined. (LGL-050)
+Total 0.1838 seconds to build cellmap data
+Information: Creating classic rule checker.
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+=====> Processed 161 ref cells (23 fillers) from library
+Design has no advanced rules
+Checking legality
+Checking cell legality:
+0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Sorting rows.
+Checking spacing rule legality.
+0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Checking packing rule legality.
+0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+
+****************************************
+  Report : Legality
+****************************************
+
+VIOLATIONS BY CATEGORY:
+   MOVABLE  APP-FIXED USER-FIXED  DESCRIPTION
+         0          0          0  Two objects overlap.
+         0          0          0  A cell violates a pnet.
+         0          0          0  A cell is illegal at a site.
+         1          0          0  A cell is not aligned with a site.
+         0          0          0  A cell has an illegal orientation.
+         0          0          0  A cell spacing rule is violated.
+         0          0          0  A layer rule is violated.
+         0          0          0  A cell is in the wrong region.
+         0          0          0  Two cells violate cts margins.
+         0          0          0  Two cells violate coloring.
+
+         1          0          0  TOTAL
+
+TOTAL 1 Violations.
+
+VIOLATIONS BY SUBCATEGORY:
+     MOVABLE  APP-FIXED USER-FIXED  DESCRIPTION
+
+         0          0          0    Two objects overlap.
+           0          0          0    Two cells overlap.
+           0          0          0    Two cells have overlapping keepout margins.
+           0          0          0    A cell overlaps a blockage.
+           0          0          0    A cell keepout margin overlaps a blockage.
+
+         0          0          0    A cell violates a pnet.
+
+         0          0          0    A cell is illegal at a site.
+           0          0          0    A cell violates pin-track alignment rules.
+           0          0          0    A cell is illegal at a site.
+           0          0          0    A cell violates legal index rule.
+           0          0          0    A cell has the wrong variant for its location.
+
+         1          0          0    A cell is not aligned with a site.
+           1          0          0    A cell is not aligned with the base site.
+           0          0          0    A cell is not aligned with an overlaid site.
+
+         0          0          0    A cell has an illegal orientation.
+
+         0          0          0    A cell spacing rule is violated.
+           0          0          0    A spacing rule is violated in a row.
+           0          0          0    A spacing rule is violated between adjacent rows.
+           0          0          0    A cell violates vertical abutment rule.
+           0          0          0    A cell violates metal spacing rule.
+
+         0          0          0    A layer rule is violated.
+           0          0          0    A layer VTH rule is violated.
+           0          0          0    A layer OD rule is violated.
+           0          0          0    A layer OD max-width rule is violated.
+           0          0          0    A layer ALL_OD corner rule is violated.
+           0          0          0    A layer max-vertical-length rule is violated.
+           0          0          0    A layer TPO rule is violated.
+           0          0          0    Filler cell insertion cannot satisfy layer rules.
+
+         0          0          0    A cell is in the wrong region.
+           0          0          0    A cell is outside its hard bound.
+           0          0          0    A cell is in the wrong voltage area.
+           0          0          0    A cell violates an exclusive movebound.
+
+         0          0          0    Two cells violate cts margins.
+
+         0          0          0    Two cells violate coloring.
+
+
+check_legality for block design picorv32 failed!
+
+check_legality failed.
+
+**************************
+
+0
+report_congestion 
+****************************************
+Report : congestion
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:07:30 2025
+****************************************
+
+Layer     |    overflow     |              # GRCs has
+Name      |  total  |  max  | overflow (%)      | max overflow
+---------------------------------------------------------------
+Both Dirs |    1084 |     6 |     899  ( 1.66%) |       1
+H routing |     526 |     6 |     434  ( 1.60%) |       1
+V routing |     558 |     4 |     465  ( 1.71%) |       2
+
+1
+report_utilization
+****************************************
+Report : report_utilization
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:07:30 2025
+****************************************
+Utilization Ratio:			0.4433
+Utilization options:
+ - Area calculation based on:		site_row of block picorv32/export
+ - Categories of objects excluded:	hard_macros macro_keepouts soft_macros io_cells hard_blockages 
+Total Area:				7854.5376
+Total Capacity Area:			7854.5376
+Total Area of cells:			3481.8480
+Area of excluded objects:
+ - hard_macros         :		0.0000
+ - macro_keepouts      :		0.0000
+ - soft_macros         :		0.0000
+ - io_cells            :		0.0000
+ - hard_blockages      :		0.0000
+Total Area of excluded objects:		0.0000
+Ratio of excluded objects:		0.0000
+
+Utilization of site-rows with:
+ - Site 'unit':				0.4433
+
+0.4433
+collect_reports export
+Collecting reports for export stage...
+Reports are generated for export stage.
+#write out design data
+write_verilog -include {pg_objects pg_netlist} /home/DuongTuong-ST/works/Projects/picorv32/results/${DESIGN_NAME}.pg.v
+1
+write_verilog -exclude {physical_only_cells} /home/DuongTuong-ST/works/Projects/picorv32/results/${DESIGN_NAME}.v
+1
+#write constraint
+write_sdc -output /home/DuongTuong-ST/works/Projects/picorv32/results/${DESIGN_NAME}.spef
+Information: The command 'write_sdc' cleared the undo history. (UNDO-016)
+
+Warning: Multiply cell derates are skipped!
+
+Warning: Multiply net derates are skipped!
+1
+#### Write GDS
+write_gds -design ${DESIGN_NAME} -layer_map ${GDS_MAP_FILE} -keep_data_type -fill include -output_pin all -merge_files ${GDS_FILE} -long_names -lib_cell_view frame  /home/DuongTuong-ST/works/Projects/picorv32/results/${DESIGN_NAME}.gds
+Warning: Unplaced cell 'mem_la_wstrb_reg[0]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_q_reg[31]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_q_reg[30]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'ctmi_2124' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_q_reg[29]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'ctmi_24394' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'ctmi_24395' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'ctmi_24982' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'ctmi_27035' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'ctmi_27038' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'ctmi_27041' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'ctmi_27044' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'ctmi_27047' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_word_reg[25]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_word_reg[24]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_word_reg[23]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_word_reg[22]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_word_reg[21]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_word_reg[20]' is written to the GDSII file. (GDS-110)
+Warning: Unplaced cell 'mem_rdata_word_reg[19]' is written to the GDSII file. (GDS-110)
+Note - message 'GDS-110' limit (20) exceeded. Remainder will be suppressed.
+1
+get_blocks -all
+{picorv32.dlib:picorv32.design picorv32.dlib:picorv32/netlist_read.design picorv32.dlib:picorv32/import.design picorv32.dlib:picorv32/floorplan.design picorv32.dlib:picorv32/place.design picorv32.dlib:picorv32/clock.design picorv32.dlib:picorv32/route.design picorv32.dlib:picorv32/export.design}
+list_blocks
+Lib picorv32.dlib /home/DuongTuong-ST/works/Projects/picorv32/results/picorv32.dlib tech current
+  -   0 picorv32.design Jul-30-14:33
+  -   0 picorv32/clock.design Jul-30-14:46
+  *>  0 picorv32/export.design Jul-30-15:07 current
+  -   0 picorv32/floorplan.design Jul-30-14:33
+  -   0 picorv32/import.design Jul-30-14:33
+  -   0 picorv32/netlist_read.design Jul-30-14:33
+  -   0 picorv32/place.design Jul-30-14:42
+  -   0 picorv32/route.design Jul-30-15:05
+8
+Information: 1272 out of 1282 POW-046 messages were not printed due to limit 10  (MSG-3913)
+Information: 2 out of 12 POW-069 messages were not printed due to limit 10  (MSG-3913)
+Information: 6 out of 16 SQM-1061 messages were not printed due to limit 10  (MSG-3913)
+Information: 3 out of 13 SQM-1067 messages were not printed due to limit 10  (MSG-3913)
+Information: 3 out of 8 SQM-1079 messages were not printed due to limit 5  (MSG-3913)
+8
+fc_shell> check_lvs
+Information: Using 2 threads for LVS
+[Check Short] Stage 1	[Check Net] Init	Elapsed =    0:00:00, CPU =    0:00:00
+Elapsed =    0:00:00, CPU =    0:00:00
+[Check Short] Stage 1-2	Elapsed =    0:00:00, CPU =    0:00:00
+[Check Short] Stage 2	Elapsed =    0:00:00, CPU =    0:00:00
+Detected more than 20 short violations. Skip checking short violations
+[Check Short] Stage 3	Elapsed =    0:00:00, CPU =    0:00:01
+[Check Short] End	Elapsed =    0:00:00, CPU =    0:00:01
+[Check Net] 10% 	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] 20% 	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] 30% 	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] 40% 	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] 50% 	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] 60% 	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] 70% 	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] 80% 	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] 90% 	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] All nets are submitted.
+[Check Net] 100%	Elapsed =    0:00:01, CPU =    0:00:02
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_FILL4!x981660y224000. Net2: N3620. BBox: (98.3790 22.8030)(98.4130 22.8370). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x504360y362000. Net2: cpuregs[28][31]. BBox: (50.5690 36.5430)(50.6030 36.5770). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x504360y362000. Net2: cpuregs[28][31]. BBox: (50.8770 36.5430)(50.8970 36.5770). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x504360y362000. Net2: cpuregs[28][31]. BBox: (50.6430 36.5430)(50.6890 36.5770). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x504360y362000. Net2: cpuregs[28][31]. BBox: (50.7290 36.5430)(50.7630 36.5770). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x504360y362000. Net2: cpuregs[28][31]. BBox: (50.8770 36.4830)(50.8970 36.5770). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x504360y362000. Net2: cpuregs[28][31]. BBox: (50.8770 36.4830)(50.8970 36.5170). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_FILL4!x982400y356000. Net2: tmp_net4603. BBox: (98.4530 35.7630)(98.4870 35.7970). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x1034200y314000. Net2: N5519. BBox: (103.8610 31.6230)(103.8810 31.7170). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x1034200y314000. Net2: N5519. BBox: (103.5530 31.5820)(103.5850 31.5970). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x1034200y314000. Net2: N5519. BBox: (103.8610 31.6830)(103.8950 31.7170). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x1034200y314000. Net2: N5519. BBox: (103.5530 31.5820)(103.5850 31.6770). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x639040y296000. Net2: ctmn_12460. BBox: (64.0370 29.7630)(64.0690 29.7970). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x639040y296000. Net2: ctmn_12460. BBox: (64.0370 29.7630)(64.0690 29.9170). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x639040y296000. Net2: ctmn_12460. BBox: (64.0370 29.8830)(64.0690 29.9170). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_FILL4!x400020y290000. Net2: ctmn_12413. BBox: (40.2410 29.2830)(40.2490 29.3170). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x560600y260000. Net2: ctmn_14685_CDR1. BBox: (56.1930 26.4030)(56.2250 26.4180). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_8!x560600y260000. Net2: ctmn_14685_CDR1. BBox: (56.1930 26.4030)(56.2250 26.4180). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_16!x372640y272000. Net2: N204. BBox: (37.8690 27.3580)(37.8730 27.4570). Layer: M1. (RT-586)
+Information: Detected short violation. Cell1: xofiller!SAEDRVT14_DCAP_V4_16!x372640y272000. Net2: N204. BBox: (37.8690 27.4230)(37.8730 27.4570). Layer: M1. (RT-586)
+
+===============================================================
+    Maximum number of violations is set to 20
+    Abort checking when more than 20 violations are found
+    All violations might not be found.
+===============================================================
+Total number of input nets is 6794.
+Total number of short violations is 20.
+Total number of open nets is 0.
+Total number of floating route violations is 0.
+
+Elapsed =    0:00:02, CPU =    0:00:03
+1
+fc_shell> r[Kroute_eco
+Information: The command 'route_eco' cleared the undo history. (UNDO-016)
+Generating Timing information  
+Design  Scenario FUNC_Slow (Mode FUNC Corner Slow)
+Generating Timing information  ... Done
+Information: Serialized np data
+INFO: timer data saved to /tmp/picorv32_27501_578532058.timdat
+[End of Generating Timing Information] Elapsed real time: 0:00:00 
+[End of Generating Timing Information] Elapsed cpu  time: sys=0:00:00 usr=0:00:00 total=0:00:00
+Cell Min-Routing-Layer = M1
+Cell Max-Routing-Layer = M7
+Turn off antenna since no rule is specified
+Information: Option route.detail.force_end_on_preferred_grid will be ignored since none of the layers have preferred grid. (ZRT-703)
+Skipping 6 internal pins that are not physical. Set route.common.verbose_level to > 0 and run routing command to get skipped pin names.
+Info: number of net_type_blockage: 0 
+Information: Via ladder engine would be activated for pattern must join connection in certain commands. Please refer to man-page for the command list. (ZRT-619)
+Via on layer (VIA1) needs more than one tracks
+Warning: Layer M1 default pitch 0.074 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.074" & "wire/via-up 0.078". (ZRT-026)
+Via on layer (VIA1) needs more than one tracks
+Warning: Layer M2 default pitch 0.060 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.078" & "wire/via-up 0.060". (ZRT-026)
+Via on layer (VIA4) needs more than one tracks
+Warning: Layer M5 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.125" & "wire/via-up 0.100". (ZRT-026)
+Via on layer (VIA7) needs more than one tracks
+Warning: Layer M7 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.100" & "wire/via-up 0.107". (ZRT-026)
+Wire on layer (M8) needs more than one tracks
+Via on layer (VIA7) needs more than one tracks
+Via on layer (VIA8) needs more than one tracks
+Warning: Layer M8 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.107" & "wire/via-up 0.135". (ZRT-026)
+Wire on layer (M9) needs more than one tracks
+Via on layer (VIA8) needs more than one tracks
+Via on layer (VIARDL) needs more than one tracks
+Warning: Layer M9 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.135" & "wire/via-up 1.570". (ZRT-026)
+Via on layer (VIARDL) needs more than one tracks
+Warning: Layer MRDL default pitch 4.000 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 4.500" & "wire/via-up 4.000". (ZRT-026)
+Information: When applicable Min-max layer allow_pin_connection mode will allow paths of length 0.90 outside the layer range. (ZRT-707)
+Information: When applicable Min-max layer allow_pin_connection mode will allow paths of length 0.90 outside the layer range on clock nets. (ZRT-718)
+Information: When applicable layer based tapering will taper up to 0.00 in distance from the pin. (ZRT-706)
+Warning: Standard cell pin SAEDRVT14_EO2_V1_0P75/A1 has no valid via regions. (ZRT-044)
+Warning: Standard cell pin SAEDRVT14_ADDH_0P5/CO has no valid via regions. (ZRT-044)
+[ECO: DbIn With Extraction] Elapsed real time: 0:00:00 
+[ECO: DbIn With Extraction] Elapsed cpu  time: sys=0:00:00 usr=0:00:00 total=0:00:00
+[ECO: DbIn With Extraction] Stage (MB): Used   55  Alloctr   55  Proc   -8 
+[ECO: DbIn With Extraction] Total (MB): Used   58  Alloctr   59  Proc 4515 
+[ECO: Before Refresh Via Ladder Phase] Elapsed real time: 0:00:00 
+[ECO: Before Refresh Via Ladder Phase] Elapsed cpu  time: sys=0:00:00 usr=0:00:00 total=0:00:00
+[ECO: Before Refresh Via Ladder Phase] Stage (MB): Used   55  Alloctr   55  Proc   -8 
+[ECO: Before Refresh Via Ladder Phase] Total (MB): Used   58  Alloctr   59  Proc 4515 
+
+    Found 0 via ladders to verify.
+
+VIA LADDER INFO: found 0 via ladder DRCs across 0 nets.
+Updating the database ...
+
+    Via ladders will be inserted on 0 of 0 ports with via ladder constraints.
+
+Updating the database ...
+[Arrange data for GR] Elapsed real time: 0:00:00 
+[Arrange data for GR] Elapsed cpu  time: sys=0:00:00 usr=0:00:00 total=0:00:00
+[Arrange data for GR] Stage (MB): Used    0  Alloctr    0  Proc    0 
+[Arrange data for GR] Total (MB): Used   56  Alloctr   57  Proc 4515 
+[ECO: After Refresh Via Ladder Phase] Elapsed real time: 0:00:00 
+[ECO: After Refresh Via Ladder Phase] Elapsed cpu  time: sys=0:00:00 usr=0:00:01 total=0:00:01
+[ECO: After Refresh Via Ladder Phase] Stage (MB): Used   63  Alloctr   63  Proc   -8 
+[ECO: After Refresh Via Ladder Phase] Total (MB): Used   66  Alloctr   67  Proc 4515 
+[ECO: Analysis] Elapsed real time: 0:00:00 
+[ECO: Analysis] Elapsed cpu  time: sys=0:00:00 usr=0:00:01 total=0:00:01
+[ECO: Analysis] Stage (MB): Used   63  Alloctr   63  Proc   -8 
+[ECO: Analysis] Total (MB): Used   66  Alloctr   67  Proc 4515 
+Num of eco nets = 6794
+Num of open eco nets = 0
+[ECO: Init] Elapsed real time: 0:00:00 
+[ECO: Init] Elapsed cpu  time: sys=0:00:00 usr=0:00:01 total=0:00:01
+[ECO: Init] Stage (MB): Used   64  Alloctr   64  Proc   -8 
+[ECO: Init] Total (MB): Used   67  Alloctr   68  Proc 4515 
+Loading timing information to the router from design
+Timing information loaded to the router.
+Printing options for 'route.common.*'
+common.eco_route_fix_existing_drc                       :	 true                
+common.verbose_level                                    :	 0                   
+common.via_on_grid_by_layer_name                        :	 {VIA1 false} {VIA2 true}
+common.wire_on_grid_by_layer_name                       :	 {M1 true} {M2 true} {M3 true}
+
+Printing options for 'route.detail.*'
+detail.antenna                                          :	 true                
+detail.eco_route_use_soft_spacing_for_timing_optimization:	 true                
+detail.timing_driven                                    :	 true                
+
+Printing options for 'route.auto_via_ladder.*'
+
+Information: RC layer preference is turned on for this design. (ZRT-613)
+
+Begin ECO DRC check ...
+
+Checked	1/18 Partitions, Violations =	0
+Checked	2/18 Partitions, Violations =	32
+Checked	3/18 Partitions, Violations =	39
+Checked	4/18 Partitions, Violations =	39
+Checked	5/18 Partitions, Violations =	45
+Checked	6/18 Partitions, Violations =	55
+Checked	7/18 Partitions, Violations =	58
+Checked	8/18 Partitions, Violations =	58
+Checked	9/18 Partitions, Violations =	58
+Checked	10/18 Partitions, Violations =	63
+Checked	11/18 Partitions, Violations =	63
+Checked	12/18 Partitions, Violations =	63
+Checked	13/18 Partitions, Violations =	64
+Checked	14/18 Partitions, Violations =	66
+Checked	15/18 Partitions, Violations =	66
+Checked	16/18 Partitions, Violations =	67
+Checked	17/18 Partitions, Violations =	67
+Checked	18/18 Partitions, Violations =	68
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	68
+
+[DRC CHECK] Elapsed real time: 0:00:02 
+[DRC CHECK] Elapsed cpu  time: sys=0:00:00 usr=0:00:02 total=0:00:03
+[DRC CHECK] Stage (MB): Used    0  Alloctr    0  Proc  362 
+[DRC CHECK] Total (MB): Used  164  Alloctr  166  Proc 5024 
+
+Total Wire Length =                    84443 micron
+Total Number of Contacts =             61819
+Total Number of Wires =                74465
+Total Number of PtConns =              12948
+Total Number of Routed Wires =       73365
+Total Routed Wire Length =           83837 micron
+Total Number of Routed Contacts =       61819
+	Layer                   M1 :        724 micron
+	Layer                   M2 :      19231 micron
+	Layer                   M3 :      18837 micron
+	Layer                   M4 :      15551 micron
+	Layer                   M5 :      11713 micron
+	Layer                   M6 :      12495 micron
+	Layer                   M7 :       5288 micron
+	Layer                   M8 :          0 micron
+	Layer                   M9 :          0 micron
+	Layer                 MRDL :          0 micron
+	Via              VIA67SQ_C :        479
+	Via          VIA67SQ_C_1x2 :        235
+	Via          VIA67SQ_C_2x1 :        409
+	Via               VIA5SQ_C :       1059
+	Via           VIA5SQ_C_1x2 :        771
+	Via           VIA5SQ_C_2x1 :        483
+	Via      VIA5SQ_C(rot)_1x2 :          1
+	Via                 VIA4SQ :       2070
+	Via         VIA4BAR1_C_1x2 :        791
+	Via             VIA4SQ_2x1 :       2075
+	Via              VIA34SQ_C :       2147
+	Via         VIA34SQ_C(rot) :          2
+	Via     VIA34SQ_C(rot)_2x1 :       1624
+	Via          VIA34SQ_C_2x1 :         29
+	Via            VIA34SQ_2x1 :       1122
+	Via       VIA34SQ(rot)_2x1 :         63
+	Via        VIA34BAR1_C_1x2 :       3568
+	Via   VIA34BAR1_C(rot)_2x1 :          2
+	Via              VIA2_Base :       6502
+	Via              VIA23SQ_C :         32
+	Via          VIA2_Base_1x2 :       7508
+	Via          VIA2_Base_2x1 :      13192
+	Via         VIA12SQ_C(rot) :        221
+	Via              VIA1_Base :      11751
+	Via       VIA12BAR2_C(rot) :          7
+	Via          VIA1_Base_1x2 :       2509
+	Via          VIA1_Base_2x1 :       3167
+
+ 
+Redundant via conversion report:
+--------------------------------
+
+  Total optimized via conversion rate = 60.74% (37549 / 61819 vias)
+ 
+    Layer VIA1       = 32.15% (5676   / 17655   vias)
+        Weight 1     = 32.15% (5676    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 67.85% (11979   vias)
+    Layer VIA2       = 76.01% (20700  / 27234   vias)
+        Weight 1     = 76.01% (20700   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 23.99% (6534    vias)
+    Layer VIA3       = 74.89% (6408   / 8557    vias)
+        Weight 1     = 74.89% (6408    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.11% (2149    vias)
+    Layer VIA4       = 58.06% (2866   / 4936    vias)
+        Weight 1     = 58.06% (2866    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 41.94% (2070    vias)
+    Layer VIA5       = 54.24% (1255   / 2314    vias)
+        Weight 1     = 54.24% (1255    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.76% (1059    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+  Total double via conversion rate    = 60.74% (37549 / 61819 vias)
+ 
+    Layer VIA1       = 32.15% (5676   / 17655   vias)
+    Layer VIA2       = 76.01% (20700  / 27234   vias)
+    Layer VIA3       = 74.89% (6408   / 8557    vias)
+    Layer VIA4       = 58.06% (2866   / 4936    vias)
+    Layer VIA5       = 54.24% (1255   / 2314    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+ 
+  The optimized via conversion rate based on total routed via count = 60.74% (37549 / 61819 vias)
+ 
+    Layer VIA1       = 32.15% (5676   / 17655   vias)
+        Weight 1     = 32.15% (5676    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 67.85% (11979   vias)
+    Layer VIA2       = 76.01% (20700  / 27234   vias)
+        Weight 1     = 76.01% (20700   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 23.99% (6534    vias)
+    Layer VIA3       = 74.89% (6408   / 8557    vias)
+        Weight 1     = 74.89% (6408    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.11% (2149    vias)
+    Layer VIA4       = 58.06% (2866   / 4936    vias)
+        Weight 1     = 58.06% (2866    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 41.94% (2070    vias)
+    Layer VIA5       = 54.24% (1255   / 2314    vias)
+        Weight 1     = 54.24% (1255    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.76% (1059    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+Total number of nets = 6794, of which 0 are not extracted
+Total number of open nets = 0, of which 0 are frozen
+Information: Using 2 threads for routing. (ZRT-444)
+Start DR iteration 0: non-uniform partition
+Routed	1/31 Partitions, Violations =	64
+Routed	2/31 Partitions, Violations =	66
+Routed	3/31 Partitions, Violations =	63
+Routed	4/31 Partitions, Violations =	63
+Routed	5/31 Partitions, Violations =	59
+Routed	6/31 Partitions, Violations =	59
+Routed	7/31 Partitions, Violations =	52
+Routed	8/31 Partitions, Violations =	51
+Routed	9/31 Partitions, Violations =	51
+Routed	10/31 Partitions, Violations =	44
+Routed	11/31 Partitions, Violations =	44
+Routed	12/31 Partitions, Violations =	39
+Routed	13/31 Partitions, Violations =	39
+Routed	14/31 Partitions, Violations =	36
+Routed	15/31 Partitions, Violations =	36
+Routed	16/31 Partitions, Violations =	28
+Routed	17/31 Partitions, Violations =	28
+Routed	18/31 Partitions, Violations =	28
+Routed	19/31 Partitions, Violations =	29
+Routed	20/31 Partitions, Violations =	27
+Routed	21/31 Partitions, Violations =	23
+Routed	22/31 Partitions, Violations =	23
+Routed	23/31 Partitions, Violations =	22
+Routed	24/31 Partitions, Violations =	18
+Routed	25/31 Partitions, Violations =	18
+Routed	26/31 Partitions, Violations =	17
+Routed	27/31 Partitions, Violations =	15
+Routed	28/31 Partitions, Violations =	15
+Routed	29/31 Partitions, Violations =	9
+Routed	30/31 Partitions, Violations =	5
+Routed	31/31 Partitions, Violations =	4
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	4
+	Less than NDR width : 2
+	Off-grid : 1
+	Same net via-cut spacing : 1
+
+[Iter 0] Elapsed real time: 0:00:03 
+[Iter 0] Elapsed cpu  time: sys=0:00:00 usr=0:00:04 total=0:00:04
+[Iter 0] Stage (MB): Used   97  Alloctr   97  Proc  508 
+[Iter 0] Total (MB): Used  165  Alloctr  166  Proc 5024 
+
+End DR iteration 0 with 31 parts
+
+Start DR iteration 1: non-uniform partition
+Routed	1/4 Partitions, Violations =	3
+Routed	2/4 Partitions, Violations =	3
+Routed	3/4 Partitions, Violations =	2
+Routed	4/4 Partitions, Violations =	0
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	0
+
+[Iter 1] Elapsed real time: 0:00:03 
+[Iter 1] Elapsed cpu  time: sys=0:00:00 usr=0:00:04 total=0:00:04
+[Iter 1] Stage (MB): Used   97  Alloctr   97  Proc  508 
+[Iter 1] Total (MB): Used  165  Alloctr  166  Proc 5024 
+
+End DR iteration 1 with 4 parts
+
+Finish DR since reached 0 DRC
+
+
+DR finished with 0 violations
+
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	0
+
+
+Total Wire Length =                    84443 micron
+Total Number of Contacts =             61804
+Total Number of Wires =                74502
+Total Number of PtConns =              12946
+Total Number of Routed Wires =       73401
+Total Routed Wire Length =           83837 micron
+Total Number of Routed Contacts =       61804
+	Layer                   M1 :        719 micron
+	Layer                   M2 :      19237 micron
+	Layer                   M3 :      18837 micron
+	Layer                   M4 :      15549 micron
+	Layer                   M5 :      11713 micron
+	Layer                   M6 :      12495 micron
+	Layer                   M7 :       5288 micron
+	Layer                   M8 :          0 micron
+	Layer                   M9 :          0 micron
+	Layer                 MRDL :          0 micron
+	Via              VIA67SQ_C :        479
+	Via          VIA67SQ_C_1x2 :        235
+	Via          VIA67SQ_C_2x1 :        409
+	Via               VIA5SQ_C :       1060
+	Via           VIA5SQ_C_1x2 :        770
+	Via           VIA5SQ_C_2x1 :        483
+	Via      VIA5SQ_C(rot)_1x2 :          1
+	Via                 VIA4SQ :       2075
+	Via         VIA4BAR1_C_1x2 :        789
+	Via             VIA4SQ_2x1 :       2069
+	Via              VIA34SQ_C :       2177
+	Via         VIA34SQ_C(rot) :          2
+	Via     VIA34SQ_C(rot)_2x1 :       1616
+	Via          VIA34SQ_C_2x1 :         29
+	Via            VIA34SQ_2x1 :       1118
+	Via       VIA34SQ(rot)_2x1 :         62
+	Via        VIA34BAR1_C_1x2 :       3548
+	Via   VIA34BAR1_C(rot)_2x1 :          2
+	Via              VIA2_Base :       6567
+	Via              VIA23SQ_C :         33
+	Via          VIA2_Base_1x2 :       7485
+	Via          VIA2_Base_2x1 :      13150
+	Via         VIA12SQ_C(rot) :        221
+	Via              VIA1_Base :      11770
+	Via       VIA12BAR2_C(rot) :          7
+	Via          VIA1_Base_1x2 :       2494
+	Via          VIA1_Base_2x1 :       3153
+
+ 
+Redundant via conversion report:
+--------------------------------
+
+  Total optimized via conversion rate = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+        Weight 1     = 32.00% (5647    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 68.00% (11998   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+        Weight 1     = 75.77% (20635   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.23% (6600    vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+        Weight 1     = 74.53% (6375    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.47% (2179    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+        Weight 1     = 57.94% (2858    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.06% (2075    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+        Weight 1     = 54.19% (1254    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.81% (1060    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+  Total double via conversion rate    = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+ 
+  The optimized via conversion rate based on total routed via count = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+        Weight 1     = 32.00% (5647    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 68.00% (11998   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+        Weight 1     = 75.77% (20635   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.23% (6600    vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+        Weight 1     = 74.53% (6375    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.47% (2179    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+        Weight 1     = 57.94% (2858    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.06% (2075    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+        Weight 1     = 54.19% (1254    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.81% (1060    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+
+
+
+Begin timing optimization in DR ...
+
+Printing options for 'route.common.*'
+common.eco_route_fix_existing_drc                       :	 true                
+common.verbose_level                                    :	 0                   
+common.via_on_grid_by_layer_name                        :	 {VIA1 false} {VIA2 true}
+common.wire_on_grid_by_layer_name                       :	 {M1 true} {M2 true} {M3 true}
+
+Printing options for 'route.detail.*'
+detail.antenna                                          :	 true                
+detail.eco_route_use_soft_spacing_for_timing_optimization:	 true                
+detail.timing_driven                                    :	 true                
+
+Printing options for 'route.auto_via_ladder.*'
+
+Information: RC layer preference is turned on for this design. (ZRT-613)
+[Dr init] Elapsed real time: 0:00:03 
+[Dr init] Elapsed cpu  time: sys=0:00:00 usr=0:00:04 total=0:00:04
+[Dr init] Stage (MB): Used   17  Alloctr   18  Proc  508 
+[Dr init] Total (MB): Used   85  Alloctr   87  Proc 5024 
+
+Begin timing soft drc check ...
+
+Created 0 soft drcs
+
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	0
+[SOFT DRC] Elapsed real time: 0:00:00 
+[SOFT DRC] Elapsed cpu  time: sys=0:00:00 usr=0:00:00 total=0:00:00
+[SOFT DRC] Stage (MB): Used    0  Alloctr    0  Proc    0 
+[SOFT DRC] Total (MB): Used   85  Alloctr   87  Proc 5024 
+[DR] Elapsed real time: 0:00:03 
+[DR] Elapsed cpu  time: sys=0:00:00 usr=0:00:04 total=0:00:04
+[DR] Stage (MB): Used    2  Alloctr    2  Proc  508 
+[DR] Total (MB): Used   70  Alloctr   71  Proc 5024 
+[DR: Done] Elapsed real time: 0:00:03 
+[DR: Done] Elapsed cpu  time: sys=0:00:00 usr=0:00:04 total=0:00:04
+[DR: Done] Stage (MB): Used    2  Alloctr    2  Proc  508 
+[DR: Done] Total (MB): Used   70  Alloctr   71  Proc 5024 
+
+
+Finished timing optimization in DR ...
+
+
+Nets that have been changed:
+Net 1 = ctmn_13794
+Net 2 = pcpi_rs1[27]
+Net 3 = cpuregs[14][9]
+Net 4 = cpuregs[18][30]
+Net 5 = ctmn_13416
+Net 6 = ctmn_13429
+Net 7 = cpuregs[28][31]
+Net 8 = ctmn_14745_CDR1
+Net 9 = ctmn_13442
+Net 10 = reg_out[24]
+Net 11 = ctmn_13448
+Net 12 = N45
+Net 13 = N5519
+Net 14 = clk_clock_gate_cpuregs_reg_10
+Net 15 = N204
+Net 16 = clk_clock_gate_cpuregs_reg_21
+Net 17 = clk_clock_gate_cpuregs_reg_26
+Net 18 = clk_clock_gate_cpuregs_reg_27
+Net 19 = clk_clock_gate_cpuregs_reg_2
+Net 20 = clk_clock_gate_cpuregs_reg_29
+Net 21 = clk_clock_gate_cpuregs_reg_1
+Net 22 = clk_clock_gate_cpuregs_reg_3
+Net 23 = ctmn_24829
+Net 24 = clk_clock_gate_cpuregs_reg_4
+Net 25 = clk_clock_gate_cpuregs_reg_5
+Net 26 = clk_clock_gate_cpuregs_reg_7
+Net 27 = clk_clock_gate_cpuregs_reg_6
+Net 28 = clk_clock_gate_cpuregs_reg_11
+Net 29 = clk_clock_gate_cpuregs_reg_8
+Net 30 = clk_clock_gate_cpuregs_reg_9
+Net 31 = clk_clock_gate_cpuregs_reg_14
+Net 32 = clk_clock_gate_cpuregs_reg_13
+Net 33 = clk_clock_gate_cpuregs_reg_15
+Net 34 = clk_clock_gate_cpuregs_reg_16
+Net 35 = ctmn_24315
+Net 36 = clk_clock_gate_cpuregs_reg_17
+Net 37 = clk_clock_gate_cpuregs_reg_18
+Net 38 = clk_clock_gate_cpuregs_reg_19
+Net 39 = clk_clock_gate_cpuregs_reg_22
+Net 40 = clk_clock_gate_cpuregs_reg_23
+Net 41 = ctmn_14685_CDR1
+Net 42 = lt_1244/ctmn_25875
+Net 43 = clk_clock_gate_reg_op1_reg
+Net 44 = N521
+Net 45 = N523
+Net 46 = phfnn_3350
+Net 47 = ctmn_13826
+Net 48 = ctmn_13832_CDR1
+Net 49 = ctmn_13834
+Net 50 = ctmn_13058
+Net 51 = ctmn_13753_CDR1
+Net 52 = ctmn_12460
+Net 53 = ctmn_13319
+Net 54 = ctmn_13465
+Net 55 = ctmn_13498
+Net 56 = ctmn_13479
+Net 57 = add_1566/N_289
+Net 58 = ctmn_14715_CDR1
+Net 59 = ctmn_12280
+Net 60 = ctmn_12282
+Net 61 = ctmn_12361
+Net 62 = ctmn_12406
+Net 63 = ctmn_12413
+Net 64 = N3620
+Net 65 = N3802
+Net 66 = clockZCTSNET_25
+Net 67 = tmp_net4603
+Net 68 = clockctosc_gls_0
+Net 69 = tmp_net4645
+Net 70 = copt_net_4849
+Net 71 = optlc_net_5118
+Net 72 = optlc_net_5148
+Total number of changed nets = 72 (out of 6794)
+
+[DR: Done] Elapsed real time: 0:00:03 
+[DR: Done] Elapsed cpu  time: sys=0:00:00 usr=0:00:04 total=0:00:04
+[DR: Done] Stage (MB): Used    2  Alloctr    2  Proc  508 
+[DR: Done] Total (MB): Used   70  Alloctr   71  Proc 5024 
+[ECO: DR] Elapsed real time: 0:00:03 
+[ECO: DR] Elapsed cpu  time: sys=0:00:00 usr=0:00:05 total=0:00:05
+[ECO: DR] Stage (MB): Used   66  Alloctr   67  Proc  500 
+[ECO: DR] Total (MB): Used   69  Alloctr   71  Proc 5024 
+
+ECO Route finished with 0 open nets, of which 0 are frozen
+
+ECO Route finished with 0 violations
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	0
+
+
+
+Total Wire Length =                    84443 micron
+Total Number of Contacts =             61804
+Total Number of Wires =                74502
+Total Number of PtConns =              12946
+Total Number of Routed Wires =       73401
+Total Routed Wire Length =           83837 micron
+Total Number of Routed Contacts =       61804
+	Layer                   M1 :        719 micron
+	Layer                   M2 :      19237 micron
+	Layer                   M3 :      18837 micron
+	Layer                   M4 :      15549 micron
+	Layer                   M5 :      11713 micron
+	Layer                   M6 :      12495 micron
+	Layer                   M7 :       5288 micron
+	Layer                   M8 :          0 micron
+	Layer                   M9 :          0 micron
+	Layer                 MRDL :          0 micron
+	Via              VIA67SQ_C :        479
+	Via          VIA67SQ_C_1x2 :        235
+	Via          VIA67SQ_C_2x1 :        409
+	Via               VIA5SQ_C :       1060
+	Via           VIA5SQ_C_1x2 :        770
+	Via           VIA5SQ_C_2x1 :        483
+	Via      VIA5SQ_C(rot)_1x2 :          1
+	Via                 VIA4SQ :       2075
+	Via         VIA4BAR1_C_1x2 :        789
+	Via             VIA4SQ_2x1 :       2069
+	Via              VIA34SQ_C :       2177
+	Via         VIA34SQ_C(rot) :          2
+	Via     VIA34SQ_C(rot)_2x1 :       1616
+	Via          VIA34SQ_C_2x1 :         29
+	Via            VIA34SQ_2x1 :       1118
+	Via       VIA34SQ(rot)_2x1 :         62
+	Via        VIA34BAR1_C_1x2 :       3548
+	Via   VIA34BAR1_C(rot)_2x1 :          2
+	Via              VIA2_Base :       6567
+	Via              VIA23SQ_C :         33
+	Via          VIA2_Base_1x2 :       7485
+	Via          VIA2_Base_2x1 :      13150
+	Via         VIA12SQ_C(rot) :        221
+	Via              VIA1_Base :      11770
+	Via       VIA12BAR2_C(rot) :          7
+	Via          VIA1_Base_1x2 :       2494
+	Via          VIA1_Base_2x1 :       3153
+
+ 
+Redundant via conversion report:
+--------------------------------
+
+  Total optimized via conversion rate = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+        Weight 1     = 32.00% (5647    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 68.00% (11998   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+        Weight 1     = 75.77% (20635   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.23% (6600    vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+        Weight 1     = 74.53% (6375    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.47% (2179    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+        Weight 1     = 57.94% (2858    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.06% (2075    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+        Weight 1     = 54.19% (1254    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.81% (1060    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+  Total double via conversion rate    = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+ 
+  The optimized via conversion rate based on total routed via count = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+        Weight 1     = 32.00% (5647    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 68.00% (11998   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+        Weight 1     = 75.77% (20635   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.23% (6600    vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+        Weight 1     = 74.53% (6375    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.47% (2179    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+        Weight 1     = 57.94% (2858    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.06% (2075    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+        Weight 1     = 54.19% (1254    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.81% (1060    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+
+Total number of nets = 6794
+0 open nets, of which 0 are frozen
+Total number of excluded ports = 0 ports of 0 unplaced cells connected to 0 nets
+                                 0 ports without pins of 0 cells connected to 0 nets
+                                 0 ports of 0 cover cells connected to 0 non-pg nets
+Total number of DRCs = 0
+Total number of antenna violations = antenna checking not active
+Information: Routes in non-preferred voltage areas = 0 (ZRT-559)
+
+Total Wire Length =                    84443 micron
+Total Number of Contacts =             61804
+Total Number of Wires =                74502
+Total Number of PtConns =              12946
+Total Number of Routed Wires =       73401
+Total Routed Wire Length =           83837 micron
+Total Number of Routed Contacts =       61804
+	Layer                   M1 :        719 micron
+	Layer                   M2 :      19237 micron
+	Layer                   M3 :      18837 micron
+	Layer                   M4 :      15549 micron
+	Layer                   M5 :      11713 micron
+	Layer                   M6 :      12495 micron
+	Layer                   M7 :       5288 micron
+	Layer                   M8 :          0 micron
+	Layer                   M9 :          0 micron
+	Layer                 MRDL :          0 micron
+	Via              VIA67SQ_C :        479
+	Via          VIA67SQ_C_1x2 :        235
+	Via          VIA67SQ_C_2x1 :        409
+	Via               VIA5SQ_C :       1060
+	Via           VIA5SQ_C_1x2 :        770
+	Via           VIA5SQ_C_2x1 :        483
+	Via      VIA5SQ_C(rot)_1x2 :          1
+	Via                 VIA4SQ :       2075
+	Via         VIA4BAR1_C_1x2 :        789
+	Via             VIA4SQ_2x1 :       2069
+	Via              VIA34SQ_C :       2177
+	Via         VIA34SQ_C(rot) :          2
+	Via     VIA34SQ_C(rot)_2x1 :       1616
+	Via          VIA34SQ_C_2x1 :         29
+	Via            VIA34SQ_2x1 :       1118
+	Via       VIA34SQ(rot)_2x1 :         62
+	Via        VIA34BAR1_C_1x2 :       3548
+	Via   VIA34BAR1_C(rot)_2x1 :          2
+	Via              VIA2_Base :       6567
+	Via              VIA23SQ_C :         33
+	Via          VIA2_Base_1x2 :       7485
+	Via          VIA2_Base_2x1 :      13150
+	Via         VIA12SQ_C(rot) :        221
+	Via              VIA1_Base :      11770
+	Via       VIA12BAR2_C(rot) :          7
+	Via          VIA1_Base_1x2 :       2494
+	Via          VIA1_Base_2x1 :       3153
+
+ 
+Redundant via conversion report:
+--------------------------------
+
+  Total optimized via conversion rate = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+        Weight 1     = 32.00% (5647    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 68.00% (11998   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+        Weight 1     = 75.77% (20635   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.23% (6600    vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+        Weight 1     = 74.53% (6375    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.47% (2179    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+        Weight 1     = 57.94% (2858    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.06% (2075    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+        Weight 1     = 54.19% (1254    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.81% (1060    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+  Total double via conversion rate    = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+ 
+  The optimized via conversion rate based on total routed via count = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+        Weight 1     = 32.00% (5647    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 68.00% (11998   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+        Weight 1     = 75.77% (20635   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.23% (6600    vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+        Weight 1     = 74.53% (6375    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.47% (2179    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+        Weight 1     = 57.94% (2858    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.06% (2075    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+        Weight 1     = 54.19% (1254    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.81% (1060    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+Updating the database ...
+...updated 72 nets with eco mode
+[ECO: End] Elapsed real time: 0:00:03 
+[ECO: End] Elapsed cpu  time: sys=0:00:00 usr=0:00:05 total=0:00:05
+[ECO: End] Stage (MB): Used   -2  Alloctr   -2  Proc  500 
+[ECO: End] Total (MB): Used    0  Alloctr    1  Proc 5024 
+fc_shell> check_lvs
+Information: Using 2 threads for LVS
+[Check Net] Init	Elapsed =    0:00:00, CPU =    0:00:00
+[Check Short] Stage 1	Elapsed =    0:00:00, CPU =    0:00:00
+[Check Short] Stage 1-2	Elapsed =    0:00:00, CPU =    0:00:00
+[Check Short] Stage 2	Elapsed =    0:00:00, CPU =    0:00:00
+[Check Short] Stage 2-2	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Short] Stage 3	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Short] End	Elapsed =    0:00:01, CPU =    0:00:01
+[Check Net] 10% 	Elapsed =    0:00:01, CPU =    0:00:02
+[Check Net] 20% 	Elapsed =    0:00:01, CPU =    0:00:02
+[Check Net] 30% 	Elapsed =    0:00:01, CPU =    0:00:02
+[Check Net] 40% 	Elapsed =    0:00:01, CPU =    0:00:02
+[Check Net] 50% 	Elapsed =    0:00:01, CPU =    0:00:02
+[Check Net] 60% 	Elapsed =    0:00:01, CPU =    0:00:02
+[Check Net] 70% 	Elapsed =    0:00:01, CPU =    0:00:02
+[Check Net] 80% 	Elapsed =    0:00:01, CPU =    0:00:02
+[Check Net] 90% 	Elapsed =    0:00:01, CPU =    0:00:02
+[Check Net] All nets are submitted.
+[Check Net] 100%	Elapsed =    0:00:01, CPU =    0:00:02
+
+===============================================================
+    Maximum number of violations is set to 20
+    Abort checking when more than 20 violations are found
+    All violations might not be found.
+===============================================================
+Total number of input nets is 6794.
+Total number of short violations is 0.
+Total number of open nets is 0.
+Total number of floating route violations is 0.
+
+Elapsed =    0:00:02, CPU =    0:00:03
+1
+fc_shell> check_route
+Information: The command 'check_routes' cleared the undo history. (UNDO-016)
+Cell Min-Routing-Layer = M1
+Cell Max-Routing-Layer = M7
+Turn off antenna since no rule is specified
+Information: Option route.detail.force_end_on_preferred_grid will be ignored since none of the layers have preferred grid. (ZRT-703)
+Skipping 6 internal pins that are not physical. Set route.common.verbose_level to > 0 and run routing command to get skipped pin names.
+Info: number of net_type_blockage: 0 
+Information: Via ladder engine would be activated for pattern must join connection in certain commands. Please refer to man-page for the command list. (ZRT-619)
+Via on layer (VIA1) needs more than one tracks
+Warning: Layer M1 default pitch 0.074 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.074" & "wire/via-up 0.078". (ZRT-026)
+Via on layer (VIA1) needs more than one tracks
+Warning: Layer M2 default pitch 0.060 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.078" & "wire/via-up 0.060". (ZRT-026)
+Via on layer (VIA4) needs more than one tracks
+Warning: Layer M5 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.125" & "wire/via-up 0.100". (ZRT-026)
+Via on layer (VIA7) needs more than one tracks
+Warning: Layer M7 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.100" & "wire/via-up 0.107". (ZRT-026)
+Wire on layer (M8) needs more than one tracks
+Via on layer (VIA7) needs more than one tracks
+Via on layer (VIA8) needs more than one tracks
+Warning: Layer M8 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.107" & "wire/via-up 0.135". (ZRT-026)
+Wire on layer (M9) needs more than one tracks
+Via on layer (VIA8) needs more than one tracks
+Via on layer (VIARDL) needs more than one tracks
+Warning: Layer M9 default pitch 0.100 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 0.135" & "wire/via-up 1.570". (ZRT-026)
+Via on layer (VIARDL) needs more than one tracks
+Warning: Layer MRDL default pitch 4.000 may be too small to handle up/down via. Note, that minimum requirements are "wire/via-down 4.500" & "wire/via-up 4.000". (ZRT-026)
+Information: When applicable Min-max layer allow_pin_connection mode will allow paths of length 1.35 outside the layer range. (ZRT-707)
+Information: When applicable Min-max layer allow_pin_connection mode will allow paths of length 1.35 outside the layer range on clock nets. (ZRT-718)
+Information: When applicable layer based tapering will taper up to 0.00 in distance from the pin. (ZRT-706)
+Warning: Standard cell pin SAEDRVT14_EO2_V1_0P75/A1 has no valid via regions. (ZRT-044)
+Warning: Standard cell pin SAEDRVT14_ADDH_0P5/CO has no valid via regions. (ZRT-044)
+
+
+Start checking for open nets ... 
+
+Total number of nets = 6794, of which 0 are not extracted
+Total number of open nets = 0, of which 0 are frozen
+
+Check 6794 nets, 0 have Errors
+
+[CHECK OPEN NETS] Elapsed real time: 0:00:00 
+[CHECK OPEN NETS] Elapsed cpu  time: sys=0:00:00 usr=0:00:00 total=0:00:00
+[CHECK OPEN NETS] Stage (MB): Used    0  Alloctr    0  Proc    0 
+[CHECK OPEN NETS] Total (MB): Used   66  Alloctr   67  Proc 5024 
+Printing options for 'route.common.*'
+common.eco_route_fix_existing_drc                       :	 true                
+common.verbose_level                                    :	 0                   
+common.via_on_grid_by_layer_name                        :	 {VIA1 false} {VIA2 true}
+common.wire_on_grid_by_layer_name                       :	 {M1 true} {M2 true} {M3 true}
+
+Printing options for 'route.detail.*'
+detail.antenna                                          :	 true                
+detail.eco_route_use_soft_spacing_for_timing_optimization:	 true                
+detail.timing_driven                                    :	 true                
+
+Printing options for 'route.auto_via_ladder.*'
+
+
+Begin full DRC check ...
+
+Information: Using 2 threads for routing. (ZRT-444)
+Checked	1/18 Partitions, Violations =	0
+Checked	2/18 Partitions, Violations =	0
+Checked	3/18 Partitions, Violations =	0
+Checked	4/18 Partitions, Violations =	0
+Checked	5/18 Partitions, Violations =	0
+Checked	6/18 Partitions, Violations =	0
+Checked	7/18 Partitions, Violations =	0
+Checked	8/18 Partitions, Violations =	0
+Checked	9/18 Partitions, Violations =	0
+Checked	10/18 Partitions, Violations =	0
+Checked	11/18 Partitions, Violations =	0
+Checked	12/18 Partitions, Violations =	0
+Checked	13/18 Partitions, Violations =	0
+Checked	14/18 Partitions, Violations =	0
+Checked	15/18 Partitions, Violations =	0
+Checked	16/18 Partitions, Violations =	0
+Checked	17/18 Partitions, Violations =	0
+Checked	18/18 Partitions, Violations =	0
+[DRC CHECK] Elapsed real time: 0:00:02 
+[DRC CHECK] Elapsed cpu  time: sys=0:00:00 usr=0:00:02 total=0:00:02
+[DRC CHECK] Stage (MB): Used    0  Alloctr    0  Proc    0 
+[DRC CHECK] Total (MB): Used  159  Alloctr  161  Proc 5024 
+Warning: No antenna rules defined, Skip antenna analysis. (ZRT-309)
+
+DRC-SUMMARY:
+	@@@@@@@ TOTAL VIOLATIONS =	0
+
+
+Total Wire Length =                    84441 micron
+Total Number of Contacts =             61804
+Total Number of Wires =                74568
+Total Number of PtConns =              12950
+Total Number of Routed Wires =       73464
+Total Routed Wire Length =           83834 micron
+Total Number of Routed Contacts =       61804
+	Layer                   M1 :        719 micron
+	Layer                   M2 :      19236 micron
+	Layer                   M3 :      18836 micron
+	Layer                   M4 :      15547 micron
+	Layer                   M5 :      11713 micron
+	Layer                   M6 :      12495 micron
+	Layer                   M7 :       5288 micron
+	Layer                   M8 :          0 micron
+	Layer                   M9 :          0 micron
+	Layer                 MRDL :          0 micron
+	Via              VIA67SQ_C :        479
+	Via          VIA67SQ_C_1x2 :        235
+	Via          VIA67SQ_C_2x1 :        409
+	Via               VIA5SQ_C :       1060
+	Via      VIA5SQ_C(rot)_1x2 :          1
+	Via           VIA5SQ_C_1x2 :        770
+	Via           VIA5SQ_C_2x1 :        483
+	Via                 VIA4SQ :       2075
+	Via         VIA4BAR1_C_1x2 :        789
+	Via             VIA4SQ_2x1 :       2069
+	Via              VIA34SQ_C :       2177
+	Via         VIA34SQ_C(rot) :          2
+	Via     VIA34SQ_C(rot)_2x1 :       1616
+	Via          VIA34SQ_C_2x1 :         29
+	Via   VIA34BAR1_C(rot)_2x1 :          2
+	Via        VIA34BAR1_C_1x2 :       3548
+	Via       VIA34SQ(rot)_2x1 :         62
+	Via            VIA34SQ_2x1 :       1118
+	Via              VIA2_Base :       6567
+	Via              VIA23SQ_C :         33
+	Via          VIA2_Base_1x2 :       7485
+	Via          VIA2_Base_2x1 :      13150
+	Via         VIA12SQ_C(rot) :        221
+	Via              VIA1_Base :      11770
+	Via       VIA12BAR2_C(rot) :          7
+	Via          VIA1_Base_1x2 :       2494
+	Via          VIA1_Base_2x1 :       3153
+
+ 
+Redundant via conversion report:
+--------------------------------
+
+  Total optimized via conversion rate = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+        Weight 1     = 32.00% (5647    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 68.00% (11998   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+        Weight 1     = 75.77% (20635   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.23% (6600    vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+        Weight 1     = 74.53% (6375    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.47% (2179    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+        Weight 1     = 57.94% (2858    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.06% (2075    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+        Weight 1     = 54.19% (1254    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.81% (1060    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+  Total double via conversion rate    = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+ 
+  The optimized via conversion rate based on total routed via count = 60.53% (37413 / 61804 vias)
+ 
+    Layer VIA1       = 32.00% (5647   / 17645   vias)
+        Weight 1     = 32.00% (5647    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 68.00% (11998   vias)
+    Layer VIA2       = 75.77% (20635  / 27235   vias)
+        Weight 1     = 75.77% (20635   vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 24.23% (6600    vias)
+    Layer VIA3       = 74.53% (6375   / 8554    vias)
+        Weight 1     = 74.53% (6375    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 25.47% (2179    vias)
+    Layer VIA4       = 57.94% (2858   / 4933    vias)
+        Weight 1     = 57.94% (2858    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.06% (2075    vias)
+    Layer VIA5       = 54.19% (1254   / 2314    vias)
+        Weight 1     = 54.19% (1254    vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 45.81% (1060    vias)
+    Layer VIA6       = 57.35% (644    / 1123    vias)
+        Weight 1     = 57.35% (644     vias)
+        Un-optimized =  0.00% (0       vias)
+        Un-mapped    = 42.65% (479     vias)
+ 
+
+
+Verify Summary:
+
+Total number of nets = 6794, of which 0 are not extracted
+Total number of open nets = 0, of which 0 are frozen
+Total number of excluded ports = 0 ports of 0 unplaced cells connected to 0 nets
+                                 0 ports without pins of 0 cells connected to 0 nets
+                                 0 ports of 0 cover cells connected to 0 non-pg nets
+Total number of DRCs = 0
+Total number of antenna violations = no antenna rules defined
+Total number of tie to rail violations = not checked
+Total number of tie to rail directly violations = not checked
+
+
+fc_shell> report_timing
+Information: Deserialized np data
+INFO: timer data loaded from /tmp/picorv32_27501_578532058.timdat
+Information: Freeing timing information from routing. (ZRT-574)
+Information: The RC mode used is DR for design 'picorv32'. (NEX-022)
+Extracting design: picorv32 
+Information: coupling capacitance is lumped to ground. (NEX-030)
+Information: 6792 nets are successfully extracted. (NEX-028)
+Information: Update timing completed net estimation for all the timing graph nets (TIM-111)
+****************************************
+Report : timing
+        -path_type full
+        -delay_type max
+        -max_paths 1
+        -report_by design
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:08:21 2025
+****************************************
+
+  Startpoint: reg_op2_reg[1] (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: alu_out_q_reg[0] (rising edge-triggered flip-flop clocked by clk)
+  Mode: FUNC
+  Corner: Slow
+  Scenario: FUNC_Slow
+  Path Group: clk
+  Path Type: max
+
+  Point                                            Incr      Path  
+  ------------------------------------------------------------------------
+  clock clk (rise edge)                            0.00      0.00
+  clock network delay (propagated)                 0.09      0.09
+
+  reg_op2_reg[1]/CK (SAEDRVT14_FSDPMQ_LP_0P5)      0.00      0.09 r
+  reg_op2_reg[1]/Q (SAEDRVT14_FSDPMQ_LP_0P5)       0.06      0.15 r
+  ctmi_6578/X (SAEDRVT14_INV_S_0P5)                0.04      0.19 f
+  ctmi_12383/X (SAEDRVT14_OAI22_0P5)               0.03      0.22 r
+  ctmi_12379/X (SAEDRVT14_OAI22_0P5)               0.03      0.25 f
+  ctmi_12377/X (SAEDRVT14_AOI21_0P75)              0.02      0.27 r
+  ctmi_12376/X (SAEDRVT14_OAI22_0P5)               0.02      0.29 f
+  ctmi_12374/X (SAEDRVT14_AOI21_0P75)              0.02      0.31 r
+  ctmi_12373/X (SAEDRVT14_OAI21_0P5)               0.02      0.33 f
+  ctmi_12370/X (SAEDRVT14_AOI21_0P75)              0.02      0.35 r
+  ctmi_12369/X (SAEDRVT14_OAI22_0P5)               0.02      0.36 f
+  ctmi_12368/X (SAEDRVT14_AOI21_0P75)              0.02      0.38 r
+  placectmTdsLR_2_9761/X (SAEDRVT14_OA221_U_0P5)   0.03      0.42 r
+  A6192/X (SAEDRVT14_OA21_MM_1)                    0.02      0.43 r
+  ctmi_12360/X (SAEDRVT14_OAI22_0P5)               0.02      0.45 f
+  ctmi_12359/X (SAEDRVT14_AOI21_0P75)              0.03      0.48 r
+  A6248/X (SAEDRVT14_OA21_1)                       0.02      0.50 r
+  A6193/X (SAEDRVT14_OA21_MM_1)                    0.01      0.52 r
+  ctmi_12351/X (SAEDRVT14_OAI22_0P5)               0.02      0.54 f
+  ctmi_12350/X (SAEDRVT14_AOI21_0P75)              0.02      0.56 r
+  ctmi_12349/X (SAEDRVT14_OAI22_0P5)               0.02      0.58 f
+  ctmi_12348/X (SAEDRVT14_AOI21_0P75)              0.02      0.60 r
+  ctmi_12347/X (SAEDRVT14_OAI22_0P5)               0.03      0.63 f
+  ctmi_12346/X (SAEDRVT14_AOI21_3)                 0.02      0.65 r
+  ctmi_12345/X (SAEDRVT14_OAI21_0P5)               0.03      0.69 f
+  A6249/X (SAEDRVT14_NR2_MM_0P5)                   0.03      0.71 r
+  A6194/X (SAEDRVT14_AN4_0P5)                      0.04      0.76 r
+  ctmi_12343/X (SAEDRVT14_AOI21_0P75)              0.02      0.78 f
+  ctmi_12415/X (SAEDRVT14_OAI21_0P5)               0.02      0.80 r
+  ctmi_12341/X (SAEDRVT14_MUX2_MM_0P5)             0.03      0.83 r
+  ctmi_12340/X (SAEDRVT14_MUXI2_U_0P5)             0.01      0.84 f
+  ctmi_12339/X (SAEDRVT14_MUXI2_U_0P5)             0.02      0.86 r
+  ctmi_12338/X (SAEDRVT14_MUXI2_U_0P5)             0.02      0.87 f
+  placectmTdsLR_1_21590/X (SAEDRVT14_OAI21_0P5)    0.02      0.90 r
+  phfnr_buf_7392/X (SAEDRVT14_INV_0P5)             0.03      0.92 f
+  ctmi_13445/X (SAEDRVT14_AO32_U_0P5)              0.03      0.95 f
+  ctmi_13444/X (SAEDRVT14_OA33_U_0P5)              0.03      0.98 f
+  alu_out_q_reg[0]/D (SAEDRVT14_FSDPQ_V2_0P5)      0.00      0.98 f
+  data arrival time                                          0.98
+
+  clock clk (rise edge)                            1.20      1.20
+  clock network delay (propagated)                 0.06      1.26
+  alu_out_q_reg[0]/CK (SAEDRVT14_FSDPQ_V2_0P5)     0.00      1.26 r
+  clock uncertainty                               -0.25      1.01
+  library setup time                              -0.02      0.98
+  data required time                                         0.98
+  ------------------------------------------------------------------------
+  data required time                                         0.98
+  data arrival time                                         -0.98
+  ------------------------------------------------------------------------
+  slack (VIOLATED)                                          -0.00
+
+
+1
+fc_shell> report_qor
+****************************************
+Report : qor
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:08:35 2025
+****************************************
+
+
+Scenario           'FUNC_Fast'
+Timing Path Group  'clk'
+----------------------------------------
+Levels of Logic:                     34
+Critical Path Length:              0.50
+Critical Path Slack:               0.42
+Critical Path Clk Period:          1.20
+Total Negative Slack:              0.00
+No. of Violating Paths:               0
+Worst Hold Violation:              0.00
+Total Hold Violation:              0.00
+No. of Hold Violations:               0
+----------------------------------------
+
+Scenario           'FUNC_Slow'
+Timing Path Group  'clk'
+----------------------------------------
+Levels of Logic:                     35
+Critical Path Length:              0.90
+Critical Path Slack:              -0.00
+Critical Path Clk Period:          1.20
+Total Negative Slack:             -0.00
+No. of Violating Paths:               1
+Worst Hold Violation:              0.00
+Total Hold Violation:              0.00
+No. of Hold Violations:               0
+----------------------------------------
+
+Scenario           'FUNC_Typical'
+Timing Path Group  'clk'
+----------------------------------------
+Levels of Logic:                     34
+Critical Path Length:              0.64
+Critical Path Slack:               0.26
+Critical Path Clk Period:          1.20
+Total Negative Slack:              0.00
+No. of Violating Paths:               0
+Worst Hold Violation:              0.00
+Total Hold Violation:              0.00
+No. of Hold Violations:               0
+----------------------------------------
+
+
+Cell Count
+----------------------------------------
+Hierarchical Cell Count:              0
+Hierarchical Port Count:              0
+Leaf Cell Count:                   6090
+Buf/Inv Cell Count:                 730
+Buf Cell Count:                     407
+Inv Cell Count:                     323
+Combinational Cell Count:          4413
+   Single-bit Isolation Cell Count:                        0
+   Multi-bit Isolation Cell Count:                         0
+   Isolation Cell Banking Ratio:                           0.00%
+   Single-bit Level Shifter Cell Count:                    0
+   Multi-bit Level Shifter Cell Count:                     0
+   Level Shifter Cell Banking Ratio:                       0.00%
+   Single-bit ELS Cell Count:                              0
+   Multi-bit ELS Cell Count:                               0
+   ELS Cell Banking Ratio:                                 0.00%
+Sequential Cell Count:             1677
+   Integrated Clock-Gating Cell Count:                     54
+   Sequential Macro Cell Count:                            0
+   Single-bit Sequential Cell Count:                       1623
+   Multi-bit Sequential Cell Count:                        0
+   Sequential Cell Banking Ratio:                          0.00%
+   BitsPerflop:                                            1.00
+Macro Count:                          0
+----------------------------------------
+
+
+Area
+----------------------------------------
+Combinational Area:             1555.69
+Noncombinational Area:          1926.16
+Buf/Inv Area:                    190.43
+Total Buffer Area:               131.07
+Total Inverter Area:              59.36
+Macro/Black Box Area:              0.00
+Net Area:                             0
+Net XLength:                   47658.08
+Net YLength:                   36856.62
+----------------------------------------
+Cell Area (netlist):                           3481.85
+Cell Area (netlist and physical only):         7854.49
+Net Length:                    84514.69
+
+
+Design Rules
+----------------------------------------
+Total Number of Nets:              6794
+Nets with Violations:                 0
+Max Trans Violations:                 0
+Max Cap Violations:                   0
+----------------------------------------
+
+1
+fc_shell> check_legality 
+
+************************
+
+running check_legality
+
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+PDC app_options settings =========
+	place.legalize.enable_prerouted_net_check: 1
+	place.legalize.num_tracks_for_access_check: 1
+	place.legalize.use_eol_spacing_for_access_check: 0
+	place.legalize.allow_touch_track_for_access_check: 1
+	place.legalize.reduce_conservatism_in_eol_check: 0
+	place.legalize.preroute_shape_merge_distance: 0.0
+	place.legalize.enable_non_preferred_direction_span_check: 0
+
+Layer M1: cached 0 shapes out of 7877 total shapes.
+Layer M2: cached 3307 shapes out of 35861 total shapes.
+Layer M3: cached 3307 shapes out of 27831 total shapes.
+Cached 9921 vias out of 78159 total vias.
+
+check_legality for block design picorv32 ... 
+Information: Initializing classic cellmap without advanced rules enabled and without PDC enabled
+Information: The following app options are used in cellmap
+        place.legalize.enable_color_aware_placement : false
+        place.legalize.use_nll_query_cm : false
+        place.legalize.enable_advanced_legalizer : false
+        place.legalize.enable_prerouted_net_check : true
+        place.legalize.enable_advanced_prerouted_net_check : false
+        place.legalize.always_continue : true
+        place.legalize.limit_legality_checks : false
+        place.common.pnet_aware_density : 1.0000
+        place.common.pnet_aware_min_width : 0.0000
+        place.common.pnet_aware_layers : {}
+        place.common.use_placement_model : false
+        place.common.enable_advanced_placement_model : true
+        cts.placement.cell_spacing_rule_style : maximum
+Warning: Library cell saed14rvt_frame_timing:SAEDRVT14_ISOFSDPQ_PECO_8.frame is missing supply pins. Its power structure cannot be determined. (LGL-050)
+Warning: Library cell saed14rvt_frame_timing:SAEDRVT14_DCAP_PV1ECO_12.frame is missing supply pins. Its power structure cannot be determined. (LGL-050)
+Total 0.0975 seconds to build cellmap data
+Information: Creating classic rule checker.
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+=====> Processed 161 ref cells (23 fillers) from library
+Design has no advanced rules
+Checking legality
+Checking cell legality:
+0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Sorting rows.
+Checking spacing rule legality.
+0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Checking packing rule legality.
+0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+
+****************************************
+  Report : Legality
+****************************************
+
+VIOLATIONS BY CATEGORY:
+   MOVABLE  APP-FIXED USER-FIXED  DESCRIPTION
+         0          0          0  Two objects overlap.
+         0          0          0  A cell violates a pnet.
+         0          0          0  A cell is illegal at a site.
+         1          0          0  A cell is not aligned with a site.
+         0          0          0  A cell has an illegal orientation.
+         0          0          0  A cell spacing rule is violated.
+         0          0          0  A layer rule is violated.
+         0          0          0  A cell is in the wrong region.
+         0          0          0  Two cells violate cts margins.
+         0          0          0  Two cells violate coloring.
+
+         1          0          0  TOTAL
+
+TOTAL 1 Violations.
+
+VIOLATIONS BY SUBCATEGORY:
+     MOVABLE  APP-FIXED USER-FIXED  DESCRIPTION
+
+         0          0          0    Two objects overlap.
+           0          0          0    Two cells overlap.
+           0          0          0    Two cells have overlapping keepout margins.
+           0          0          0    A cell overlaps a blockage.
+           0          0          0    A cell keepout margin overlaps a blockage.
+
+         0          0          0    A cell violates a pnet.
+
+         0          0          0    A cell is illegal at a site.
+           0          0          0    A cell violates pin-track alignment rules.
+           0          0          0    A cell is illegal at a site.
+           0          0          0    A cell violates legal index rule.
+           0          0          0    A cell has the wrong variant for its location.
+
+         1          0          0    A cell is not aligned with a site.
+           1          0          0    A cell is not aligned with the base site.
+           0          0          0    A cell is not aligned with an overlaid site.
+
+         0          0          0    A cell has an illegal orientation.
+
+         0          0          0    A cell spacing rule is violated.
+           0          0          0    A spacing rule is violated in a row.
+           0          0          0    A spacing rule is violated between adjacent rows.
+           0          0          0    A cell violates vertical abutment rule.
+           0          0          0    A cell violates metal spacing rule.
+
+         0          0          0    A layer rule is violated.
+           0          0          0    A layer VTH rule is violated.
+           0          0          0    A layer OD rule is violated.
+           0          0          0    A layer OD max-width rule is violated.
+           0          0          0    A layer ALL_OD corner rule is violated.
+           0          0          0    A layer max-vertical-length rule is violated.
+           0          0          0    A layer TPO rule is violated.
+           0          0          0    Filler cell insertion cannot satisfy layer rules.
+
+         0          0          0    A cell is in the wrong region.
+           0          0          0    A cell is outside its hard bound.
+           0          0          0    A cell is in the wrong voltage area.
+           0          0          0    A cell violates an exclusive movebound.
+
+         0          0          0    Two cells violate cts margins.
+
+         0          0          0    Two cells violate coloring.
+
+
+check_legality for block design picorv32 failed!
+
+check_legality failed.
+
+**************************
+
+0
+fc_shell> report_congestion 
+****************************************
+Report : congestion
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:08:46 2025
+****************************************
+
+Layer     |    overflow     |              # GRCs has
+Name      |  total  |  max  | overflow (%)      | max overflow
+---------------------------------------------------------------
+Both Dirs |    1084 |     6 |     899  ( 1.66%) |       1
+H routing |     526 |     6 |     434  ( 1.60%) |       1
+V routing |     558 |     4 |     465  ( 1.71%) |       2
+
+1
+fc_shell> report_utilization
+****************************************
+Report : report_utilization
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 15:08:46 2025
+****************************************
+Utilization Ratio:			0.4433
+Utilization options:
+ - Area calculation based on:		site_row of block picorv32/export
+ - Categories of objects excluded:	hard_macros macro_keepouts soft_macros io_cells hard_blockages 
+Total Area:				7854.5376
+Total Capacity Area:			7854.5376
+Total Area of cells:			3481.8480
+Area of excluded objects:
+ - hard_macros         :		0.0000
+ - macro_keepouts      :		0.0000
+ - soft_macros         :		0.0000
+ - io_cells            :		0.0000
+ - hard_blockages      :		0.0000
+Total Area of excluded objects:		0.0000
+Ratio of excluded objects:		0.0000
+
+Utilization of site-rows with:
+ - Site 'unit':				0.4433
+
+0.4433
+fc_shell> collect_reports export
+Collecting reports for export stage...
+Reports are generated for export stage.
+fc_shell> save_block -as ${DESIGN_NAME}/place[K[K[K[K[Kexport
+Information: Saving block 'picorv32.dlib:picorv32/export.design'
+RDE-checksum: edee9fa0
+1
+fc_shell> save_lib
+Saving library 'picorv32.dlib'
+RDE-checksum: edee9fa0
+1
+fc_shell> exit
+Maximum memory usage for this session: 1509.55 MB
+Maximum memory usage for this session including child processes: 1509.55 MB
+CPU usage for this session:     53 seconds (  0.01 hours)
+Elapsed time for this session:    121 seconds (  0.03 hours)
+Thank you for using Fusion Compiler.

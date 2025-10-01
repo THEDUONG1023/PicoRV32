@@ -1,0 +1,1205 @@
+
+
+
+                              Fusion Compiler (TM)
+
+                Version W-2024.09-SP2 for linux64 - Nov 26, 2024
+                           Base Build Date: 11/5/2024
+
+                    Copyright (c) 1988 - 2024 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+ 
+Loading user preference file /home/DuongTuong-ST/.synopsys_fc_gui/preferences.tcl
+Information: Term was not able to be set up using xterm-256color . Using "xterm" by default instead. (CLE-10)
+#####################################################################
+#####			1.IMPORT                		#####
+#####################################################################
+#### Sourcing common setup script
+source -echo /home/DuongTuong-ST/works/Projects/picorv32/setup/setup.tcl 
+set DESIGN_NAME         "picorv32"              
+set DESIGN_LIBRARY      "${DESIGN_NAME}.dlib"  
+set WORK_DIR            "/home/DuongTuong-ST/works/Projects/picorv32"
+set TECH_FILE           "${WORK_DIR}/tech/tf/saed14nm_1p9m.tf"
+set REFERENCE_LIBRARY	"${WORK_DIR}/libs/saed14rvt/ndm/saed14rvt_frame_timing.ndm"
+set OUTPUT_LOCATION     "${WORK_DIR}/results/picorv32.dlib"
+set NETLIST_FILE        "${WORK_DIR}/inputs/netlist/picorv32.v"
+set DB_FF               "${WORK_DIR}/libs/saed14rvt/liberty/saed14rvt_ff0p88v125c.db"
+set DB_TT  	        "${WORK_DIR}/libs/saed14rvt/liberty/saed14rvt_tt0p8v25c.db"
+set DB_SS               "${WORK_DIR}/libs/saed14rvt/liberty/saed14rvt_ss0p72vm40c.db"
+set TLUP_MIN_FILE       "${WORK_DIR}/tech/tlup/saed14nm_1p9m_Cmin.tlup "
+set TLUP_NOM_FILE       "${WORK_DIR}/tech/tlup/saed14nm_1p9m_Cnom.tlup"
+set TLUP_MAX_FILE       "${WORK_DIR}/tech/tlup/saed14nm_1p9m_Cmax.tlup"
+set LAYER_MAP_FILE      "${WORK_DIR}/tech/map/saed14nm_tf_itf_tluplus.map"
+set MCMM_SETUP_SCRIPT   "${WORK_DIR}/inputs/constraints/mcmm_setup.tcl"
+set SDC_FILE            "${WORK_DIR}/inputs/constraints/picorv32.sdc"
+set DRC_RUNSET_FILE 	"${WORK_DIR}/tech/runsets/saed14nm_1p9m_drc_rules.rs"
+set GDS_MAP_FILE	"${WORK_DIR}/tech/map/saed14nm_1p9m_gdsout_mw.map"
+set MFILL_RUNSET_FILE	"${WORK_DIR}/tech/runsets/saed14nm_1p9m_mfill_rules.rs "
+set GDS_FILE            "${WORK_DIR}/libs/saed14rvt/gds/saed14rvt.gds"
+set REPORTS_PATH	"${WORK_DIR}/reports"
+source ${WORK_DIR}/setup/utilities.tcl
+set_host_options -max_cores 2
+1
+set REF_NDM   "frame_timing" ; 
+frame_timing
+set TECH_BASED "tf"           ;
+tf
+#### Creating Design Library
+puts "--- Creating design library ---"
+--- Creating design library ---
+if {[string equal frame_only ${REF_NDM}]} {
+	set_app_var link_library "${DB_FF} ${DB_TT} ${DB_SS}"
+	create_lib ${OUTPUT_LOCATION} -technology $TECH_FILE -ref_libs ${REFERENCE_LIBRARY}
+	puts "Design library created: ${OUTPUT_LOCATION} with technology and NDM reference library (frame_only)."
+} elseif {[string equal frame_timing ${REF_NDM}]} {
+	if {[string equal ndm ${TECH_BASED}]} {
+		lappend REFERENCE_LIBRARY ${TECH_NDM}
+		create_lib ${OUTPUT_LOCATION} -use_technology_lib ${TECH_NDM} -ref_libs ${REFERENCE_LIBRARY}
+		puts "Design library created: ${OUTPUT_LOCATION} using technology NDM and other reference libraries."
+	} elseif {[string equal tf ${TECH_BASED}]} {
+		create_lib ${OUTPUT_LOCATION} -technology $TECH_FILE -ref_libs ${REFERENCE_LIBRARY}
+		
+	} else {
+		puts "Error: TECH_BASED variable's value is not 'ndm' or 'tf'. Please fix the value."
+		exit 1
+	}
+} else {
+	puts "Error: REF_NDM variable's value is not 'frame_only' or 'frame_timing'. Please fix the value."
+	exit 1
+}
+Information: Loading technology file '/home/DuongTuong-ST/works/Projects/picorv32/tech/tf/saed14nm_1p9m.tf' (FILE-007)
+{picorv32.dlib}
+puts "--- Design library creation complete ---"
+--- Design library creation complete ---
+#### Report reference libraries
+report_ref_libs
+****************************************
+Report : Reference Library Report
+Library: picorv32.dlib
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 14:33:16 2025
+****************************************
+
+    Name                   Path                                                                                      Location
+    -------------------------------------------------------------------------------------------------------------------------
+*+  saed14rvt_frame_timing /home/DuongTuong-ST/works/Projects/picorv32/libs/saed14rvt/ndm/saed14rvt_frame_timing.ndm /home/DuongTuong-ST/works/Projects/picorv32/libs/saed14rvt/ndm/saed14rvt_frame_timing.ndm
+    "*" = Library currently open
+    "+" = Library has technology information
+1
+#### Reading Netlist
+#analyze -format verilog ${NETLIST_FILE}
+read_verilog $NETLIST_FILE
+Loading verilog file '/home/DuongTuong-ST/works/Projects/picorv32/inputs/netlist/picorv32.v'
+Information: Reading Verilog into new design 'picorv32' in library 'picorv32.dlib'. (VR-012)
+Number of modules read: 1
+Top level ports: 411
+Total ports in all modules: 411
+Total nets in all modules: 5389
+Total instances in all modules: 4634
+Elapsed = 00:00:00.07, CPU = 00:00:00.04
+1
+# Elaborate
+elaborate ${DESIGN_NAME}
+Error: elaborate -hdl_lib: The library '' is not mapped to a directory. (VHD-1)
+Elapsed = 00:00:00.00, CPU = 00:00:00.00
+0
+# Set top module in the design
+set_top_module ${DESIGN_NAME}
+Information: User units loaded from library 'saed14rvt_frame_timing' (LNK-040)
+Information: Non-default hdlin app options: (FLW-8560)
+****************************************
+Name       Type       Value      User-value   User-default System-default Scope      Status     Source
+---------- ---------- ---------- ------------ ------------ -------------- ---------- ---------- ----------
+No options matched the specified pattern(s)
+---------- ---------- ---------- ------------ ------------ -------------- ---------- ---------- ----------
+Elapsed = 00:00:00.22, CPU = 00:00:00.16
+1
+# Save block after netlist reading
+save_block -as ${DESIGN_NAME}/netlist_read
+Information: Saving 'picorv32.dlib:picorv32.design' to 'picorv32.dlib:picorv32/netlist_read.design'. (DES-028)
+1
+source -echo /home/DuongTuong-ST/works/Projects/picorv32/setup/tech_setup.tcl
+#####################################################################
+#####			Tech Setup Script			#####
+#####################################################################
+set PARASITIC	"tlup"	
+set_attribute [get_site_defs unit] symmetry Y
+set_attribute [get_site_defs unit] is_default true
+if {[string equal tlup ${PARASITIC}]} {
+	read_parasitic_tech -layermap ${LAYER_MAP_FILE} -tlup ${TLUP_MAX_FILE} -name maxTLU
+	read_parasitic_tech -layermap ${LAYER_MAP_FILE} -tlup ${TLUP_NOM_FILE} -name nomTLU
+	read_parasitic_tech -layermap ${LAYER_MAP_FILE} -tlup ${TLUP_MIN_FILE} -name minTLU
+} elseif {[string equal nxtgrd ${PARASITIC}]} {
+	read_parasitic_tech -layermap ${LAYER_MAP_FILE} -tlup ${NXTGRD_MAX_FILE} -name maxTLU
+	read_parasitic_tech -layermap ${LAYER_MAP_FILE} -tlup ${NXTGRD_NOM_FILE} -name nomTLU
+	read_parasitic_tech -layermap ${LAYER_MAP_FILE} -tlup ${NXTGRD_MIN_FILE} -name minTLU
+} 
+Information: The command 'read_parasitic_tech' cleared the undo history. (UNDO-016)
+WARNING: Layer mapping file warning. Tech layer 'M1_3' mapped in layer mapping file cannot be found in technology section.
+WARNING: Layer mapping file warning. Tech layer 'M2_3' mapped in layer mapping file cannot be found in technology section.
+WARNING: Layer mapping file warning. Tech layer 'M3_3' mapped in layer mapping file cannot be found in technology section.
+WARNING: Layer mapping file warning. Tech layer 'M1_3' mapped in layer mapping file cannot be found in technology section.
+WARNING: Layer mapping file warning. Tech layer 'M2_3' mapped in layer mapping file cannot be found in technology section.
+WARNING: Layer mapping file warning. Tech layer 'M3_3' mapped in layer mapping file cannot be found in technology section.
+WARNING: Layer mapping file warning. Tech layer 'M1_3' mapped in layer mapping file cannot be found in technology section.
+WARNING: Layer mapping file warning. Tech layer 'M2_3' mapped in layer mapping file cannot be found in technology section.
+WARNING: Layer mapping file warning. Tech layer 'M3_3' mapped in layer mapping file cannot be found in technology section.
+suppress_message ATTR-12
+set_attribute [get_layers {M1 M3 M5 M7 M9}]   routing_direction vertical
+set_attribute [get_layers {M2 M4 M6 M8 MRDL}] routing_direction horizontal
+unsuppress_message ATTR-12
+# Read the constraints
+read_sdc -echo ${SDC_FILE}
+Information: The command 'read_sdc' cleared the undo history. (UNDO-016)
+Information: Loading SDC version 2.1 file '/home/DuongTuong-ST/works/Projects/picorv32/inputs/constraints/picorv32.sdc' (FILE-007)
+###############################################################################
+# Created by write_sdc
+###############################################################################
+#current_design picorv32
+###############################################################################
+# Timing Constraints
+###############################################################################
+create_clock -name clk -period 1.2000 [get_ports {clk}]
+set_clock_transition 0.1500 [get_clocks {clk}]
+set_clock_uncertainty -setup 0.2500 [get_clocks {clk}]
+set_clock_uncertainty -hold 0.050 [get_clocks {clk}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[0]}]
+Information: Timer using 2 threads
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[10]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[11]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[12]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[13]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[14]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[15]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[16]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[17]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[18]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[19]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[1]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[20]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[21]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[22]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[23]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[24]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[25]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[26]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[27]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[28]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[29]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[2]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[30]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[31]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[3]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[4]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[5]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[6]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[7]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[8]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {irq[9]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[0]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[10]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[11]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[12]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[13]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[14]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[15]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[16]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[17]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[18]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[19]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[1]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[20]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[21]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[22]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[23]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[24]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[25]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[26]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[27]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[28]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[29]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[2]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[30]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[31]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[3]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[4]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[5]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[6]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[7]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[8]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_rdata[9]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_ready}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[0]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[10]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[11]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[12]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[13]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[14]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[15]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[16]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[17]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[18]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[19]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[1]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[20]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[21]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[22]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[23]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[24]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[25]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[26]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[27]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[28]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[29]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[2]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[30]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[31]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[3]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[4]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[5]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[6]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[7]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[8]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rd[9]}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_ready}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_wait}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_wr}]
+set_input_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {resetn}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[10]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[11]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[12]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[13]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[14]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[15]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[16]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[17]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[18]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[19]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[20]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[21]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[22]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[23]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[24]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[25]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[26]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[27]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[28]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[29]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[30]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[31]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[4]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[5]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[6]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[7]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[8]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {eoi[9]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[10]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[11]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[12]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[13]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[14]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[15]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[16]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[17]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[18]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[19]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[20]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[21]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[22]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[23]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[24]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[25]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[26]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[27]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[28]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[29]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[30]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[31]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[4]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[5]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[6]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[7]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[8]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_addr[9]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_instr}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[10]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[11]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[12]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[13]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[14]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[15]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[16]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[17]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[18]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[19]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[20]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[21]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[22]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[23]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[24]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[25]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[26]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[27]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[28]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[29]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[30]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[31]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[4]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[5]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[6]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[7]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[8]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_addr[9]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_read}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[10]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[11]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[12]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[13]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[14]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[15]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[16]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[17]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[18]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[19]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[20]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[21]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[22]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[23]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[24]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[25]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[26]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[27]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[28]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[29]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[30]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[31]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[4]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[5]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[6]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[7]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[8]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wdata[9]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_write}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wstrb[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wstrb[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wstrb[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_la_wstrb[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_valid}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[10]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[11]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[12]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[13]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[14]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[15]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[16]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[17]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[18]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[19]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[20]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[21]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[22]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[23]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[24]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[25]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[26]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[27]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[28]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[29]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[30]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[31]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[4]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[5]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[6]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[7]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[8]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wdata[9]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wstrb[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wstrb[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wstrb[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {mem_wstrb[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[10]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[11]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[12]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[13]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[14]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[15]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[16]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[17]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[18]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[19]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[20]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[21]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[22]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[23]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[24]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[25]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[26]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[27]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[28]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[29]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[30]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[31]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[4]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[5]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[6]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[7]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[8]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_insn[9]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[10]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[11]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[12]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[13]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[14]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[15]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[16]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[17]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[18]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[19]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[20]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[21]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[22]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[23]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[24]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[25]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[26]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[27]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[28]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[29]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[30]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[31]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[4]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[5]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[6]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[7]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[8]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs1[9]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[10]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[11]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[12]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[13]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[14]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[15]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[16]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[17]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[18]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[19]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[20]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[21]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[22]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[23]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[24]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[25]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[26]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[27]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[28]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[29]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[30]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[31]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[4]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[5]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[6]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[7]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[8]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_rs2[9]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {pcpi_valid}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[0]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[10]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[11]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[12]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[13]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[14]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[15]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[16]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[17]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[18]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[19]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[1]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[20]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[21]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[22]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[23]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[24]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[25]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[26]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[27]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[28]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[29]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[2]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[30]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[31]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[32]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[33]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[34]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[35]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[3]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[4]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[5]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[6]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[7]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[8]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_data[9]}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trace_valid}]
+set_output_delay 4.0000 -clock [get_clocks {clk}] -add_delay [get_ports {trap}]
+###############################################################################
+# Environment
+###############################################################################
+set_load -pin_load 0.0334 [get_ports {mem_instr}]
+set_load -pin_load 0.0334 [get_ports {mem_la_read}]
+set_load -pin_load 0.0334 [get_ports {mem_la_write}]
+set_load -pin_load 0.0334 [get_ports {mem_valid}]
+set_load -pin_load 0.0334 [get_ports {pcpi_valid}]
+set_load -pin_load 0.0334 [get_ports {trace_valid}]
+set_load -pin_load 0.0334 [get_ports {trap}]
+set_load -pin_load 0.0334 [get_ports {eoi[31]}]
+set_load -pin_load 0.0334 [get_ports {eoi[30]}]
+set_load -pin_load 0.0334 [get_ports {eoi[29]}]
+set_load -pin_load 0.0334 [get_ports {eoi[28]}]
+set_load -pin_load 0.0334 [get_ports {eoi[27]}]
+set_load -pin_load 0.0334 [get_ports {eoi[26]}]
+set_load -pin_load 0.0334 [get_ports {eoi[25]}]
+set_load -pin_load 0.0334 [get_ports {eoi[24]}]
+set_load -pin_load 0.0334 [get_ports {eoi[23]}]
+set_load -pin_load 0.0334 [get_ports {eoi[22]}]
+set_load -pin_load 0.0334 [get_ports {eoi[21]}]
+set_load -pin_load 0.0334 [get_ports {eoi[20]}]
+set_load -pin_load 0.0334 [get_ports {eoi[19]}]
+set_load -pin_load 0.0334 [get_ports {eoi[18]}]
+set_load -pin_load 0.0334 [get_ports {eoi[17]}]
+set_load -pin_load 0.0334 [get_ports {eoi[16]}]
+set_load -pin_load 0.0334 [get_ports {eoi[15]}]
+set_load -pin_load 0.0334 [get_ports {eoi[14]}]
+set_load -pin_load 0.0334 [get_ports {eoi[13]}]
+set_load -pin_load 0.0334 [get_ports {eoi[12]}]
+set_load -pin_load 0.0334 [get_ports {eoi[11]}]
+set_load -pin_load 0.0334 [get_ports {eoi[10]}]
+set_load -pin_load 0.0334 [get_ports {eoi[9]}]
+set_load -pin_load 0.0334 [get_ports {eoi[8]}]
+set_load -pin_load 0.0334 [get_ports {eoi[7]}]
+set_load -pin_load 0.0334 [get_ports {eoi[6]}]
+set_load -pin_load 0.0334 [get_ports {eoi[5]}]
+set_load -pin_load 0.0334 [get_ports {eoi[4]}]
+set_load -pin_load 0.0334 [get_ports {eoi[3]}]
+set_load -pin_load 0.0334 [get_ports {eoi[2]}]
+set_load -pin_load 0.0334 [get_ports {eoi[1]}]
+set_load -pin_load 0.0334 [get_ports {eoi[0]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[31]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[30]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[29]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[28]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[27]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[26]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[25]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[24]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[23]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[22]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[21]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[20]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[19]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[18]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[17]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[16]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[15]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[14]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[13]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[12]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[11]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[10]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[9]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[8]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[7]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[6]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[5]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[4]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[3]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[2]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[1]}]
+set_load -pin_load 0.0334 [get_ports {mem_addr[0]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[31]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[30]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[29]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[28]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[27]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[26]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[25]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[24]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[23]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[22]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[21]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[20]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[19]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[18]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[17]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[16]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[15]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[14]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[13]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[12]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[11]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[10]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[9]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[8]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[7]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[6]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[5]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[4]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[3]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[2]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[1]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_addr[0]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[31]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[30]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[29]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[28]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[27]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[26]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[25]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[24]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[23]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[22]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[21]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[20]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[19]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[18]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[17]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[16]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[15]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[14]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[13]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[12]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[11]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[10]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[9]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[8]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[7]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[6]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[5]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[4]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[3]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[2]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[1]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wdata[0]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wstrb[3]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wstrb[2]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wstrb[1]}]
+set_load -pin_load 0.0334 [get_ports {mem_la_wstrb[0]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[31]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[30]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[29]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[28]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[27]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[26]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[25]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[24]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[23]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[22]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[21]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[20]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[19]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[18]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[17]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[16]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[15]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[14]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[13]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[12]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[11]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[10]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[9]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[8]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[7]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[6]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[5]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[4]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[3]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[2]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[1]}]
+set_load -pin_load 0.0334 [get_ports {mem_wdata[0]}]
+set_load -pin_load 0.0334 [get_ports {mem_wstrb[3]}]
+set_load -pin_load 0.0334 [get_ports {mem_wstrb[2]}]
+set_load -pin_load 0.0334 [get_ports {mem_wstrb[1]}]
+set_load -pin_load 0.0334 [get_ports {mem_wstrb[0]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[31]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[30]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[29]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[28]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[27]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[26]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[25]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[24]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[23]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[22]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[21]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[20]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[19]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[18]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[17]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[16]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[15]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[14]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[13]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[12]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[11]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[10]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[9]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[8]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[7]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[6]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[5]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[4]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[3]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[2]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[1]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_insn[0]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[31]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[30]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[29]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[28]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[27]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[26]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[25]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[24]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[23]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[22]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[21]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[20]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[19]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[18]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[17]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[16]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[15]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[14]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[13]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[12]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[11]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[10]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[9]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[8]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[7]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[6]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[5]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[4]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[3]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[2]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[1]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs1[0]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[31]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[30]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[29]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[28]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[27]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[26]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[25]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[24]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[23]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[22]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[21]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[20]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[19]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[18]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[17]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[16]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[15]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[14]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[13]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[12]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[11]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[10]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[9]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[8]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[7]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[6]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[5]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[4]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[3]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[2]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[1]}]
+set_load -pin_load 0.0334 [get_ports {pcpi_rs2[0]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[35]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[34]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[33]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[32]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[31]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[30]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[29]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[28]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[27]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[26]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[25]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[24]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[23]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[22]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[21]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[20]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[19]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[18]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[17]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[16]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[15]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[14]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[13]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[12]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[11]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[10]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[9]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[8]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[7]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[6]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[5]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[4]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[3]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[2]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[1]}]
+set_load -pin_load 0.0334 [get_ports {trace_data[0]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {clk}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_ready}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_ready}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_wait}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_wr}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {resetn}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[31]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[30]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[29]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[28]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[27]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[26]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[25]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[24]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[23]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[22]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[21]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[20]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[19]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[18]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[17]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[16]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[15]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[14]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[13]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[12]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[11]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[10]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[9]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[8]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[7]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[6]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[5]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[4]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[3]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[2]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[1]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {irq[0]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[31]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[30]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[29]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[28]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[27]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[26]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[25]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[24]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[23]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[22]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[21]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[20]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[19]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[18]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[17]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[16]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[15]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[14]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[13]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[12]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[11]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[10]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[9]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[8]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[7]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[6]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[5]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[4]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[3]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[2]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[1]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {mem_rdata[0]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[31]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[30]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[29]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[28]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[27]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[26]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[25]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[24]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[23]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[22]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[21]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[20]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[19]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[18]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[17]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[16]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[15]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[14]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[13]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[12]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[11]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[10]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[9]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[8]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[7]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[6]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[5]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[4]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[3]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[2]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[1]}]
+set_driving_cell -lib_cell SAEDRVT14_INV_2 -pin {X} -input_transition_rise 0.0000 -input_transition_fall 0.0000 [get_ports {pcpi_rd[0]}]
+###############################################################################
+# Design Rules
+###############################################################################
+#set_max_transition 0.7500 [current_design]
+#set_max_capacitance 0.2000 [current_design]
+set_false_path -from [all_inputs]
+set_false_path -to [all_outputs]
+1
+source -echo ${MCMM_SETUP_SCRIPT}
+#####################################################################
+#####			MCMM Setup Script			#####
+#####################################################################
+# Remove all MCMM related info
+remove_corners   -all
+remove_modes     -all
+remove_scenarios -all
+# PVT Names
+set PVT_FF      "ff0p88v125c"                   ; # set FF PVT
+set PVT_TT      "tt0p8v25c"                     ; # set TT PVT
+set PVT_SS      "ss0p72vm40c"                   ; # set SS PVT
+# Create Corners
+create_corner Fast
+create_corner Typical
+create_corner Slow
+# Set parasitics parameters
+set_parasitics_parameters -early_spec minTLU -late_spec  minTLU -corners {Fast}
+set_parasitics_parameters -early_spec nomTLU -late_spec  nomTLU -corners {Typical}
+set_parasitics_parameters -early_spec maxTLU -late_spec  maxTLU -corners {Slow}
+# Create Mode
+create_mode  FUNC
+current_mode FUNC
+# Create Scenarios
+create_scenario -mode FUNC -corner Fast    -name FUNC_Fast
+Created scenario FUNC_Fast for mode FUNC and corner Fast
+All analysis types are activated.
+create_scenario -mode FUNC -corner Typical -name FUNC_Typical
+Created scenario FUNC_Typical for mode FUNC and corner Typical
+All analysis types are activated.
+create_scenario -mode FUNC -corner Slow    -name FUNC_Slow
+Created scenario FUNC_Slow for mode FUNC and corner Slow
+All analysis types are activated.
+# Read Constraints for each scenario
+set scenarios [get_attribute [get_scenarios ] name]
+suppress_message UIC-034
+foreach scenario ${scenarios} {
+	current_scenario ${scenario}
+	read_sdc ${SDC_FILE}
+}
+Information: Loading SDC version 2.1 file '/home/DuongTuong-ST/works/Projects/picorv32/inputs/constraints/picorv32.sdc' (FILE-007)
+Information: Timer using 2 threads
+Information: Loading SDC version 2.1 file '/home/DuongTuong-ST/works/Projects/picorv32/inputs/constraints/picorv32.sdc' (FILE-007)
+Information: Loading SDC version 2.1 file '/home/DuongTuong-ST/works/Projects/picorv32/inputs/constraints/picorv32.sdc' (FILE-007)
+# Set operating conditions for each corner and scenario
+current_corner Fast
+current_scenario FUNC_Fast
+set_operating_conditions ${PVT_FF}
+current_corner Typical
+current_scenario FUNC_Typical
+set_operating_conditions ${PVT_TT}
+current_corner Slow
+current_scenario FUNC_Slow
+set_operating_conditions ${PVT_SS}
+set_scenario_status FUNC_Fast -all -active true
+Information: Cellem using advance interpolation.
+Scenario FUNC_Fast (mode FUNC corner Fast) is active for setup/hold/leakage_power/dynamic_power/max_transition/max_capacitance/min_capacitance/cell_em/signal_em/glitch_power/si_noise/thermal analysis.
+set_scenario_status FUNC_Typical -all -active true
+Scenario FUNC_Typical (mode FUNC corner Typical) is active for setup/hold/leakage_power/dynamic_power/max_transition/max_capacitance/min_capacitance/cell_em/signal_em/glitch_power/si_noise/thermal analysis.
+set_scenario_status FUNC_Slow -all -active true
+Scenario FUNC_Slow (mode FUNC corner Slow) is active for setup/hold/leakage_power/dynamic_power/max_transition/max_capacitance/min_capacitance/cell_em/signal_em/glitch_power/si_noise/thermal analysis.
+1
+# Setup application options
+set_lib_cell_purpose -include none {*/*_AO21* */*V2LP*}
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO211_1.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO211_2.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO211_4.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21_1.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO211_U_0P5.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21_2.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21_4.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21B_0P5.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21B_1.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21B_2.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+1
+get_flat_cells -filter {ref_name=~*AO21* or ref_name=~*V2LP*}
+{{mem_rdata_q_reg[31]} {mem_rdata_q_reg[30]} {mem_rdata_q_reg[29]} {count_instr_reg[31]} {mem_rdata_q_reg[28]} {mem_rdata_q_reg[27]} {mem_rdata_q_reg[26]} {mem_rdata_q_reg[25]} {mem_rdata_q_reg[21]} {mem_rdata_q_reg[20]} {mem_rdata_q_reg[14]} {mem_rdata_q_reg[13]} {mem_rdata_q_reg[23]} {mem_rdata_q_reg[22]} {mem_rdata_q_reg[6]} {mem_rdata_q_reg[24]} {mem_state_reg[1]} {mem_rdata_q_reg[18]} {mem_rdata_q_reg[17]} {mem_rdata_q_reg[16]} {mem_rdata_q_reg[15]} {mem_state_reg[0]} {mem_rdata_q_reg[19]} {mem_wstrb_reg[3]} {mem_rdata_q_reg[11]} {mem_rdata_q_reg[10]} {mem_rdata_q_reg[9]} {mem_rdata_q_reg[8]} {mem_rdata_q_reg[7]} {mem_wstrb_reg[2]} {mem_rdata_q_reg[12]} {mem_rdata_q_reg[4]} {mem_rdata_q_reg[3]} {mem_rdata_q_reg[2]} {mem_rdata_q_reg[1]} {mem_rdata_q_reg[0]} {mem_wdata_reg[31]} {mem_rdata_q_reg[5]} {mem_wdata_reg[30]} {mem_wdata_reg[29]} {mem_wdata_reg[28]} {mem_wdata_reg[27]} {mem_wdata_reg[26]} {mem_wdata_reg[25]} {mem_wdata_reg[24]} {mem_wdata_reg[23]} {mem_wdata_reg[22]} {mem_wdata_reg[21]} {mem_wdata_reg[20]} {mem_wdata_reg[19]} {mem_wdata_reg[18]} {mem_wdata_reg[17]} {mem_wdata_reg[16]} {mem_wdata_reg[15]} {mem_wdata_reg[14]} {mem_wdata_reg[13]} {mem_wdata_reg[12]} {mem_wdata_reg[11]} {mem_wdata_reg[10]} {mem_wdata_reg[9]} {mem_wdata_reg[8]} {mem_wdata_reg[7]} {mem_wdata_reg[6]} {mem_wdata_reg[5]} {mem_wdata_reg[4]} {mem_wdata_reg[3]} {mem_wdata_reg[2]} {mem_wdata_reg[1]} {mem_wdata_reg[0]} {mem_wstrb_reg[1]} {mem_wstrb_reg[0]} {decoded_rs1_reg[4]} is_lb_lh_lw_lbu_lhu_reg is_sb_sh_sw_reg is_lui_auipc_jal_reg {mem_addr_reg[30]} {mem_addr_reg[29]} {mem_addr_reg[28]} {mem_addr_reg[27]} {mem_addr_reg[26]} {mem_addr_reg[25]} {mem_addr_reg[24]} {mem_addr_reg[23]} {mem_addr_reg[22]} {mem_addr_reg[21]} {mem_addr_reg[20]} {mem_addr_reg[19]} {mem_addr_reg[18]} {mem_addr_reg[17]} {mem_addr_reg[16]} {mem_addr_reg[15]} {mem_addr_reg[14]} {mem_addr_reg[13]} {mem_addr_reg[12]} {mem_addr_reg[11]} {mem_addr_reg[10]} {mem_addr_reg[9]} {mem_addr_reg[8]} {mem_addr_reg[7]} {mem_addr_reg[6]} ...}
+set_app_options -name place.coarse.continue_on_missing_scandef -value true
+place.coarse.continue_on_missing_scandef true
+report_timing
+Information: Corner Slow: no PVT mismatches. (PVT-032)
+Information: Corner Typical: no PVT mismatches. (PVT-032)
+Information: Corner Fast: no PVT mismatches. (PVT-032)
+Information: The stitching and editing of coupling caps is turned OFF for design 'picorv32.dlib:picorv32.design'. (TIM-125)
+Warning: No physical information exists for design 'picorv32'. Zero interconnect delay is used in timing analysis. (TIM-101)
+Warning: The extractor can not be initialized for design 'picorv32'. Zero interconnect delay is used in timing analysis. (TIM-102)
+Warning: Batch extraction is skipped for block "picorv32"
+Information: Update timing completed net estimation for all the timing graph nets (TIM-111)
+Information: Net estimation statistics: timing graph nets = 5136, routed nets = 0, across physical hierarchy nets = 0, parasitics cached nets = 0, delay annotated nets = 0, parasitics annotated nets = 0, multi-voltage nets = 0. (TIM-112)
+************************************************************
+Timer Settings:
+Delay Calculation Style:                   auto
+Signal Integrity Analysis:                 disabled
+Timing Window Analysis:                    disabled
+Advanced Waveform Propagation:             disabled
+Variation Type:                            fixed_derate
+Clock Reconvergence Pessimism Removal:     disabled
+Advanced Receiver Model:                   disabled
+LLE:                                       disabled
+ML Acceleration:                           off
+Smart Arc Optimization:                    disabled
+************************************************************
+****************************************
+Report : timing
+        -path_type full
+        -delay_type max
+        -max_paths 1
+        -report_by design
+Design : picorv32
+Version: W-2024.09-SP2
+Date   : Wed Jul 30 14:33:18 2025
+****************************************
+
+  Startpoint: latched_branch_reg (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: reg_next_pc_reg[31] (rising edge-triggered flip-flop clocked by clk)
+  Mode: FUNC
+  Corner: Slow
+  Scenario: FUNC_Slow
+  Path Group: clk
+  Path Type: max
+
+  Point                                            Incr      Path  
+  ------------------------------------------------------------------------
+  clock clk (rise edge)                            0.00      0.00
+  clock network delay (ideal)                      0.00      0.00
+
+  latched_branch_reg/CK (SAEDRVT14_FSDP_V2_2)      0.00      0.00 r
+  latched_branch_reg/Q (SAEDRVT14_FSDP_V2_2)       0.09      0.09 f
+  ctmi_24422/X (SAEDRVT14_ND2_3)                   0.02      0.11 r
+  phfnr_buf_2580/X (SAEDRVT14_INV_1P5)             0.02      0.13 f
+  ctmi_2144/X (SAEDRVT14_AN2B_MM_4)                0.03      0.16 f
+  ctmi_24824/X (SAEDRVT14_AO222_1)                 0.04      0.20 f
+  add_1571/U_0/CO (SAEDRVT14_ADDH_0P5)             0.01      0.21 f
+  add_1571/U_3/CO (SAEDRVT14_ADDF_V1_0P5)          0.03      0.24 f
+  add_1571/U_5/CO (SAEDRVT14_ADDF_V1_0P5)          0.03      0.27 f
+  add_1571/U_8/CO (SAEDRVT14_ADDF_V1_0P5)          0.03      0.30 f
+  add_1571/U_10/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.33 f
+  add_1571/U_13/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.36 f
+  add_1571/U_15/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.39 f
+  add_1571/U_18/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.42 f
+  add_1571/U_20/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.46 f
+  add_1571/U_23/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.49 f
+  add_1571/U_25/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.52 f
+  add_1571/U_28/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.55 f
+  add_1571/U_30/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.58 f
+  add_1571/U_33/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.61 f
+  add_1571/U_35/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.64 f
+  add_1571/U_38/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.67 f
+  add_1571/U_40/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.70 f
+  add_1571/U_43/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.73 f
+  add_1571/U_45/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.76 f
+  add_1571/U_48/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.80 f
+  add_1571/U_50/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.83 f
+  add_1571/U_53/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.86 f
+  add_1571/U_55/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.89 f
+  add_1571/U_58/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.92 f
+  add_1571/U_60/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.95 f
+  add_1571/U_63/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      0.98 f
+  add_1571/U_65/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      1.01 f
+  add_1571/U_68/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      1.04 f
+  add_1571/U_70/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      1.07 f
+  add_1571/U_73/CO (SAEDRVT14_ADDF_V1_0P5)         0.03      1.10 f
+  add_1571/ctmi_27792/X (SAEDRVT14_EO2_1)          0.02      1.12 r
+  A1706/X (SAEDRVT14_EN2_1)                        0.02      1.14 f
+  ctmi_27402/X (SAEDRVT14_AO33_1)                  0.02      1.17 f
+  ctmi_2118/X (SAEDRVT14_AO21_U_0P5)               0.01      1.18 f
+  reg_next_pc_reg[31]/D (SAEDRVT14_FSDPQ_V2LP_1)   0.00      1.18 f
+  data arrival time                                          1.18
+
+  clock clk (rise edge)                            1.20      1.20
+  clock network delay (ideal)                      0.00      1.20
+  reg_next_pc_reg[31]/CK (SAEDRVT14_FSDPQ_V2LP_1)
+                                                   0.00      1.20 r
+  clock uncertainty                               -0.25      0.95
+  library setup time                               0.01      0.96
+  data required time                                         0.96
+  ------------------------------------------------------------------------
+  data required time                                         0.96
+  data arrival time                                         -1.18
+  ------------------------------------------------------------------------
+  slack (VIOLATED)                                          -0.22
+
+
+1
+save_block -as ${DESIGN_NAME}/import
+Information: Saving 'picorv32.dlib:picorv32.design' to 'picorv32.dlib:picorv32/import.design'. (DES-028)
+1
+get_blocks -all
+{picorv32.dlib:picorv32.design picorv32.dlib:picorv32/netlist_read.design picorv32.dlib:picorv32/import.design}
+save_lib
+Saving library 'picorv32.dlib'
+1
+exit
+Maximum memory usage for this session: 551.15 MB
+Maximum memory usage for this session including child processes: 551.15 MB
+CPU usage for this session:      7 seconds (  0.00 hours)
+Elapsed time for this session:      8 seconds (  0.00 hours)
+Thank you for using Fusion Compiler.

@@ -1,0 +1,632 @@
+
+
+
+                              Fusion Compiler (TM)
+
+                Version W-2024.09-SP2 for linux64 - Nov 26, 2024
+                           Base Build Date: 11/5/2024
+
+                    Copyright (c) 1988 - 2024 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+ 
+Loading user preference file /home/DuongTuong-ST/.synopsys_fc_gui/preferences.tcl
+Information: Term was not able to be set up using xterm-256color . Using "xterm" by default instead. (CLE-10)
+#####################################################################
+#####	             Floorplanning                              #####
+#####################################################################
+source -echo /home/DuongTuong-ST/works/Projects/picorv32/setup/setup.tcl 
+set DESIGN_NAME         "picorv32"              
+set DESIGN_LIBRARY      "${DESIGN_NAME}.dlib"  
+set WORK_DIR            "/home/DuongTuong-ST/works/Projects/picorv32"
+set TECH_FILE           "${WORK_DIR}/tech/tf/saed14nm_1p9m.tf"
+set REFERENCE_LIBRARY	"${WORK_DIR}/libs/saed14rvt/ndm/saed14rvt_frame_timing.ndm"
+set OUTPUT_LOCATION     "${WORK_DIR}/results/picorv32.dlib"
+set NETLIST_FILE        "${WORK_DIR}/inputs/netlist/picorv32.v"
+set DB_FF               "${WORK_DIR}/libs/saed14rvt/liberty/saed14rvt_ff0p88v125c.db"
+set DB_TT  	        "${WORK_DIR}/libs/saed14rvt/liberty/saed14rvt_tt0p8v25c.db"
+set DB_SS               "${WORK_DIR}/libs/saed14rvt/liberty/saed14rvt_ss0p72vm40c.db"
+set TLUP_MIN_FILE       "${WORK_DIR}/tech/tlup/saed14nm_1p9m_Cmin.tlup "
+set TLUP_NOM_FILE       "${WORK_DIR}/tech/tlup/saed14nm_1p9m_Cnom.tlup"
+set TLUP_MAX_FILE       "${WORK_DIR}/tech/tlup/saed14nm_1p9m_Cmax.tlup"
+set LAYER_MAP_FILE      "${WORK_DIR}/tech/map/saed14nm_tf_itf_tluplus.map"
+set MCMM_SETUP_SCRIPT   "${WORK_DIR}/inputs/constraints/mcmm_setup.tcl"
+set SDC_FILE            "${WORK_DIR}/inputs/constraints/picorv32.sdc"
+set DRC_RUNSET_FILE 	"${WORK_DIR}/tech/runsets/saed14nm_1p9m_drc_rules.rs"
+set GDS_MAP_FILE	"${WORK_DIR}/tech/map/saed14nm_1p9m_gdsout_mw.map"
+set MFILL_RUNSET_FILE	"${WORK_DIR}/tech/runsets/saed14nm_1p9m_mfill_rules.rs "
+set GDS_FILE            "${WORK_DIR}/libs/saed14rvt/gds/saed14rvt.gds"
+set REPORTS_PATH	"${WORK_DIR}/reports"
+source ${WORK_DIR}/setup/utilities.tcl
+set_host_options -max_cores 2
+1
+##open the design library
+open_lib ${OUTPUT_LOCATION}
+Information: Loading library file '/home/DuongTuong-ST/works/Projects/picorv32/results/picorv32.dlib' (FILE-007)
+Information: Loading library file '/home/DuongTuong-ST/works/Projects/picorv32/libs/saed14rvt/ndm/saed14rvt_frame_timing.ndm' (FILE-007)
+{picorv32.dlib}
+# Copy the imported block
+copy_block -from ${DESIGN_NAME}/import -to ${DESIGN_NAME}/floorplan
+Information: User units loaded from library 'saed14rvt_frame_timing' (LNK-040)
+{picorv32.dlib:picorv32/floorplan.design}
+open_block ${DESIGN_NAME}/floorplan
+Information: Incrementing open_count of block 'picorv32.dlib:picorv32/floorplan.design' to 2. (DES-021)
+{picorv32.dlib:picorv32/floorplan.design}
+set_lib_cell_purpose -include none {*/*_AO21* */*V2LP*}
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO211_1.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO211_2.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO211_4.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21_1.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO211_U_0P5.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21_2.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21_4.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21B_0P5.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21B_1.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+Information: The design specific attribute override for lib_cell 'saed14rvt_frame_timing:SAEDRVT14_AO21B_2.timing' is set in the current block 'picorv32', because the actual library setting may not be overwritten. (ATTR-12)
+1
+get_flat_cells -filter {ref_name=~*AO21* or ref_name=~*V2LP*}
+Using libraries: picorv32.dlib saed14rvt_frame_timing
+Visiting block picorv32.dlib:picorv32/floorplan.design
+Information: Cellem using advance interpolation.
+Design 'picorv32' was successfully linked.
+{{mem_rdata_q_reg[31]} {mem_rdata_q_reg[30]} {mem_rdata_q_reg[29]} {count_instr_reg[31]} {mem_rdata_q_reg[28]} {mem_rdata_q_reg[27]} {mem_rdata_q_reg[26]} {mem_rdata_q_reg[25]} {mem_rdata_q_reg[21]} {mem_rdata_q_reg[20]} {mem_rdata_q_reg[14]} {mem_rdata_q_reg[13]} {mem_rdata_q_reg[23]} {mem_rdata_q_reg[22]} {mem_rdata_q_reg[6]} {mem_rdata_q_reg[24]} {mem_state_reg[1]} {mem_rdata_q_reg[18]} {mem_rdata_q_reg[17]} {mem_rdata_q_reg[16]} {mem_rdata_q_reg[15]} {mem_state_reg[0]} {mem_rdata_q_reg[19]} {mem_wstrb_reg[3]} {mem_rdata_q_reg[11]} {mem_rdata_q_reg[10]} {mem_rdata_q_reg[9]} {mem_rdata_q_reg[8]} {mem_rdata_q_reg[7]} {mem_wstrb_reg[2]} {mem_rdata_q_reg[12]} {mem_rdata_q_reg[4]} {mem_rdata_q_reg[3]} {mem_rdata_q_reg[2]} {mem_rdata_q_reg[1]} {mem_rdata_q_reg[0]} {mem_wdata_reg[31]} {mem_rdata_q_reg[5]} {mem_wdata_reg[30]} {mem_wdata_reg[29]} {mem_wdata_reg[28]} {mem_wdata_reg[27]} {mem_wdata_reg[26]} {mem_wdata_reg[25]} {mem_wdata_reg[24]} {mem_wdata_reg[23]} {mem_wdata_reg[22]} {mem_wdata_reg[21]} {mem_wdata_reg[20]} {mem_wdata_reg[19]} {mem_wdata_reg[18]} {mem_wdata_reg[17]} {mem_wdata_reg[16]} {mem_wdata_reg[15]} {mem_wdata_reg[14]} {mem_wdata_reg[13]} {mem_wdata_reg[12]} {mem_wdata_reg[11]} {mem_wdata_reg[10]} {mem_wdata_reg[9]} {mem_wdata_reg[8]} {mem_wdata_reg[7]} {mem_wdata_reg[6]} {mem_wdata_reg[5]} {mem_wdata_reg[4]} {mem_wdata_reg[3]} {mem_wdata_reg[2]} {mem_wdata_reg[1]} {mem_wdata_reg[0]} {mem_wstrb_reg[1]} {mem_wstrb_reg[0]} {decoded_rs1_reg[4]} is_lb_lh_lw_lbu_lhu_reg is_sb_sh_sw_reg is_lui_auipc_jal_reg {mem_addr_reg[30]} {mem_addr_reg[29]} {mem_addr_reg[28]} {mem_addr_reg[27]} {mem_addr_reg[26]} {mem_addr_reg[25]} {mem_addr_reg[24]} {mem_addr_reg[23]} {mem_addr_reg[22]} {mem_addr_reg[21]} {mem_addr_reg[20]} {mem_addr_reg[19]} {mem_addr_reg[18]} {mem_addr_reg[17]} {mem_addr_reg[16]} {mem_addr_reg[15]} {mem_addr_reg[14]} {mem_addr_reg[13]} {mem_addr_reg[12]} {mem_addr_reg[11]} {mem_addr_reg[10]} {mem_addr_reg[9]} {mem_addr_reg[8]} {mem_addr_reg[7]} {mem_addr_reg[6]} ...}
+# Floorplan setup : shape: R | core utilization 40% | core aspect ratio: 2:1 | core to boundary distance : 5um | flip the bottom row | core-to-io distance: 5 um
+initialize_floorplan  \
+        -control_type core \
+        -shape R \
+        -core_utilization 0.4 \
+        -core_offset 5 \
+        -side_ratio {2 1} \
+        -flip_first_row true
+Use site_def 'unit' to initialize floorplan.
+Removing existing floorplan objects
+Creating core...
+Core utilization ratio = 40.36%
+Unplacing all cells...
+Creating site array...
+Creating routing tracks...
+Initializing floorplan completed.
+# I/O pins placement 
+set ports [remove_from_collection [get_ports] {VDD VSS}]
+{clk resetn trap mem_valid mem_instr mem_ready {mem_addr[31]} {mem_addr[30]} {mem_addr[29]} {mem_addr[28]} {mem_addr[27]} {mem_addr[26]} {mem_addr[25]} {mem_addr[24]} {mem_addr[23]} {mem_addr[22]} {mem_addr[21]} {mem_addr[20]} {mem_addr[19]} {mem_addr[18]} {mem_addr[17]} {mem_addr[16]} {mem_addr[15]} {mem_addr[14]} {mem_addr[13]} {mem_addr[12]} {mem_addr[11]} {mem_addr[10]} {mem_addr[9]} {mem_addr[8]} {mem_addr[7]} {mem_addr[6]} {mem_addr[5]} {mem_addr[4]} {mem_addr[3]} {mem_addr[2]} {mem_addr[1]} {mem_addr[0]} {mem_wdata[31]} {mem_wdata[30]} {mem_wdata[29]} {mem_wdata[28]} {mem_wdata[27]} {mem_wdata[26]} {mem_wdata[25]} {mem_wdata[24]} {mem_wdata[23]} {mem_wdata[22]} {mem_wdata[21]} {mem_wdata[20]} {mem_wdata[19]} {mem_wdata[18]} {mem_wdata[17]} {mem_wdata[16]} {mem_wdata[15]} {mem_wdata[14]} {mem_wdata[13]} {mem_wdata[12]} {mem_wdata[11]} {mem_wdata[10]} {mem_wdata[9]} {mem_wdata[8]} {mem_wdata[7]} {mem_wdata[6]} {mem_wdata[5]} {mem_wdata[4]} {mem_wdata[3]} {mem_wdata[2]} {mem_wdata[1]} {mem_wdata[0]} {mem_wstrb[3]} {mem_wstrb[2]} {mem_wstrb[1]} {mem_wstrb[0]} {mem_rdata[31]} {mem_rdata[30]} {mem_rdata[29]} {mem_rdata[28]} {mem_rdata[27]} {mem_rdata[26]} {mem_rdata[25]} {mem_rdata[24]} {mem_rdata[23]} {mem_rdata[22]} {mem_rdata[21]} {mem_rdata[20]} {mem_rdata[19]} {mem_rdata[18]} {mem_rdata[17]} {mem_rdata[16]} {mem_rdata[15]} {mem_rdata[14]} {mem_rdata[13]} {mem_rdata[12]} {mem_rdata[11]} {mem_rdata[10]} {mem_rdata[9]} {mem_rdata[8]} {mem_rdata[7]} {mem_rdata[6]} ...}
+set_block_pin_constraints -self \
+	-allowed_layers {M4 M3} \
+	-sides {1 3} \
+	-width 0.11 \
+        -length 0.11 \
+        -pin_spacing_distance 1
+Information: The command 'set_block_pin_constraints' cleared the undo history. (UNDO-016)
+Information: Block pin constraints pin_spacing_distance, allowed_layers, sides are set for top block picorv32/floorplan. (DPPA-403)
+1
+# Create power grid
+# Remove PG related data
+remove_pg_via_master_rules -all
+All via def rules have been removed.
+remove_pg_patterns -all
+All patterns have been removed.
+remove_pg_strategies -all
+All strategies have been removed.
+remove_pg_strategy_via_rules -all
+All strategy via rules have been removed.
+remove_routes -ring -stripe -lib_cell_pin_connect
+Remove no route shapes with specified net types and shape uses.
+1
+# Set PG net attribute
+create_net VDD -power
+Error: Net 'VDD' already exists. (DES-150)
+0
+create_net VSS -ground
+Error: Net 'VSS' already exists. (DES-150)
+0
+set_attribute -objects [get_nets VDD] -name net_type -value power
+{VDD}
+set_attribute -objects [get_nets VSS] -name net_type -value ground
+{VSS}
+# Create VIA strategy rule VIA_NIL
+set_pg_strategy_via_rule VIA_NIL -via_rule { {intersection: undefined} {via_master: NIL} }
+Information: The command 'set_pg_strategy_via_rule' cleared the undo history. (UNDO-016)
+Successfully set strategy via rule VIA_NIL.
+#### Create PG Rails for standard cells
+create_pg_std_cell_conn_pattern M1_rail -layers {M1} -rail_width {@wtop @wbottom} -parameters {wtop wbottom}
+Successfully create standard cell rail pattern M1_rail.
+set_pg_strategy M1_rail_strategy_pwr  -core -pattern {{name: M1_rail} {nets: VDD} {parameters: {0.094 0.094}}}
+Successfully set PG strategy M1_rail_strategy_pwr.
+set_pg_strategy M1_rail_strategy_gnd -core -pattern {{name: M1_rail} {nets: VSS} {parameters: {0.094 0.094}}}
+Successfully set PG strategy M1_rail_strategy_gnd.
+compile_pg -strategies M1_rail_strategy_pwr -ignore_drc
+Sanity check for inputs.
+Warning: Strategy via rule is not defined. Add appropriate via rule to get expected results and avoid runtime penalties. (PGR-095)
+DRC checking and fixing will be skipped for created shapes.
+Automatic PG net connection through connect_pg_net is disabled.
+Updating PG strategies.
+Updating strategy M1_rail_strategy_pwr.
+Loading library and design information.
+Number of Standard Cells: 0
+Number of Hard Macros: 0
+Number of Pads: 0
+Creating standard cell rails.
+Creating standard cell rails for strategy M1_rail_strategy_pwr.
+Creating via connection between strategies and existing shapes.
+via connection runtime: 0 seconds.
+Commiting wires and vias.
+Committing wires takes 0.00 seconds.
+Committing vias takes 0.00 seconds.
+Committed 53 wires.
+Committed 0 vias.
+Committed 0 wires for via creation.
+Overall PG creation runtime: 0 seconds.
+Successfully compiled PG.
+Overall runtime: 0 seconds.
+1
+compile_pg -strategies M1_rail_strategy_gnd -ignore_drc
+Sanity check for inputs.
+Warning: Strategy via rule is not defined. Add appropriate via rule to get expected results and avoid runtime penalties. (PGR-095)
+DRC checking and fixing will be skipped for created shapes.
+Automatic PG net connection through connect_pg_net is disabled.
+Updating PG strategies.
+Updating strategy M1_rail_strategy_gnd.
+Loading library and design information.
+Number of Standard Cells: 0
+Number of Hard Macros: 0
+Number of Pads: 0
+Creating standard cell rails.
+Creating standard cell rails for strategy M1_rail_strategy_gnd.
+Creating via connection between strategies and existing shapes.
+via connection runtime: 0 seconds.
+Commiting wires and vias.
+Committing wires takes 0.00 seconds.
+Committing vias takes 0.00 seconds.
+Committed 52 wires.
+Committed 0 vias.
+Committed 0 wires for via creation.
+Overall PG creation runtime: 0 seconds.
+Successfully compiled PG.
+Overall runtime: 0 seconds.
+1
+# Create M5 Vertical PG Straps
+create_pg_mesh_pattern M5_PG \
+	-layers { {vertical_layer: M5}   {width: 0.1} {spacing: interleaving} {pitch: 4} {offset: 0.5} } 
+Successfully create mesh pattern M5_PG.
+1
+set_pg_strategy M5_PG_Strategy \
+	-core \
+	-pattern   { {name: M5_PG} {nets:{VSS VDD}} } \
+	-extension { {stop: core_boundary} }
+Successfully set PG strategy M5_PG_Strategy.
+compile_pg -strategies {M5_PG_Strategy} -via_rule VIA_NIL
+Sanity check for inputs.
+Automatic PG net connection through connect_pg_net is disabled.
+Updating PG strategies.
+Updating strategy M5_PG_Strategy.
+Loading library and design information.
+Number of Standard Cells: 0
+Number of Hard Macros: 0
+Number of Pads: 0
+Creating straps and vias in power plan.
+Creating wire shapes for strategies M5_PG_Strategy .
+Creating wire shapes runtime: 0 seconds
+Blockage cutting and DRC fixing for wire shapes for strategies M5_PG_Strategy .
+Check and fix DRC for 63 wires for strategy M5_PG_Strategy.
+Number of threads: 2
+Number of partitions: 6
+Direction of partitions: vertical
+Number of wires: 63
+Checking DRC for 63 wires: 0% 100%
+Creating 63 wires after DRC fixing.
+Wire DRC checking runtime 0.00 seconds.
+Creating via shapes for strategies M5_PG_Strategy .
+Number of threads: 2
+Working on strategy M5_PG_Strategy.
+Number of detected intersections: 0
+Total runtime of via shapes creation: 0 seconds
+Runtime of via DRC checking for strategy M5_PG_Strategy: 0.00 seconds.
+Removing dangling/floating wire/vias after DRC check.
+Start iteration 1:
+Checking potential dangling/floating power plan wires.
+Finish removing all dangling or floating wires and vias.
+Commiting wires and vias.
+Committing wires takes 0.00 seconds.
+Committing vias takes 0.00 seconds.
+Committed 63 wires.
+Committed 0 vias.
+Committed 0 wires for via creation.
+Overall PG creation runtime: 0 seconds.
+Successfully compiled PG.
+Overall runtime: 0 seconds.
+1
+# Create M6 Horizontal PG Straps 
+create_pg_mesh_pattern M6_PG \
+	-layers { {horizontal_layer: M6}   {width: 0.2} {spacing: interleaving} {pitch: 4} {offset: 0.5} }
+Successfully create mesh pattern M6_PG.
+1
+set_pg_strategy M6_PG_Strategy \
+	-core \
+	-pattern   { {name: M6_PG} {nets:{VSS VDD}} } \
+	-extension { {stop: design_boundary_and_generate_pin} }
+Successfully set PG strategy M6_PG_Strategy.
+compile_pg -strategies {M6_PG_Strategy} -via_rule VIA_NIL
+Sanity check for inputs.
+Automatic PG net connection through connect_pg_net is disabled.
+Updating PG strategies.
+Updating strategy M6_PG_Strategy.
+Loading library and design information.
+Number of Standard Cells: 0
+Number of Hard Macros: 0
+Number of Pads: 0
+Creating straps and vias in power plan.
+Creating wire shapes for strategies M6_PG_Strategy .
+Creating wire shapes runtime: 0 seconds
+Blockage cutting and DRC fixing for wire shapes for strategies M6_PG_Strategy .
+Check and fix DRC for 31 wires for strategy M6_PG_Strategy.
+Number of threads: 2
+Number of partitions: 3
+Direction of partitions: horizontal
+Number of wires: 31
+Checking DRC for 31 wires: 0% 100%
+Creating 31 wires after DRC fixing.
+Wire DRC checking runtime 0.00 seconds.
+Creating via shapes for strategies M6_PG_Strategy .
+Number of threads: 2
+Working on strategy M6_PG_Strategy.
+Number of detected intersections: 0
+Total runtime of via shapes creation: 0 seconds
+Runtime of via DRC checking for strategy M6_PG_Strategy: 0.00 seconds.
+Removing dangling/floating wire/vias after DRC check.
+Start iteration 1:
+Checking potential dangling/floating power plan wires.
+Finish removing all dangling or floating wires and vias.
+Commiting wires and vias.
+Committing wires takes 0.00 seconds.
+Committing vias takes 0.00 seconds.
+Committed 93 wires.
+Committed 0 vias.
+Committed 0 wires for via creation.
+Created 62 pins at design boundary.
+Overall PG creation runtime: 0 seconds.
+Successfully compiled PG.
+Overall runtime: 0 seconds.
+1
+# Create M7 Vertical PG Straps
+create_pg_mesh_pattern M7_PG \
+	-layers { {vertical_layer: M7}   {width: 0.24} {spacing: interleaving} {pitch: 4} {offset: 0.5} } 
+Successfully create mesh pattern M7_PG.
+1
+set_pg_strategy M7_PG_Strategy \
+	-core \
+	-pattern   { {name: M7_PG} {nets:{VSS VDD}} } \
+	-extension { {stop: design_boundary_and_generate_pin} }
+Successfully set PG strategy M7_PG_Strategy.
+compile_pg -strategies {M7_PG_Strategy} -via_rule VIA_NIL
+Sanity check for inputs.
+Automatic PG net connection through connect_pg_net is disabled.
+Updating PG strategies.
+Updating strategy M7_PG_Strategy.
+Loading library and design information.
+Number of Standard Cells: 0
+Number of Hard Macros: 0
+Number of Pads: 0
+Creating straps and vias in power plan.
+Creating wire shapes for strategies M7_PG_Strategy .
+Creating wire shapes runtime: 0 seconds
+Blockage cutting and DRC fixing for wire shapes for strategies M7_PG_Strategy .
+Check and fix DRC for 63 wires for strategy M7_PG_Strategy.
+Number of threads: 2
+Number of partitions: 6
+Direction of partitions: vertical
+Number of wires: 63
+Checking DRC for 63 wires: 0% 100%
+Creating 63 wires after DRC fixing.
+Wire DRC checking runtime 0.00 seconds.
+Creating via shapes for strategies M7_PG_Strategy .
+Number of threads: 2
+Working on strategy M7_PG_Strategy.
+Number of detected intersections: 0
+Total runtime of via shapes creation: 0 seconds
+Runtime of via DRC checking for strategy M7_PG_Strategy: 0.00 seconds.
+Removing dangling/floating wire/vias after DRC check.
+Start iteration 1:
+Checking potential dangling/floating power plan wires.
+Finish removing all dangling or floating wires and vias.
+Commiting wires and vias.
+Committing wires takes 0.00 seconds.
+Committing vias takes 0.00 seconds.
+Committed 189 wires.
+Committed 0 vias.
+Committed 0 wires for via creation.
+Created 126 pins at design boundary.
+Overall PG creation runtime: 0 seconds.
+Successfully compiled PG.
+Overall runtime: 0 seconds.
+1
+# Create PG Rings
+create_pg_ring_pattern \
+         PG_Ring \
+        -horizontal_layer M6  -vertical_layer M7 \
+        -horizontal_width 1 -vertical_width 1 \
+        -horizontal_spacing 1 -vertical_spacing 1
+Successfully create PG ring pattern PG_Ring.
+set_pg_strategy PG_Ring_Strategy -core -pattern {{ name: PG_Ring} { nets: "VDD VSS" } {offset: 0.5}}
+Successfully set PG strategy PG_Ring_Strategy.
+compile_pg -strategies PG_Ring_Strategy -via_rule VIA_NIL
+Sanity check for inputs.
+Automatic PG net connection through connect_pg_net is disabled.
+Updating PG strategies.
+Updating strategy PG_Ring_Strategy.
+Loading library and design information.
+Number of Standard Cells: 0
+Number of Hard Macros: 0
+Number of Pads: 0
+Creating rings.
+Removing dangling/floating wire/vias after DRC check.
+Start iteration 1:
+Checking potential dangling/floating power plan wires.
+Checking dangling/floating vias inside strategy PG_Ring_Strategy.
+Checking 8 stacked vias: 0% 100%
+Finish removing all dangling or floating wires and vias.
+Commiting wires and vias.
+Committing wires takes 0.00 seconds.
+Committing vias takes 0.00 seconds.
+Committed 8 wires.
+Committed 8 vias.
+Committed 0 wires for via creation.
+Overall PG creation runtime: 0 seconds.
+Successfully compiled PG.
+Overall runtime: 0 seconds.
+1
+# Create PG VIAs
+create_pg_vias -from_layers M5 -to_layers M1 -via_masters default -nets {VDD VSS}
+Initializing drc engine runtime: 0 seconds.
+Design loading runtime: 0 seconds.
+Net load_neting runtime: 0 seconds.
+Query intersections and create vias.
+Object query runtime: 0 seconds.
+Determining intersections for 168 shapes starts
+Number of threads: 2
+Number of partitions: 9
+Determining intersections for 168 shapes: 0% 100%
+Intersection detection runtime: 0 seconds.
+Instantiating vias for 3307 intersections starts
+Via instantiation runtime: 0 seconds.
+Starting via DRC checking ...
+Number of threads: 2
+Number of partitions: 10
+Direction of partitions: horizontal
+Number of vias: 3307
+Checking DRC for 3307 stacked vias:: 0% 100%
+Overall via DRC checking runtime: 1 seconds.
+Checking dangling/floating vias.
+Start iteration 1: Checking 3307 stacked vias: 0% 100%
+Committed 13228 vias.
+Committing vias takes 0.00 seconds.
+Overall runtime: 1 seconds.
+Successfully created PG Vias.
+1
+create_pg_vias -from_layers M6 -to_layers M5 -via_masters default -nets {VDD VSS}
+Initializing drc engine runtime: 0 seconds.
+Design loading runtime: 0 seconds.
+Net load_neting runtime: 0 seconds.
+Query intersections and create vias.
+Object query runtime: 0 seconds.
+Determining intersections for 98 shapes starts
+Number of threads: 2
+Number of partitions: 5
+Determining intersections for 98 shapes: 0% 100%
+Intersection detection runtime: 0 seconds.
+Instantiating vias for 977 intersections starts
+Via instantiation runtime: 0 seconds.
+Starting via DRC checking ...
+Number of threads: 2
+Number of partitions: 3
+Direction of partitions: horizontal
+Number of vias: 977
+Checking DRC for 977 stacked vias:: 0% 100%
+Overall via DRC checking runtime: 0 seconds.
+Checking dangling/floating vias.
+Start iteration 1: Checking 977 stacked vias: 0% 100%
+Committed 977 vias.
+Committing vias takes 0.00 seconds.
+Overall runtime: 0 seconds.
+Successfully created PG Vias.
+1
+create_pg_vias -from_layers M7 -to_layers M6 -via_masters default -nets {VDD VSS}
+Initializing drc engine runtime: 0 seconds.
+Design loading runtime: 0 seconds.
+Net load_neting runtime: 0 seconds.
+Query intersections and create vias.
+Object query runtime: 0 seconds.
+Determining intersections for 102 shapes starts
+Number of threads: 2
+Number of partitions: 6
+Determining intersections for 102 shapes: 0% 100%
+Intersection detection runtime: 0 seconds.
+Instantiating vias for 1165 intersections starts
+Via instantiation runtime: 0 seconds.
+Starting via DRC checking ...
+Number of threads: 2
+Number of partitions: 6
+Direction of partitions: vertical
+Number of vias: 126
+Checking DRC for 126 stacked vias:: 0% 100%
+Number of threads: 2
+Number of partitions: 3
+Direction of partitions: horizontal
+Number of vias: 1039
+Checking DRC for 1039 stacked vias:: 0% 100%
+Overall via DRC checking runtime: 0 seconds.
+Checking dangling/floating vias.
+Start iteration 1: Checking 1165 stacked vias: 0% 100%
+Start iteration 2: Checking 2142 stacked vias: 0% 100%
+Committed 2142 vias.
+Committing vias takes 0.00 seconds.
+Overall runtime: 0 seconds.
+Successfully created PG Vias.
+1
+# Connect PG nets
+connect_pg_net -net VDD [get_pins -hierarchical  */VDD]
+1
+connect_pg_net -net VSS [get_pins -hierarchical  */VSS]
+1
+# Check created PG structure
+check_pg_connectivity
+Information: The command 'check_pg_connectivity' cleared the undo history. (UNDO-016)
+Checking secondary net through power switch is enabled. 
+Secondary net will be checked together from primary net. They will be treated as the same net
+Primary Net : VDD    Secondary Net:
+Primary Net : VSS    Secondary Net:
+Loading cell instances...
+Number of Standard Cells: 4634
+Number of Macro Cells: 0
+Number of IO Pad Cells: 0
+Number of Blocks: 0
+Loading P/G wires and vias...
+Number of VDD Wires: 5063
+Number of VDD Vias: 8063
+Number of VDD Terminals: 92
+**************Verify net VDD connectivity*****************
+  Number of floating wires: 0
+  Number of floating vias: 0
+  Number of floating std cells: 4634
+  Number of floating hard macros: 0
+  Number of floating I/O pads: 0
+  Number of floating terminals: 0
+  Number of floating hierarchical blocks: 0
+************************************************************
+Loading cell instances...
+Loading P/G wires and vias...
+Number of VSS Wires: 5128
+Number of VSS Vias: 8292
+Number of VSS Terminals: 96
+**************Verify net VSS connectivity*****************
+  Number of floating wires: 0
+  Number of floating vias: 0
+  Number of floating std cells: 4634
+  Number of floating hard macros: 0
+  Number of floating I/O pads: 0
+  Number of floating terminals: 0
+  Number of floating hierarchical blocks: 0
+************************************************************
+Overall runtime: 0 seconds.
+check_pg_drc
+Command check_pg_drc started  at Wed Jul 30 14:33:36 2025
+Command check_pg_drc finished at Wed Jul 30 14:33:36 2025
+CPU usage for check_pg_drc: 0.08 seconds ( 0.00 hours)
+Elapsed time for check_pg_drc: 0.05 seconds ( 0.00 hours)
+No errors found.
+#Insert boundary cells 
+set CELL_PREFIX "SAEDRVT14"
+SAEDRVT14
+set_boundary_cell_rules  \
+        -top_boundary_cells                */${CELL_PREFIX}_CAPT2 \
+        -bottom_boundary_cells             */${CELL_PREFIX}_CAPB2 \
+	-left_boundary_cell                */${CELL_PREFIX}_CAPT2 \
+	-right_boundary_cell               */${CELL_PREFIX}_CAPB2 \
+        -top_left_outside_corner_cell      */${CELL_PREFIX}_CAPTIN13 \
+        -top_right_outside_corner_cell     */${CELL_PREFIX}_CAPTIN13 \
+        -bottom_left_outside_corner_cell   */${CELL_PREFIX}_CAPBIN13 \
+        -bottom_right_outside_corner_cell  */${CELL_PREFIX}_CAPBIN13 
+1
+#	-mirror_left_outside_corner_cell \
+#	-mirror_right_outside_corner_cell 
+compile_boundary_cells
+Warning: Detected use of obsolete/unsupported feature.  The following
+        	will not be available in a future release of the application:
+        	compile_boundary_cells. Use compile_targeted_boundary_cells instead (CMD-100)
+Using AL to insert boundary cells
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+PDC app_options settings =========
+	place.legalize.enable_prerouted_net_check: 1
+	place.legalize.num_tracks_for_access_check: 1
+	place.legalize.use_eol_spacing_for_access_check: 0
+	place.legalize.allow_touch_track_for_access_check: 1
+	place.legalize.reduce_conservatism_in_eol_check: 0
+	place.legalize.preroute_shape_merge_distance: 0.0
+	place.legalize.enable_non_preferred_direction_span_check: 0
+
+Layer M1: cached 0 shapes out of 105 total shapes.
+Layer M2: cached 3307 shapes out of 3307 total shapes.
+Layer M3: cached 3307 shapes out of 3307 total shapes.
+Cached 9921 vias out of 16355 total vias.
+Warning: No 1x or 2x + 3x wide cells provided for top or bottom option. (CHF-125)
+Information: Starting boundary cell insertion into picorv32/floorplan using site master "unit". (CHF-200)
+	10% complete ...
+	20% complete ...
+	30% complete ...
+	40% complete ...
+	50% complete ...
+	60% complete ...
+	70% complete ...
+	80% complete ...
+	90% complete ...
+Information: Total 102 left cells inserted successfully into picorv32/floorplan. (CHF-100)
+Information: Total 0 bottom cells inserted successfully into picorv32/floorplan. (CHF-100)
+Information: Total 102 right cells inserted successfully into picorv32/floorplan. (CHF-100)
+Information: Total 834 top cells inserted successfully into picorv32/floorplan. (CHF-100)
+Information: Total 0 bottom left outside cells inserted successfully into picorv32/floorplan. (CHF-100)
+Information: Total 0 bottom right outside cells inserted successfully into picorv32/floorplan. (CHF-100)
+Information: Total 2 top left outside cells inserted successfully into picorv32/floorplan. (CHF-100)
+Information: Total 2 top right outside cells inserted successfully into picorv32/floorplan. (CHF-100)
+Information: Total 1042 boundary cells inserted successfully into picorv32/floorplan. (CHF-100)
+1
+#Insert tap cells 
+create_tap_cells   \
+         -lib_cell  */${CELL_PREFIX}_TAPDS \
+         -distance 60  \
+         -pattern stagger \
+         -skip_fixed_cells
+* Disjointed site row process : FALSE
+Using AL to insert tap cells
+Information: tap_to_tap_distance is not a hard rule at tap insertion stage. Please set place.legalize.ignore_tap_to_tap_distance_rule to true to bypass the check.
+Warning: Routing direction of metal layer PO is neither "horizontal" nor "vertical".  PDC checks will not be performed on this layer. (PDC-003)
+PDC app_options settings =========
+	place.legalize.enable_prerouted_net_check: 1
+	place.legalize.num_tracks_for_access_check: 1
+	place.legalize.use_eol_spacing_for_access_check: 0
+	place.legalize.allow_touch_track_for_access_check: 1
+	place.legalize.reduce_conservatism_in_eol_check: 0
+	place.legalize.preroute_shape_merge_distance: 0.0
+	place.legalize.enable_non_preferred_direction_span_check: 0
+
+Layer M1: cached 0 shapes out of 105 total shapes.
+Layer M2: cached 3307 shapes out of 3307 total shapes.
+Layer M3: cached 3307 shapes out of 3307 total shapes.
+Cached 9921 vias out of 16355 total vias.
+Information: Starting tap cell insertion into picorv32/floorplan using site master "unit". (CHF-200)
+	10% complete ...
+	20% complete ...
+	30% complete ...
+	40% complete ...
+	50% complete ...
+	60% complete ...
+	70% complete ...
+	80% complete ...
+	90% complete ...
+Information: Total 260 tap cells inserted successfully into picorv32/floorplan. (CHF-100)
+save_block -as ${DESIGN_NAME}/floorplan
+Information: Saving block 'picorv32.dlib:picorv32/floorplan.design'
+1
+collect_reports floorplan
+Collecting reports for floorplan stage...
+Reports are generated for floorplan stage.
+get_blocks -all
+{picorv32.dlib:picorv32.design picorv32.dlib:picorv32/netlist_read.design picorv32.dlib:picorv32/import.design picorv32.dlib:picorv32/floorplan.design}
+save_lib
+Saving library 'picorv32.dlib'
+1
+exit
+Maximum memory usage for this session: 767.64 MB
+Maximum memory usage for this session including child processes: 767.64 MB
+CPU usage for this session:     12 seconds (  0.00 hours)
+Elapsed time for this session:     12 seconds (  0.00 hours)
+Thank you for using Fusion Compiler.
